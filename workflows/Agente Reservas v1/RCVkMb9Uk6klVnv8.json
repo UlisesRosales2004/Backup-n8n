@@ -1,0 +1,1188 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-03-15T14:47:21.000Z",
+    "createdAt": "2026-03-15T14:47:18.365Z",
+    "versionId": "a3d2871b-3e1d-41ef-84e8-d4522e0c5abd",
+    "workflowId": "RCVkMb9Uk6klVnv8",
+    "nodes": [
+      {
+        "parameters": {
+          "workflowInputs": {
+            "values": [
+              {
+                "name": "Fecha"
+              }
+            ]
+          }
+        },
+        "id": "c055762a-8fe7-4141-a639-df2372f30060",
+        "typeVersion": 1.1,
+        "name": "When Executed by Another Workflow",
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "position": [
+          208,
+          352
+        ]
+      },
+      {
+        "parameters": {
+          "operation": "getAll",
+          "calendar": {
+            "__rl": true,
+            "value": "ulises.rosales.ar@gmail.com",
+            "mode": "id"
+          },
+          "returnAll": true,
+          "timeMin": "={{ $json.Fecha_inicio }}{{ $('Call \\'Configuracion Global\\'').item.json.TimezoneOffset }}",
+          "timeMax": "={{ $json.Fecha_fin }}{{ $('Call \\'Configuracion Global\\'').item.json.TimezoneOffset }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleCalendar",
+        "typeVersion": 1.3,
+        "position": [
+          944,
+          336
+        ],
+        "id": "2f030b04-b797-4771-94bd-bf0106654d0b",
+        "name": "Get many events",
+        "alwaysOutputData": true,
+        "credentials": {
+          "googleCalendarOAuth2Api": {
+            "id": "uUlIwgQJ1mHXECLz",
+            "name": "Google Calendar account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "// Obtener input\nconst items = $('When Executed by Another Workflow').all();\n\nfunction formatearSinZona(date) {\n  const pad = (n) => String(n).padStart(2, '0');\n\n  return (\n    date.getFullYear() + '-' +\n    pad(date.getMonth() + 1) + '-' +\n    pad(date.getDate()) + 'T' +\n    pad(date.getHours()) + ':' +\n    pad(date.getMinutes()) + ':' +\n    pad(date.getSeconds())\n  );\n}\n\nreturn items.map(item => {\n\n  const fechaInput = item.json.Fecha;\n\n  if (!fechaInput) {\n    throw new Error(\"No se recibió la propiedad 'Fecha'\");\n  }\n\n  // Validar formato básico YYYY-MM-DDTHH:mm:ss\n  const match = fechaInput.match(\n    /^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2})?$/\n  );\n\n  if (!match) {\n    throw new Error(`Formato de fecha inválido: ${fechaInput}`);\n  }\n\n  const [_, y, m, d] = match;\n\n  // Crear fecha en UTC para evitar zonas horarias\n  const fecha = new Date(Date.UTC(y, m - 1, d));\n\n  // ✅ Validar fecha real (evita 31 febrero, etc)\n  if (\n    fecha.getUTCFullYear() != y ||\n    fecha.getUTCMonth() != (m - 1) ||\n    fecha.getUTCDate() != d\n  ) {\n    throw new Error(`Fecha inválida: ${fechaInput}`);\n  }\n\n  // Fecha inicio 00:00:00\n  const fechaInicio = new Date(Date.UTC(y, m - 1, d, 0, 0, 0));\n\n  // Fecha fin 23:59:59\n  const fechaFin = new Date(Date.UTC(y, m - 1, d, 23, 59, 59));\n\n  return {\n    json: {\n      Fecha_inicio: formatearSinZona(fechaInicio),\n      Fecha_fin: formatearSinZona(fechaFin),\n    }\n  };\n});"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          688,
+          352
+        ],
+        "id": "a22c4bf0-3b74-4d9e-aff2-8d8babe372ca",
+        "name": "Code in JavaScript",
+        "onError": "continueErrorOutput"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "3d316de0-0362-432f-a675-6f52077a2b75",
+                "leftValue": "={{ $json.id }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "exists",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          1152,
+          336
+        ],
+        "id": "2ed195a2-f776-4a39-9301-2755779c4e70",
+        "name": "If"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "16d5942c-7d6a-40b8-a1f7-9bfd217f5c3b",
+                "name": "Respuesta",
+                "value": "=La fecha ingresada no existe o el formato es invalido.",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          816,
+          512
+        ],
+        "id": "4eccfc5e-02ed-43e7-80f1-39a4898705bf",
+        "name": "Fecha mala"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "c2ab2fcf-ca1f-4fc4-852a-bbe5d0f8f202",
+                "name": "Respuesta",
+                "value": "No existen eventos agendados en el calendario para el día seleccionado.",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1312,
+          464
+        ],
+        "id": "a599776b-9066-443b-99fe-0b498305e503",
+        "name": "Edit Fields"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "dc31f1df-d555-4ca7-9f98-e0cce4c3f0d3",
+                "leftValue": "={{ $json.colorId }}",
+                "rightValue": "2",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          1920,
+          320
+        ],
+        "id": "09dcc2aa-f959-4a72-a74a-cbf799a91233",
+        "name": "Confirmadas?"
+      },
+      {
+        "parameters": {
+          "jsCode": "const results = [];\n\nfor (const item of $input.all()) {\n    const summary = item?.json?.summary ?? \"\";\n    const text = typeof summary === \"string\" ? summary : \"\";\n\n    const servicio = text.match(/Cita:\\s*(.*?)\\s*Duracion/i)?.[1] || \"\";\n    const tiempo = text.match(/Duracion estimada:\\s*([0-9]+ ?minutos)/i)?.[1] || \"\";\n    const nombre = text.match(/Para\\s+(.*?)\\s+[0-9]+@/i)?.[1] || \"\";\n    const numero = text.match(/([0-9]{10,})@s\\.whatsapp\\.net/i)?.[1] || \"\";\n\n    // Extraer hora desde item.json.start.dateTime (si existe)\n    let horaEntrada = \"\";\n    const startStr = item?.json?.start?.dateTime ?? item?.json?.startDateTime ?? \"\";\n    if (typeof startStr === \"string\" && startStr.includes(\"T\")) {\n        // Parte después de la T: \"09:00:00-03:00\" o \"09:00:00\"\n        const afterT = startStr.split(\"T\")[1] || \"\";\n        // Extraer HH:MM usando regex (maneja segundos y offsets)\n        const m = afterT.match(/^(\\d{2}:\\d{2})/);\n        if (m) {\n            horaEntrada = `${m[1]} hs`;\n        }\n    }\n\n    const isEmpty =\n        !servicio &&\n        !tiempo &&\n        !nombre &&\n        !numero;\n\n    if (!isEmpty) {\n        results.push({\n            json: {\n                servicio,\n                tiempo,\n                nombre,\n                numero,\n                horaEntrada\n            }\n        });\n    }\n}\n\nreturn results;\n\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2192,
+          208
+        ],
+        "id": "6c3075c6-4fe9-44b1-a87a-3a9a50846a7d",
+        "name": "Ordenar Datos",
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "jsCode": "const results = [];\n\nfor (const item of $input.all()) {\n    const summary = item?.json?.summary ?? \"\";\n    const text = typeof summary === \"string\" ? summary : \"\";\n\n    const servicio = text.match(/Cita:\\s*(.*?)\\s*Duracion/i)?.[1] || \"\";\n    const tiempo = text.match(/Duracion estimada:\\s*([0-9]+ ?minutos)/i)?.[1] || \"\";\n    const nombre = text.match(/Para\\s+(.*?)\\s+[0-9]+@/i)?.[1] || \"\";\n    const numero = text.match(/([0-9]{10,})@s\\.whatsapp\\.net/i)?.[1] || \"\";\n\n    // Extraer hora desde item.json.start.dateTime (si existe)\n    let horaEntrada = \"\";\n    const startStr = item?.json?.start?.dateTime ?? item?.json?.startDateTime ?? \"\";\n    if (typeof startStr === \"string\" && startStr.includes(\"T\")) {\n        // Parte después de la T: \"09:00:00-03:00\" o \"09:00:00\"\n        const afterT = startStr.split(\"T\")[1] || \"\";\n        // Extraer HH:MM usando regex (maneja segundos y offsets)\n        const m = afterT.match(/^(\\d{2}:\\d{2})/);\n        if (m) {\n            horaEntrada = `${m[1]} hs`;\n        }\n    }\n\n    const isEmpty =\n        !servicio &&\n        !tiempo &&\n        !nombre &&\n        !numero;\n\n    if (!isEmpty) {\n        results.push({\n            json: {\n                servicio,\n                tiempo,\n                nombre,\n                numero,\n                horaEntrada\n            }\n        });\n    }\n}\n\nreturn results;\n\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2144,
+          416
+        ],
+        "id": "1cb68073-d5f7-4483-8cd3-1fb28f40e4c7",
+        "name": "Ordenar Datos1"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Si no hay citas\nif (items.length === 0) {\n  return [\n    {\n      json: {\n        mensaje: \"Citas confirmadas para hoy:\\n\\nNo hay citas agendadas.\"\n      }\n    }\n  ];\n}\n\n// Texto base\nlet mensaje = \"Citas confirmadas para hoy:\\n\\n\";\n\n// Recorrer todas las citas\nitems.forEach((item, index) => {\n  const cita = item.json;\n\n  mensaje += `${index + 1}) ${cita.horaEntrada}\\n`;\n  mensaje += `Cliente: ${cita.nombre}\\n`;\n  mensaje += `Servicio: ${cita.servicio}\\n`;\n  mensaje += `Duración: ${cita.tiempo}\\n`;\n  mensaje += `Teléfono: ${cita.numero}\\n\\n`;\n});\n\n// Devolver un solo item con el mensaje armado\nreturn [\n  {\n    json: {\n      mensaje: mensaje.trim()\n    }\n  }\n];"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2368,
+          208
+        ],
+        "id": "dc5fe07e-84a7-45e4-b4e5-ffaec0e9f585",
+        "name": "Juntar citas"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Si no hay citas\nif (items.length === 0) {\n  return [\n    {\n      json: {\n        mensaje: \"Citas NO confirmadas para hoy:\\n\\nNo hay citas agendadas.\"\n      }\n    }\n  ];\n}\n\n// Texto base\nlet mensaje = \"Citas NO confirmadas para hoy:\\n\\n\";\n\n// Recorrer todas las citas\nitems.forEach((item, index) => {\n  const cita = item.json;\n\n  mensaje += `${index + 1}) ${cita.horaEntrada}\\n`;\n  mensaje += `Cliente: ${cita.nombre}\\n`;\n  mensaje += `Servicio: ${cita.servicio}\\n`;\n  mensaje += `Duración: ${cita.tiempo}\\n`;\n  mensaje += `Teléfono: ${cita.numero}\\n\\n`;\n});\n\n// Devolver un solo item con el mensaje armado\nreturn [\n  {\n    json: {\n      mensaje: mensaje.trim()\n    }\n  }\n];"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2368,
+          416
+        ],
+        "id": "0a08f12a-826a-4383-bbf9-1e14233f4711",
+        "name": "Juntar citas1"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "1be489f7-f650-4f07-aac2-a3e66e70681d",
+                "leftValue": "={{ $json.summary }}",
+                "rightValue": "Cita:",
+                "operator": {
+                  "type": "string",
+                  "operation": "contains"
+                }
+              },
+              {
+                "id": "fbbc6cf2-ae8f-4863-b596-b6ac1ea1bf1d",
+                "leftValue": "={{ $json.summary }}",
+                "rightValue": "Duracion estimada:",
+                "operator": {
+                  "type": "string",
+                  "operation": "contains"
+                }
+              },
+              {
+                "id": "7cbaa9eb-a203-40ca-9b43-6febeadbc0ff",
+                "leftValue": "={{ $json.summary }}",
+                "rightValue": "Para",
+                "operator": {
+                  "type": "string",
+                  "operation": "contains"
+                }
+              },
+              {
+                "id": "4c0d5f79-4255-4e82-bccb-3abbaba38a62",
+                "leftValue": "={{ $json.summary }}",
+                "rightValue": "@s.whatsapp.net",
+                "operator": {
+                  "type": "string",
+                  "operation": "contains"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          1408,
+          336
+        ],
+        "id": "9bbc8451-09a1-4e17-9fdc-f984a2a439df",
+        "name": "Formato_Cita"
+      },
+      {
+        "parameters": {
+          "jsCode": "const items = $input.all();\n\nfunction formatearFechaHora(fecha) {\n  // si tiene hora\n  if (fecha.dateTime) {\n    return fecha.dateTime.substring(0, 16).replace(\"T\", \" \");\n  }\n\n  // si es evento de día completo\n  if (fecha.date) {\n    return `${fecha.date} (todo el día)`;\n  }\n\n  return \"Sin fecha\";\n}\n\n// Crear texto de cada evento\nconst eventos = items.map(item => {\n\n  const summary = item.json.summary ?? \"Sin descripción\";\n  const inicio = formatearFechaHora(item.json.start);\n  const fin = formatearFechaHora(item.json.end);\n\n  return `${summary}\ninicio: ${inicio}\nfin: ${fin}`;\n});\n\n// Mensaje final\nconst mensajeFinal = `Otros:\n${eventos.join(\"\\n\\n\")}`;\n\nreturn [\n  {\n    json: {\n      mensaje: mensajeFinal\n    }\n  }\n];"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2272,
+          592
+        ],
+        "id": "fb646520-f7fa-4399-af34-1e6b2772ce9f",
+        "name": "No formato"
+      },
+      {
+        "parameters": {
+          "numberInputs": 3
+        },
+        "type": "n8n-nodes-base.merge",
+        "typeVersion": 3.2,
+        "position": [
+          2912,
+          352
+        ],
+        "id": "f44cf5c6-214e-49f5-b1d4-973d41a58cac",
+        "name": "Merge",
+        "alwaysOutputData": true
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "06ee1a44-ced9-48b4-9381-773e4ce58c5e",
+                "name": "mensaje_final",
+                "value": "={{ $json.mensaje }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          3360,
+          368
+        ],
+        "id": "860488af-6ec2-4dd9-b972-ff56190f5fdb",
+        "name": "Edit Fields1"
+      },
+      {
+        "parameters": {
+          "jsCode": "const mensajes = items\n  .map(item => item.json.mensaje)\n  .filter(m => m); // evita null o undefined\n\nreturn [\n  {\n    json: {\n      mensaje: mensajes.join('\\n\\n')\n    }\n  }\n];"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          3152,
+          368
+        ],
+        "id": "b74dfcac-0c93-4a19-9625-d9ca7dabec06",
+        "name": "JuntarMensajes"
+      },
+      {
+        "parameters": {
+          "workflowId": {
+            "__rl": true,
+            "value": "i0aP21thDHY2T8UDlPfgP",
+            "mode": "list",
+            "cachedResultUrl": "/workflow/i0aP21thDHY2T8UDlPfgP",
+            "cachedResultName": "Configuracion Global"
+          },
+          "workflowInputs": {
+            "mappingMode": "defineBelow",
+            "value": {},
+            "matchingColumns": [],
+            "schema": [],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": true
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.executeWorkflow",
+        "typeVersion": 1.3,
+        "position": [
+          416,
+          352
+        ],
+        "id": "facb7a40-5a4e-4eae-aab1-2170e6db9e82",
+        "name": "Call 'Configuracion Global'"
+      }
+    ],
+    "connections": {
+      "When Executed by Another Workflow": {
+        "main": [
+          [
+            {
+              "node": "Call 'Configuracion Global'",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code in JavaScript": {
+        "main": [
+          [
+            {
+              "node": "Get many events",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Fecha mala",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get many events": {
+        "main": [
+          [
+            {
+              "node": "If",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If": {
+        "main": [
+          [
+            {
+              "node": "Formato_Cita",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Edit Fields",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Confirmadas?": {
+        "main": [
+          [
+            {
+              "node": "Ordenar Datos",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Ordenar Datos1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Ordenar Datos": {
+        "main": [
+          [
+            {
+              "node": "Juntar citas",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Ordenar Datos1": {
+        "main": [
+          [
+            {
+              "node": "Juntar citas1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Formato_Cita": {
+        "main": [
+          [
+            {
+              "node": "Confirmadas?",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "No formato",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Juntar citas1": {
+        "main": [
+          [
+            {
+              "node": "Merge",
+              "type": "main",
+              "index": 1
+            }
+          ]
+        ]
+      },
+      "Juntar citas": {
+        "main": [
+          [
+            {
+              "node": "Merge",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "No formato": {
+        "main": [
+          [
+            {
+              "node": "Merge",
+              "type": "main",
+              "index": 2
+            }
+          ]
+        ]
+      },
+      "Merge": {
+        "main": [
+          [
+            {
+              "node": "JuntarMensajes",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "JuntarMensajes": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Call 'Configuracion Global'": {
+        "main": [
+          [
+            {
+              "node": "Code in JavaScript",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Cognia Empresa",
+    "name": "Version a3d2871b",
+    "description": "",
+    "autosaved": false
+  },
+  "activeVersionId": "a3d2871b-3e1d-41ef-84e8-d4522e0c5abd",
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Call 'Configuracion Global'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Get many events",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fecha mala",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many events": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Formato_Cita",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Confirmadas?": {
+      "main": [
+        [
+          {
+            "node": "Ordenar Datos",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Ordenar Datos1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ordenar Datos": {
+      "main": [
+        [
+          {
+            "node": "Juntar citas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ordenar Datos1": {
+      "main": [
+        [
+          {
+            "node": "Juntar citas1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Formato_Cita": {
+      "main": [
+        [
+          {
+            "node": "Confirmadas?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No formato",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Juntar citas1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Juntar citas": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "No formato": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "JuntarMensajes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "JuntarMensajes": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'Configuracion Global'": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-02-27T00:11:26.454Z",
+  "id": "RCVkMb9Uk6klVnv8",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "consultar_agenda",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "Fecha"
+            }
+          ]
+        }
+      },
+      "id": "c055762a-8fe7-4141-a639-df2372f30060",
+      "typeVersion": 1.1,
+      "name": "When Executed by Another Workflow",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        208,
+        352
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "ulises.rosales.ar@gmail.com",
+          "mode": "id"
+        },
+        "returnAll": true,
+        "timeMin": "={{ $json.Fecha_inicio }}{{ $('Call \\'Configuracion Global\\'').item.json.TimezoneOffset }}",
+        "timeMax": "={{ $json.Fecha_fin }}{{ $('Call \\'Configuracion Global\\'').item.json.TimezoneOffset }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        944,
+        336
+      ],
+      "id": "2f030b04-b797-4771-94bd-bf0106654d0b",
+      "name": "Get many events",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "uUlIwgQJ1mHXECLz",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Obtener input\nconst items = $('When Executed by Another Workflow').all();\n\nfunction formatearSinZona(date) {\n  const pad = (n) => String(n).padStart(2, '0');\n\n  return (\n    date.getFullYear() + '-' +\n    pad(date.getMonth() + 1) + '-' +\n    pad(date.getDate()) + 'T' +\n    pad(date.getHours()) + ':' +\n    pad(date.getMinutes()) + ':' +\n    pad(date.getSeconds())\n  );\n}\n\nreturn items.map(item => {\n\n  const fechaInput = item.json.Fecha;\n\n  if (!fechaInput) {\n    throw new Error(\"No se recibió la propiedad 'Fecha'\");\n  }\n\n  // Validar formato básico YYYY-MM-DDTHH:mm:ss\n  const match = fechaInput.match(\n    /^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2})?$/\n  );\n\n  if (!match) {\n    throw new Error(`Formato de fecha inválido: ${fechaInput}`);\n  }\n\n  const [_, y, m, d] = match;\n\n  // Crear fecha en UTC para evitar zonas horarias\n  const fecha = new Date(Date.UTC(y, m - 1, d));\n\n  // ✅ Validar fecha real (evita 31 febrero, etc)\n  if (\n    fecha.getUTCFullYear() != y ||\n    fecha.getUTCMonth() != (m - 1) ||\n    fecha.getUTCDate() != d\n  ) {\n    throw new Error(`Fecha inválida: ${fechaInput}`);\n  }\n\n  // Fecha inicio 00:00:00\n  const fechaInicio = new Date(Date.UTC(y, m - 1, d, 0, 0, 0));\n\n  // Fecha fin 23:59:59\n  const fechaFin = new Date(Date.UTC(y, m - 1, d, 23, 59, 59));\n\n  return {\n    json: {\n      Fecha_inicio: formatearSinZona(fechaInicio),\n      Fecha_fin: formatearSinZona(fechaFin),\n    }\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        688,
+        352
+      ],
+      "id": "a22c4bf0-3b74-4d9e-aff2-8d8babe372ca",
+      "name": "Code in JavaScript",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "3d316de0-0362-432f-a675-6f52077a2b75",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1152,
+        336
+      ],
+      "id": "2ed195a2-f776-4a39-9301-2755779c4e70",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "16d5942c-7d6a-40b8-a1f7-9bfd217f5c3b",
+              "name": "Respuesta",
+              "value": "=La fecha ingresada no existe o el formato es invalido.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        816,
+        512
+      ],
+      "id": "4eccfc5e-02ed-43e7-80f1-39a4898705bf",
+      "name": "Fecha mala"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c2ab2fcf-ca1f-4fc4-852a-bbe5d0f8f202",
+              "name": "Respuesta",
+              "value": "No existen eventos agendados en el calendario para el día seleccionado.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1312,
+        464
+      ],
+      "id": "a599776b-9066-443b-99fe-0b498305e503",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "dc31f1df-d555-4ca7-9f98-e0cce4c3f0d3",
+              "leftValue": "={{ $json.colorId }}",
+              "rightValue": "2",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1920,
+        320
+      ],
+      "id": "09dcc2aa-f959-4a72-a74a-cbf799a91233",
+      "name": "Confirmadas?"
+    },
+    {
+      "parameters": {
+        "jsCode": "const results = [];\n\nfor (const item of $input.all()) {\n    const summary = item?.json?.summary ?? \"\";\n    const text = typeof summary === \"string\" ? summary : \"\";\n\n    const servicio = text.match(/Cita:\\s*(.*?)\\s*Duracion/i)?.[1] || \"\";\n    const tiempo = text.match(/Duracion estimada:\\s*([0-9]+ ?minutos)/i)?.[1] || \"\";\n    const nombre = text.match(/Para\\s+(.*?)\\s+[0-9]+@/i)?.[1] || \"\";\n    const numero = text.match(/([0-9]{10,})@s\\.whatsapp\\.net/i)?.[1] || \"\";\n\n    // Extraer hora desde item.json.start.dateTime (si existe)\n    let horaEntrada = \"\";\n    const startStr = item?.json?.start?.dateTime ?? item?.json?.startDateTime ?? \"\";\n    if (typeof startStr === \"string\" && startStr.includes(\"T\")) {\n        // Parte después de la T: \"09:00:00-03:00\" o \"09:00:00\"\n        const afterT = startStr.split(\"T\")[1] || \"\";\n        // Extraer HH:MM usando regex (maneja segundos y offsets)\n        const m = afterT.match(/^(\\d{2}:\\d{2})/);\n        if (m) {\n            horaEntrada = `${m[1]} hs`;\n        }\n    }\n\n    const isEmpty =\n        !servicio &&\n        !tiempo &&\n        !nombre &&\n        !numero;\n\n    if (!isEmpty) {\n        results.push({\n            json: {\n                servicio,\n                tiempo,\n                nombre,\n                numero,\n                horaEntrada\n            }\n        });\n    }\n}\n\nreturn results;\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2192,
+        208
+      ],
+      "id": "6c3075c6-4fe9-44b1-a87a-3a9a50846a7d",
+      "name": "Ordenar Datos",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const results = [];\n\nfor (const item of $input.all()) {\n    const summary = item?.json?.summary ?? \"\";\n    const text = typeof summary === \"string\" ? summary : \"\";\n\n    const servicio = text.match(/Cita:\\s*(.*?)\\s*Duracion/i)?.[1] || \"\";\n    const tiempo = text.match(/Duracion estimada:\\s*([0-9]+ ?minutos)/i)?.[1] || \"\";\n    const nombre = text.match(/Para\\s+(.*?)\\s+[0-9]+@/i)?.[1] || \"\";\n    const numero = text.match(/([0-9]{10,})@s\\.whatsapp\\.net/i)?.[1] || \"\";\n\n    // Extraer hora desde item.json.start.dateTime (si existe)\n    let horaEntrada = \"\";\n    const startStr = item?.json?.start?.dateTime ?? item?.json?.startDateTime ?? \"\";\n    if (typeof startStr === \"string\" && startStr.includes(\"T\")) {\n        // Parte después de la T: \"09:00:00-03:00\" o \"09:00:00\"\n        const afterT = startStr.split(\"T\")[1] || \"\";\n        // Extraer HH:MM usando regex (maneja segundos y offsets)\n        const m = afterT.match(/^(\\d{2}:\\d{2})/);\n        if (m) {\n            horaEntrada = `${m[1]} hs`;\n        }\n    }\n\n    const isEmpty =\n        !servicio &&\n        !tiempo &&\n        !nombre &&\n        !numero;\n\n    if (!isEmpty) {\n        results.push({\n            json: {\n                servicio,\n                tiempo,\n                nombre,\n                numero,\n                horaEntrada\n            }\n        });\n    }\n}\n\nreturn results;\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2144,
+        416
+      ],
+      "id": "1cb68073-d5f7-4483-8cd3-1fb28f40e4c7",
+      "name": "Ordenar Datos1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Si no hay citas\nif (items.length === 0) {\n  return [\n    {\n      json: {\n        mensaje: \"Citas confirmadas para hoy:\\n\\nNo hay citas agendadas.\"\n      }\n    }\n  ];\n}\n\n// Texto base\nlet mensaje = \"Citas confirmadas para hoy:\\n\\n\";\n\n// Recorrer todas las citas\nitems.forEach((item, index) => {\n  const cita = item.json;\n\n  mensaje += `${index + 1}) ${cita.horaEntrada}\\n`;\n  mensaje += `Cliente: ${cita.nombre}\\n`;\n  mensaje += `Servicio: ${cita.servicio}\\n`;\n  mensaje += `Duración: ${cita.tiempo}\\n`;\n  mensaje += `Teléfono: ${cita.numero}\\n\\n`;\n});\n\n// Devolver un solo item con el mensaje armado\nreturn [\n  {\n    json: {\n      mensaje: mensaje.trim()\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2368,
+        208
+      ],
+      "id": "dc5fe07e-84a7-45e4-b4e5-ffaec0e9f585",
+      "name": "Juntar citas"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Si no hay citas\nif (items.length === 0) {\n  return [\n    {\n      json: {\n        mensaje: \"Citas NO confirmadas para hoy:\\n\\nNo hay citas agendadas.\"\n      }\n    }\n  ];\n}\n\n// Texto base\nlet mensaje = \"Citas NO confirmadas para hoy:\\n\\n\";\n\n// Recorrer todas las citas\nitems.forEach((item, index) => {\n  const cita = item.json;\n\n  mensaje += `${index + 1}) ${cita.horaEntrada}\\n`;\n  mensaje += `Cliente: ${cita.nombre}\\n`;\n  mensaje += `Servicio: ${cita.servicio}\\n`;\n  mensaje += `Duración: ${cita.tiempo}\\n`;\n  mensaje += `Teléfono: ${cita.numero}\\n\\n`;\n});\n\n// Devolver un solo item con el mensaje armado\nreturn [\n  {\n    json: {\n      mensaje: mensaje.trim()\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2368,
+        416
+      ],
+      "id": "0a08f12a-826a-4383-bbf9-1e14233f4711",
+      "name": "Juntar citas1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "1be489f7-f650-4f07-aac2-a3e66e70681d",
+              "leftValue": "={{ $json.summary }}",
+              "rightValue": "Cita:",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "fbbc6cf2-ae8f-4863-b596-b6ac1ea1bf1d",
+              "leftValue": "={{ $json.summary }}",
+              "rightValue": "Duracion estimada:",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "7cbaa9eb-a203-40ca-9b43-6febeadbc0ff",
+              "leftValue": "={{ $json.summary }}",
+              "rightValue": "Para",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "4c0d5f79-4255-4e82-bccb-3abbaba38a62",
+              "leftValue": "={{ $json.summary }}",
+              "rightValue": "@s.whatsapp.net",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1408,
+        336
+      ],
+      "id": "9bbc8451-09a1-4e17-9fdc-f984a2a439df",
+      "name": "Formato_Cita"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\n\nfunction formatearFechaHora(fecha) {\n  // si tiene hora\n  if (fecha.dateTime) {\n    return fecha.dateTime.substring(0, 16).replace(\"T\", \" \");\n  }\n\n  // si es evento de día completo\n  if (fecha.date) {\n    return `${fecha.date} (todo el día)`;\n  }\n\n  return \"Sin fecha\";\n}\n\n// Crear texto de cada evento\nconst eventos = items.map(item => {\n\n  const summary = item.json.summary ?? \"Sin descripción\";\n  const inicio = formatearFechaHora(item.json.start);\n  const fin = formatearFechaHora(item.json.end);\n\n  return `${summary}\ninicio: ${inicio}\nfin: ${fin}`;\n});\n\n// Mensaje final\nconst mensajeFinal = `Otros:\n${eventos.join(\"\\n\\n\")}`;\n\nreturn [\n  {\n    json: {\n      mensaje: mensajeFinal\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2272,
+        592
+      ],
+      "id": "fb646520-f7fa-4399-af34-1e6b2772ce9f",
+      "name": "No formato"
+    },
+    {
+      "parameters": {
+        "numberInputs": 3
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        2912,
+        352
+      ],
+      "id": "f44cf5c6-214e-49f5-b1d4-973d41a58cac",
+      "name": "Merge",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "06ee1a44-ced9-48b4-9381-773e4ce58c5e",
+              "name": "mensaje_final",
+              "value": "={{ $json.mensaje }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3360,
+        368
+      ],
+      "id": "860488af-6ec2-4dd9-b972-ff56190f5fdb",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const mensajes = items\n  .map(item => item.json.mensaje)\n  .filter(m => m); // evita null o undefined\n\nreturn [\n  {\n    json: {\n      mensaje: mensajes.join('\\n\\n')\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3152,
+        368
+      ],
+      "id": "b74dfcac-0c93-4a19-9625-d9ca7dabec06",
+      "name": "JuntarMensajes"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "i0aP21thDHY2T8UDlPfgP",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/i0aP21thDHY2T8UDlPfgP",
+          "cachedResultName": "Configuracion Global"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        416,
+        352
+      ],
+      "id": "facb7a40-5a4e-4eae-aab1-2170e6db9e82",
+      "name": "Call 'Configuracion Global'"
+    }
+  ],
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "Fecha": "2026-03-10T00:00:00"
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "esT3Af9Aeha2_IffOfU2d"
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-02-27T00:11:26.457Z",
+      "createdAt": "2026-02-27T00:11:26.457Z",
+      "role": "workflow:owner",
+      "workflowId": "RCVkMb9Uk6klVnv8",
+      "projectId": "f3W32VX4HOke6C3N"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "updatedAt": "2026-03-15T14:46:54.854Z",
+      "createdAt": "2026-03-15T14:28:58.602Z",
+      "id": "S9TWg646mw2pIE1k",
+      "name": "Agente Reservas v1"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2026-03-15T14:47:35.423Z",
+  "versionId": "a3d2871b-3e1d-41ef-84e8-d4522e0c5abd"
+}
