@@ -1,0 +1,479 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-03-09T15:03:24.000Z",
+    "createdAt": "2026-03-09T15:03:22.743Z",
+    "versionId": "232878e5-68e2-4a29-b31f-b91b4c739ae7",
+    "workflowId": "EncmY9DE5NLy89O0",
+    "nodes": [
+      {
+        "parameters": {
+          "workflowInputs": {
+            "values": [
+              {
+                "name": "Numero celular"
+              }
+            ]
+          }
+        },
+        "id": "c055762a-8fe7-4141-a639-df2372f30060",
+        "typeVersion": 1.1,
+        "name": "When Executed by Another Workflow",
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "position": [
+          160,
+          352
+        ]
+      },
+      {
+        "parameters": {
+          "operation": "getAll",
+          "calendar": {
+            "__rl": true,
+            "value": "ulises.rosales.ar@gmail.com",
+            "mode": "list",
+            "cachedResultName": "ulises.rosales.ar@gmail.com"
+          },
+          "timeMax": "={{ $now.plus({ week: 4 }) }}",
+          "options": {
+            "query": "={{ $json['Numero celular'] }}"
+          }
+        },
+        "type": "n8n-nodes-base.googleCalendar",
+        "typeVersion": 1.3,
+        "position": [
+          656,
+          352
+        ],
+        "id": "1b414c2f-5c43-42c7-b79c-e7177737edb3",
+        "name": "Obtener_citas_cliente",
+        "alwaysOutputData": true,
+        "credentials": {
+          "googleCalendarOAuth2Api": {
+            "id": "uUlIwgQJ1mHXECLz",
+            "name": "Google Calendar account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "7aa8f4f1-7b92-4a1e-b880-7789763b3546",
+                "leftValue": "={{ $json.summary }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "exists",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          848,
+          352
+        ],
+        "id": "7dc20df8-98b5-4a85-ad8a-5e6ed4e43d3c",
+        "name": "If"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "88443e78-9f08-43ec-a0f0-15ab3647e914",
+                "name": "Mensaje",
+                "value": "No hay ningún turno agendado con este numero.",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1056,
+          448
+        ],
+        "id": "f47ac7d4-106a-4de2-9676-8b82497a2125",
+        "name": "Sin turnos"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "5eeee0a3-4605-4034-aff4-644725025744",
+                "name": "Resumen",
+                "value": "={{ $json.summary }}",
+                "type": "string"
+              },
+              {
+                "id": "94b284c5-bab2-4056-8c34-661c4002cc76",
+                "name": "Inicio-Turno",
+                "value": "={{ $json.start.dateTime }}",
+                "type": "string"
+              },
+              {
+                "id": "480a343f-06fb-4334-8591-bff634991069",
+                "name": "Fin-Turno",
+                "value": "={{ $json.end.dateTime }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1024,
+          240
+        ],
+        "id": "a100664a-5148-49a6-9ef2-9cb8c64d4d71",
+        "name": "Turnos"
+      },
+      {
+        "parameters": {
+          "amount": 3
+        },
+        "type": "n8n-nodes-base.wait",
+        "typeVersion": 1.1,
+        "position": [
+          400,
+          352
+        ],
+        "id": "2bd28c14-a72c-4c14-86ac-800e0a480670",
+        "name": "Wait",
+        "webhookId": "cb2d91e3-db26-4724-8be1-87af9dc0327c"
+      }
+    ],
+    "connections": {
+      "When Executed by Another Workflow": {
+        "main": [
+          [
+            {
+              "node": "Wait",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Obtener_citas_cliente": {
+        "main": [
+          [
+            {
+              "node": "If",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If": {
+        "main": [
+          [
+            {
+              "node": "Turnos",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Sin turnos",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Wait": {
+        "main": [
+          [
+            {
+              "node": "Obtener_citas_cliente",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Cognia Empresa",
+    "name": "Version 232878e5",
+    "description": "",
+    "autosaved": false
+  },
+  "activeVersionId": "232878e5-68e2-4a29-b31f-b91b4c739ae7",
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener_citas_cliente": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Turnos",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Sin turnos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Obtener_citas_cliente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-02-09T19:39:45.397Z",
+  "id": "EncmY9DE5NLy89O0",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "consultar_citas",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "Numero celular"
+            }
+          ]
+        }
+      },
+      "id": "c055762a-8fe7-4141-a639-df2372f30060",
+      "typeVersion": 1.1,
+      "name": "When Executed by Another Workflow",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        160,
+        352
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "ulises.rosales.ar@gmail.com",
+          "mode": "list",
+          "cachedResultName": "ulises.rosales.ar@gmail.com"
+        },
+        "timeMax": "={{ $now.plus({ week: 4 }) }}",
+        "options": {
+          "query": "={{ $json['Numero celular'] }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        656,
+        352
+      ],
+      "id": "1b414c2f-5c43-42c7-b79c-e7177737edb3",
+      "name": "Obtener_citas_cliente",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "uUlIwgQJ1mHXECLz",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "7aa8f4f1-7b92-4a1e-b880-7789763b3546",
+              "leftValue": "={{ $json.summary }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        848,
+        352
+      ],
+      "id": "7dc20df8-98b5-4a85-ad8a-5e6ed4e43d3c",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "88443e78-9f08-43ec-a0f0-15ab3647e914",
+              "name": "Mensaje",
+              "value": "No hay ningún turno agendado con este numero.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1056,
+        448
+      ],
+      "id": "f47ac7d4-106a-4de2-9676-8b82497a2125",
+      "name": "Sin turnos"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5eeee0a3-4605-4034-aff4-644725025744",
+              "name": "Resumen",
+              "value": "={{ $json.summary }}",
+              "type": "string"
+            },
+            {
+              "id": "94b284c5-bab2-4056-8c34-661c4002cc76",
+              "name": "Inicio-Turno",
+              "value": "={{ $json.start.dateTime }}",
+              "type": "string"
+            },
+            {
+              "id": "480a343f-06fb-4334-8591-bff634991069",
+              "name": "Fin-Turno",
+              "value": "={{ $json.end.dateTime }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1024,
+        240
+      ],
+      "id": "a100664a-5148-49a6-9ef2-9cb8c64d4d71",
+      "name": "Turnos"
+    },
+    {
+      "parameters": {
+        "amount": 3
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        400,
+        352
+      ],
+      "id": "2bd28c14-a72c-4c14-86ac-800e0a480670",
+      "name": "Wait",
+      "webhookId": "cb2d91e3-db26-4724-8be1-87af9dc0327c"
+    }
+  ],
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "Numero celular": "5492616763104@s.whatsapp.net"
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "timezone": "America/Argentina/Buenos_Aires",
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "esT3Af9Aeha2_IffOfU2d"
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-02-09T19:39:45.400Z",
+      "createdAt": "2026-02-09T19:39:45.400Z",
+      "role": "workflow:owner",
+      "workflowId": "EncmY9DE5NLy89O0",
+      "projectId": "f3W32VX4HOke6C3N"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "updatedAt": "2026-03-15T14:46:54.854Z",
+      "createdAt": "2026-03-15T14:28:58.602Z",
+      "id": "S9TWg646mw2pIE1k",
+      "name": "Agente Reservas v1"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2026-03-15T14:49:12.424Z",
+  "versionId": "232878e5-68e2-4a29-b31f-b91b4c739ae7"
+}
