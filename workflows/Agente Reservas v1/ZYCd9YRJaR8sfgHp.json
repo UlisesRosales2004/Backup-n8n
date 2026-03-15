@@ -1,0 +1,199 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-03-10T22:47:50.000Z",
+    "createdAt": "2026-03-10T22:47:49.743Z",
+    "versionId": "2fa98494-cd3f-4ec3-bc00-e9c4567ed1d3",
+    "workflowId": "ZYCd9YRJaR8sfgHp",
+    "nodes": [
+      {
+        "parameters": {
+          "inputSource": "passthrough"
+        },
+        "id": "c055762a-8fe7-4141-a639-df2372f30060",
+        "typeVersion": 1.1,
+        "name": "When Executed by Another Workflow",
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "position": [
+          272,
+          352
+        ]
+      },
+      {
+        "parameters": {
+          "authentication": "nocoDbApiToken",
+          "operation": "getAll",
+          "projectId": "pvalhsum160gh07",
+          "table": "m3m2qj8gmy4irp0",
+          "returnAll": true,
+          "options": {}
+        },
+        "type": "n8n-nodes-base.nocoDb",
+        "typeVersion": 3,
+        "position": [
+          496,
+          352
+        ],
+        "id": "66bb4a3e-6dfb-422a-804b-986bcbc64a47",
+        "name": "Obtener servicios",
+        "credentials": {
+          "nocoDbApiToken": {
+            "id": "NJEMSwQ8VfnQXOIP",
+            "name": "NocoDB Token account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "const items = $input.all();\n\nconst servicios = items\n  .filter(i => i.json.Disponible !== 'No disponible') // 👈 nueva regla\n  .map(i => {\n    const json = i.json;\n\n    const base = {\n      Id: json.Id,\n      Nombre: json.Nombre,\n      Descripcion: json.Descripcion,\n      Precio: json.Precio,\n      Tiempo_estimado_min: json.Tiempo_estimado_min,\n      Disponible: json.Disponible,\n    };\n\n    if (typeof json.Disponible === 'string' && json.Disponible.includes('Día Seleccionado')) {\n      base['Días Disponibles'] = (json['_nc_m2m_Servicios_Días Especiales'] || [])\n        .map(e => e['Días Especiales']?.['Día'])\n        .filter(Boolean)\n        .join(',') || 'No hay dias seleccionados para este servicio';\n    }\n\n    return base;\n  });\n\nreturn [{ json: { servicios } }];"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          752,
+          352
+        ],
+        "id": "e70edd04-6c43-4141-9e57-af1c9ee90d24",
+        "name": "Code in JavaScript1"
+      }
+    ],
+    "connections": {
+      "When Executed by Another Workflow": {
+        "main": [
+          [
+            {
+              "node": "Obtener servicios",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Obtener servicios": {
+        "main": [
+          [
+            {
+              "node": "Code in JavaScript1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Cognia Empresa",
+    "name": "Version 2fa98494",
+    "description": "",
+    "autosaved": false
+  },
+  "activeVersionId": "2fa98494-cd3f-4ec3-bc00-e9c4567ed1d3",
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Obtener servicios",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener servicios": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-03-10T20:54:27.193Z",
+  "id": "ZYCd9YRJaR8sfgHp",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "servicios_disponibles",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "id": "c055762a-8fe7-4141-a639-df2372f30060",
+      "typeVersion": 1.1,
+      "name": "When Executed by Another Workflow",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        272,
+        352
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "pvalhsum160gh07",
+        "table": "m3m2qj8gmy4irp0",
+        "returnAll": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        496,
+        352
+      ],
+      "id": "66bb4a3e-6dfb-422a-804b-986bcbc64a47",
+      "name": "Obtener servicios",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "NJEMSwQ8VfnQXOIP",
+          "name": "NocoDB Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\n\nconst servicios = items\n  .filter(i => i.json.Disponible !== 'No disponible') // 👈 nueva regla\n  .map(i => {\n    const json = i.json;\n\n    const base = {\n      Id: json.Id,\n      Nombre: json.Nombre,\n      Descripcion: json.Descripcion,\n      Precio: json.Precio,\n      Tiempo_estimado_min: json.Tiempo_estimado_min,\n      Disponible: json.Disponible,\n    };\n\n    if (typeof json.Disponible === 'string' && json.Disponible.includes('Día Seleccionado')) {\n      base['Días Disponibles'] = (json['_nc_m2m_Servicios_Días Especiales'] || [])\n        .map(e => e['Días Especiales']?.['Día'])\n        .filter(Boolean)\n        .join(',') || 'No hay dias seleccionados para este servicio';\n    }\n\n    return base;\n  });\n\nreturn [{ json: { servicios } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        752,
+        352
+      ],
+      "id": "e70edd04-6c43-4141-9e57-af1c9ee90d24",
+      "name": "Code in JavaScript1"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-03-10T20:54:27.195Z",
+      "createdAt": "2026-03-10T20:54:27.195Z",
+      "role": "workflow:owner",
+      "workflowId": "ZYCd9YRJaR8sfgHp",
+      "projectId": "f3W32VX4HOke6C3N"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "updatedAt": "2026-03-15T14:46:54.854Z",
+      "createdAt": "2026-03-15T14:28:58.602Z",
+      "id": "S9TWg646mw2pIE1k",
+      "name": "Agente Reservas v1"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2026-03-15T14:47:07.068Z",
+  "versionId": "2fa98494-cd3f-4ec3-bc00-e9c4567ed1d3"
+}
