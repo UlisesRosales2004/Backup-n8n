@@ -1,0 +1,295 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-02-10T18:54:14.000Z",
+    "createdAt": "2026-02-10T18:54:13.005Z",
+    "versionId": "16650afe-10a4-4927-ad37-71a7993fa1f6",
+    "workflowId": "q6yYHNJXJnfYBfml",
+    "nodes": [
+      {
+        "parameters": {
+          "workflowInputs": {
+            "values": [
+              {
+                "name": "consulta"
+              }
+            ]
+          }
+        },
+        "id": "c055762a-8fe7-4141-a639-df2372f30060",
+        "typeVersion": 1.1,
+        "name": "When Executed by Another Workflow",
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "position": [
+          272,
+          352
+        ]
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=Consulta: {{ $json.consulta }}",
+          "options": {
+            "systemMessage": "Eres un asistente de información de un negocio.\nUsa SOLO las herramientas disponibles.\nNo inventes ni uses conocimiento externo.\n\nAnaliza el campo \"consulta\" y detecta el tipo.\nLlama únicamente a obtener_informacion.\n\nUsa EXACTAMENTE este filtro:\n(tipo,eq,__TIPO__)~and(activo,eq,true)\n\nReemplaza __TIPO__ por el tipo detectado.\nNo modifiques la fórmula.\n\nTipos válidos:\nhorarios | ubicacion | pagos | promocion | politica\n\nResponde solo con la salida de la herramienta.\n\nSi no hay datos, responde exactamente:\nEsa información no se encuentra disponible actualmente.\n"
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 3.1,
+        "position": [
+          480,
+          352
+        ],
+        "id": "ce95c677-ea7c-4aca-9070-5e63a1e3723b",
+        "name": "AI Agent"
+      },
+      {
+        "parameters": {
+          "modelName": "models/gemini-2.5-flash-lite",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+        "typeVersion": 1,
+        "position": [
+          480,
+          544
+        ],
+        "id": "0bb6a7f1-a242-4261-8e66-b3760e673eaf",
+        "name": "Google Gemini Chat Model",
+        "credentials": {
+          "googlePalmApi": {
+            "id": "uuO2PZ99GN4s46rW",
+            "name": "Google Gemini(PaLM) Api account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "authentication": "nocoDbApiToken",
+          "operation": "getAll",
+          "projectId": "pvalhsum160gh07",
+          "table": "mquqqjjvsekrhib",
+          "options": {
+            "where": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Filter_By_Formula', `Usa esta fórmula:\n(tipo,eq,__TIPO__)~and(activo,eq,true)\nNo la modifiques.\nDonde __TIPO__ es el valor exacto del tipo detectado.`, 'string') }}"
+          }
+        },
+        "type": "n8n-nodes-base.nocoDbTool",
+        "typeVersion": 3,
+        "position": [
+          624,
+          576
+        ],
+        "id": "8e75b639-c336-4d8e-8002-da426960dfe5",
+        "name": "obtener_informacion",
+        "credentials": {
+          "nocoDbApiToken": {
+            "id": "NJEMSwQ8VfnQXOIP",
+            "name": "NocoDB Token account"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "When Executed by Another Workflow": {
+        "main": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Google Gemini Chat Model": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "obtener_informacion": {
+        "ai_tool": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Cognia Empresa",
+    "name": "Version 16650afe",
+    "description": "",
+    "autosaved": false
+  },
+  "activeVersionId": "16650afe-10a4-4927-ad37-71a7993fa1f6",
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "obtener_informacion": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-02-06T22:00:44.342Z",
+  "id": "q6yYHNJXJnfYBfml",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Info-General",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "consulta"
+            }
+          ]
+        }
+      },
+      "id": "c055762a-8fe7-4141-a639-df2372f30060",
+      "typeVersion": 1.1,
+      "name": "When Executed by Another Workflow",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        272,
+        352
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Consulta: {{ $json.consulta }}",
+        "options": {
+          "systemMessage": "Eres un asistente de información de un negocio.\nUsa SOLO las herramientas disponibles.\nNo inventes ni uses conocimiento externo.\n\nAnaliza el campo \"consulta\" y detecta el tipo.\nLlama únicamente a obtener_informacion.\n\nUsa EXACTAMENTE este filtro:\n(tipo,eq,__TIPO__)~and(activo,eq,true)\n\nReemplaza __TIPO__ por el tipo detectado.\nNo modifiques la fórmula.\n\nTipos válidos:\nhorarios | ubicacion | pagos | promocion | politica\n\nResponde solo con la salida de la herramienta.\n\nSi no hay datos, responde exactamente:\nEsa información no se encuentra disponible actualmente.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        480,
+        352
+      ],
+      "id": "ce95c677-ea7c-4aca-9070-5e63a1e3723b",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash-lite",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        480,
+        544
+      ],
+      "id": "0bb6a7f1-a242-4261-8e66-b3760e673eaf",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "uuO2PZ99GN4s46rW",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "pvalhsum160gh07",
+        "table": "mquqqjjvsekrhib",
+        "options": {
+          "where": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Filter_By_Formula', `Usa esta fórmula:\n(tipo,eq,__TIPO__)~and(activo,eq,true)\nNo la modifiques.\nDonde __TIPO__ es el valor exacto del tipo detectado.`, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.nocoDbTool",
+      "typeVersion": 3,
+      "position": [
+        624,
+        576
+      ],
+      "id": "8e75b639-c336-4d8e-8002-da426960dfe5",
+      "name": "obtener_informacion",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "NJEMSwQ8VfnQXOIP",
+          "name": "NocoDB Token account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "consulta": "horarios de atencion"
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "timezone": "America/Argentina/Buenos_Aires",
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "esT3Af9Aeha2_IffOfU2d"
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-02-06T22:00:44.345Z",
+      "createdAt": "2026-02-06T22:00:44.345Z",
+      "role": "workflow:owner",
+      "workflowId": "q6yYHNJXJnfYBfml",
+      "projectId": "f3W32VX4HOke6C3N"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "updatedAt": "2026-03-15T14:46:54.854Z",
+      "createdAt": "2026-03-15T14:28:58.602Z",
+      "id": "S9TWg646mw2pIE1k",
+      "name": "Agente Reservas v1"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2026-03-15T14:49:17.808Z",
+  "versionId": "16650afe-10a4-4927-ad37-71a7993fa1f6"
+}
