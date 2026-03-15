@@ -1,0 +1,143 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-02-23T19:31:51.000Z",
+    "createdAt": "2026-02-23T19:31:48.986Z",
+    "versionId": "16e0911a-d506-4fb3-a2bb-1a773a2a08ad",
+    "workflowId": "esT3Af9Aeha2_IffOfU2d",
+    "nodes": [
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.errorTrigger",
+        "typeVersion": 1,
+        "position": [
+          0,
+          0
+        ],
+        "id": "1421bd45-ec22-4dc1-b6cd-192bcc11433f",
+        "name": "Error Trigger"
+      },
+      {
+        "parameters": {
+          "chatId": "=1450492684",
+          "text": "=Se produjo un error el {{ $now }} en el proyecto de veremma. \nWorkflow:  \nid: {{ $json.workflow.id }}\nNombre: {{ $json.workflow.name }}\n\nExecution: \nid: {{ $json.execution.id }}\nurl: {{ $json.execution.url }}\n\nNodo de error: {{ $json.execution.lastNodeExecuted }}\nMensaje de error: {{ $json.execution.error.message }}\nStack: {{ $json.execution.error.stack }}",
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.telegram",
+        "typeVersion": 1.2,
+        "position": [
+          256,
+          0
+        ],
+        "id": "a4d3d49e-19eb-4298-a561-3208a0611509",
+        "name": "Send a text message",
+        "webhookId": "c11a6f96-510b-41af-ac40-1101cbd147c7",
+        "retryOnFail": true,
+        "credentials": {
+          "telegramApi": {
+            "id": "5Kl62VkSpYm7Hhzy",
+            "name": "Telegram account"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Error Trigger": {
+        "main": [
+          [
+            {
+              "node": "Send a text message",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Cognia Empresa",
+    "name": "Version 16e0911a",
+    "description": "",
+    "autosaved": false
+  },
+  "activeVersionId": "16e0911a-d506-4fb3-a2bb-1a773a2a08ad",
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-02-20T18:24:27.251Z",
+  "id": "esT3Af9Aeha2_IffOfU2d",
+  "isArchived": false,
+  "meta": null,
+  "name": "ErrorWorkflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "1421bd45-ec22-4dc1-b6cd-192bcc11433f",
+      "name": "Error Trigger"
+    },
+    {
+      "parameters": {
+        "chatId": "=1450492684",
+        "text": "=Se produjo un error el {{ $now }} en el proyecto de veremma. \nWorkflow:  \nid: {{ $json.workflow.id }}\nNombre: {{ $json.workflow.name }}\n\nExecution: \nid: {{ $json.execution.id }}\nurl: {{ $json.execution.url }}\n\nNodo de error: {{ $json.execution.lastNodeExecuted }}\nMensaje de error: {{ $json.execution.error.message }}\nStack: {{ $json.execution.error.stack }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        256,
+        0
+      ],
+      "id": "a4d3d49e-19eb-4298-a561-3208a0611509",
+      "name": "Send a text message",
+      "webhookId": "c11a6f96-510b-41af-ac40-1101cbd147c7",
+      "retryOnFail": true,
+      "credentials": {
+        "telegramApi": {
+          "id": "5Kl62VkSpYm7Hhzy",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-02-20T18:24:27.257Z",
+      "createdAt": "2026-02-20T18:24:27.257Z",
+      "role": "workflow:owner",
+      "workflowId": "esT3Af9Aeha2_IffOfU2d",
+      "projectId": "f3W32VX4HOke6C3N"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "updatedAt": "2026-03-15T14:46:54.854Z",
+      "createdAt": "2026-03-15T14:28:58.602Z",
+      "id": "S9TWg646mw2pIE1k",
+      "name": "Agente Reservas v1"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2026-03-15T14:48:18.786Z",
+  "versionId": "16e0911a-d506-4fb3-a2bb-1a773a2a08ad"
+}
