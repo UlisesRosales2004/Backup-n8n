@@ -1,0 +1,1830 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-03-15T14:49:52.000Z",
+    "createdAt": "2026-03-15T14:49:51.440Z",
+    "versionId": "6ea1e8cd-97cf-4525-9544-26618ed721dc",
+    "workflowId": "uOWAlzzNWmxO7AIcF8-tB",
+    "nodes": [
+      {
+        "parameters": {
+          "inputSource": "jsonExample",
+          "jsonExample": "{\n  \"Fecha\": \"2025-07-10T16:00:00\",\n  \"Telefono\":\"+56954675214\",\n  \"Duracion\":\"25\",\n  \"Dueño\":true\n}"
+        },
+        "id": "3687754b-af85-4d23-bb59-16b89f933844",
+        "typeVersion": 1.1,
+        "name": "When Executed by Another Workflow",
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "position": [
+          -1296,
+          32
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "274e25c0-7f3c-499d-8ded-fe06ef7a0f20",
+                "leftValue": "={{ $json.coincide }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "boolean",
+                  "operation": "true",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          176,
+          128
+        ],
+        "id": "a511a652-a035-4bee-aa16-d1a2329b189f",
+        "name": "If"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Tomamos la fecha de inicio desde el input\nconst fechaInicioTexto = $('When Executed by Another Workflow').first().json.Fecha; // Ej: \"2025-12-01T17:30:00\"\nconst duracionMinutos = Number($('When Executed by Another Workflow').first().json.Duracion); // Ej: \"30\" -> 30\n\n// Convertir a Date\nconst fechaInicio = new Date(fechaInicioTexto);\n\n// Crear fecha fin sumando los minutos\nconst fechaFin = new Date(fechaInicio.getTime() + duracionMinutos * 60000);\n\n// Formatear ambas a 'YYYY-MM-DDTHH:mm:ss'\nfunction formatear(fecha) {\n  return fecha.toISOString().substring(0, 19);\n}\n\nreturn [\n  {\n    json: {\n      FechaInicio: formatear(fechaInicio),\n      FechaFin: formatear(fechaFin),\n    }\n  }\n];\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -640,
+          32
+        ],
+        "id": "e103a2fe-1539-4ce4-8f25-83bb975d23ee",
+        "name": "Formatear_fecha"
+      },
+      {
+        "parameters": {
+          "operation": "getAll",
+          "calendar": {
+            "__rl": true,
+            "value": "ulises.rosales.ar@gmail.com",
+            "mode": "list",
+            "cachedResultName": "ulises.rosales.ar@gmail.com"
+          },
+          "limit": 1,
+          "timeMin": "={{ $json.FechaInicio }}{{ $('Call \\'Configuracion Global\\'').item.json.TimezoneOffset }}",
+          "timeMax": "={{ $json.FechaFin }}{{ $('Call \\'Configuracion Global\\'').item.json.TimezoneOffset }}",
+          "options": {
+            "orderBy": "startTime"
+          }
+        },
+        "type": "n8n-nodes-base.googleCalendar",
+        "typeVersion": 1.3,
+        "position": [
+          -480,
+          32
+        ],
+        "id": "56a37d53-bdf3-46c8-9c6b-452fc2bee5f5",
+        "name": "Traer_citas",
+        "alwaysOutputData": true,
+        "retryOnFail": true,
+        "maxTries": 5,
+        "waitBetweenTries": 5000,
+        "credentials": {
+          "googleCalendarOAuth2Api": {
+            "id": "uUlIwgQJ1mHXECLz",
+            "name": "Google Calendar account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "let summary;\nlet telefono;\n\n// Obtener datos\ntry {\n  summary = $input.first().json.summary;\n} catch {\n  summary = undefined;\n}\n\ntry {\n  telefono = $('When Executed by Another Workflow')?.first()?.json?.Telefono;\n} catch {\n  telefono = undefined;\n}\n\n\n// ----------------------------\n// EXTRAER NUMERO\n// ----------------------------\nfunction extraerNumero(valor) {\n\n  if (!valor) return null;\n\n  const texto = String(valor);\n\n  // formato whatsapp jid\n  let match = texto.match(/(\\d+)@s\\.whatsapp\\.net/);\n  if (match) return match[1];\n\n  // numero plano (+54, 549, etc)\n  const digits = texto.replace(/\\D/g, \"\");\n  if (digits.length >= 8) return digits;\n\n  return null;\n}\n\n\n// ----------------------------\n// NUMEROS DETECTADOS\n// ----------------------------\nconst numeroSummary = extraerNumero(summary);\nconst numeroTelefono = extraerNumero(telefono);\n\n\n// ----------------------------\n// LOGICA FINAL\n// ----------------------------\n\n// ✅ Si alguno tiene numero → validar coincidencia\nif (numeroSummary !== null || numeroTelefono !== null) {\n\n  if (numeroSummary === null || numeroTelefono === null) {\n    return [{ json: { coincide: false } }];\n  }\n\n  return [{\n    json: {\n      coincide: numeroSummary === numeroTelefono\n    }\n  }];\n}\n\n// ✅ Ninguno tiene numero → permitir\nreturn [{\n  json: {\n    coincide: true\n  }\n}];"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -16,
+          128
+        ],
+        "id": "f3951c7a-8426-401f-9c91-6ae25f2596eb",
+        "name": "verificarNumero"
+      },
+      {
+        "parameters": {
+          "operation": "delete",
+          "calendar": {
+            "__rl": true,
+            "value": "ulises.rosales.ar@gmail.com",
+            "mode": "list",
+            "cachedResultName": "ulises.rosales.ar@gmail.com"
+          },
+          "eventId": "={{ $('Traer_citas').item.json.id }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleCalendar",
+        "typeVersion": 1.3,
+        "position": [
+          896,
+          0
+        ],
+        "id": "616df274-9707-4292-b60a-0fdc4273fa41",
+        "name": "Delete an event",
+        "credentials": {
+          "googleCalendarOAuth2Api": {
+            "id": "uUlIwgQJ1mHXECLz",
+            "name": "Google Calendar account"
+          }
+        },
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "ed4bd4d5-c290-4d09-a008-55f561ed8e41",
+                "name": "fecha_formateada",
+                "value": "={{ \n  (() => {\n    const dias = [\"domingo\",\"lunes\",\"martes\",\"miercoles\",\"jueves\",\"viernes\",\"sabado\"];\n    const d = new Date();\n    const dia = dias[d.getDay()];\n    const dd = String(d.getDate()).padStart(2,\"0\");\n    const mm = String(d.getMonth()+1).padStart(2,\"0\");\n    const yyyy = d.getFullYear();\n    return `${dia} ${dd}/${mm}/${yyyy}`;\n  })()\n}}\n",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          416,
+          0
+        ],
+        "id": "03355bd2-a4f4-4a48-91e4-0eaa097533fd",
+        "name": "fecha_formateada"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "8ce77bd3-26d5-432d-8f62-3c5e30f7d1f5",
+                "leftValue": "={{ $json.success }}",
+                "rightValue": false,
+                "operator": {
+                  "type": "boolean",
+                  "operation": "true",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          1088,
+          0
+        ],
+        "id": "38b6310f-6f47-4410-8171-0041f42caed7",
+        "name": "If1"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "35618fe3-477f-430e-91cd-60c46a5c8d9b",
+                "name": "Problema",
+                "value": "=No se puede eliminar la cita por que el número de telefono no cohincide con el número que agendo el turno.",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          384,
+          192
+        ],
+        "id": "7e95c016-b67d-4efc-b28d-dbe71c690734",
+        "name": "NroNoCohincide"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "6bbd8632-ba8d-4657-8ca5-5d585252bf21",
+                "name": "Respuesta",
+                "value": "=Se elimino correctamente la {{ $('Traer_citas').item.json.summary }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1584,
+          -48
+        ],
+        "id": "7168067e-991e-4b0f-865e-688068e0eff4",
+        "name": "Exitoso"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "6bbd8632-ba8d-4657-8ca5-5d585252bf21",
+                "name": "Respuesta",
+                "value": "=Hubo un error el eliminar la cita: {{ $('Delete an event').item.json.error }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1456,
+          128
+        ],
+        "id": "154d9694-7796-4c79-bec3-c44305c4437f",
+        "name": "Problema"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "aec3af4f-a491-4c32-a1c7-487c6ec95c85",
+                "leftValue": "={{ $('Traer_citas').item.json.id }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "exists",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          624,
+          16
+        ],
+        "id": "81d2f1ae-fbdf-4000-811a-8d79b2e36a1b",
+        "name": "If2"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "149563b5-f1e5-46a3-b252-31c6894c8265",
+                "name": "Respuesta",
+                "value": "La cita no fue encontrada en ese día a ese horario.",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          768,
+          160
+        ],
+        "id": "dfe95f73-b854-4931-8e60-f84cac04431c",
+        "name": "CitaNoEncontrada"
+      },
+      {
+        "parameters": {
+          "amount": 3
+        },
+        "type": "n8n-nodes-base.wait",
+        "typeVersion": 1.1,
+        "position": [
+          -816,
+          32
+        ],
+        "id": "828eedc1-655a-4b71-a744-54fa61800524",
+        "name": "Wait",
+        "webhookId": "93857cc1-6f45-4cd8-a8ed-350764f3ec0f"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "f70f5d8d-9f15-49c3-8f7a-3918e86bdc99",
+                "leftValue": "={{ $('When Executed by Another Workflow').item.json['Dueño'] }}",
+                "rightValue": true,
+                "operator": {
+                  "type": "boolean",
+                  "operation": "equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          -256,
+          32
+        ],
+        "id": "32dc7999-f46d-4da0-a42b-5bf822f310c6",
+        "name": "If3"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "f70f5d8d-9f15-49c3-8f7a-3918e86bdc99",
+                "leftValue": "={{ $('When Executed by Another Workflow').item.json['Dueño'] }}",
+                "rightValue": true,
+                "operator": {
+                  "type": "boolean",
+                  "operation": "equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          1280,
+          -112
+        ],
+        "id": "244bb96f-1a02-424a-9aad-9c365c58c465",
+        "name": "dueño"
+      },
+      {
+        "parameters": {
+          "jsCode": "const texto = $('Traer_citas').first().json.summary || \"\";\n\n// buscar numero tipo 5492616763104@s.whatsapp.net\nconst match = texto.match(/(\\d+)@s\\.whatsapp\\.net/);\n\nif (!match) {\n  return [\n    {\n      json: {\n        existe: false,\n        mensaje: \"El numero no existe\"\n      }\n    }\n  ];\n}\n\nconst numero = match[1];\n\n// validar numero internacional (8 a 15 digitos)\nconst numeroValido = /^\\d{8,15}$/.test(numero);\n\nif (!numeroValido) {\n  return [\n    {\n      json: {\n        existe: false,\n        mensaje: \"El numero no es valido\",\n        numero: numero\n      }\n    }\n  ];\n}\n\n// valido\nreturn [\n  {\n    json: {\n      existe: true,\n      mensaje: \"Numero valido\",\n      numero: numero\n    }\n  }\n];"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1520,
+          -240
+        ],
+        "id": "54a68288-750d-4b66-8938-d1e019391b21",
+        "name": "FormatearNumero"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "b71ba646-ba2f-4027-aa8d-4db062dc7ebe",
+                "leftValue": "={{ $json.existe }}",
+                "rightValue": true,
+                "operator": {
+                  "type": "boolean",
+                  "operation": "equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          1728,
+          -240
+        ],
+        "id": "d76378b2-e86f-4f08-a39b-3f4391bd24a1",
+        "name": "nroValido"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "6bbd8632-ba8d-4657-8ca5-5d585252bf21",
+                "name": "Respuesta",
+                "value": "=Se eliminó correctamente la cita:\n{{ $('Traer_citas').item.json.summary }}\n\nNo se pudo enviar el mensaje al cliente.\nMotivo: {{ $('FormatearNumero').item.json.mensaje }}\n\nAcción requerida: el usuario debe enviar el mensaje manualmente si lo considera necesario.",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          2000,
+          -128
+        ],
+        "id": "3acd9ebb-491c-45ba-b935-5c4d02d5daab",
+        "name": "Exitoso1"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').item.json.EvolutionInstance }}",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "apikey",
+                "value": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionApiKey }}"
+              }
+            ]
+          },
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "number",
+                "value": "={{ $json.numero }}@s.whatsapp.net"
+              },
+              {
+                "name": "text",
+                "value": "=Hola, te informo que el/la propietario/a canceló tu turno programado para el {{ \nnew Date($('Traer_citas').item.json.start.dateTime)\n.toLocaleString('es-AR', { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' })\n}} .  \nSi necesitas reprogramarlo, puedes comunicarte nuevamente."
+              },
+              {
+                "name": "delay",
+                "value": "={{ 2000 }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          2048,
+          -352
+        ],
+        "id": "50a78288-fd34-47a4-8634-14afd904cc2f",
+        "name": "turnoCancelado",
+        "retryOnFail": true,
+        "waitBetweenTries": 5000,
+        "onError": "continueErrorOutput"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "6bbd8632-ba8d-4657-8ca5-5d585252bf21",
+                "name": "Respuesta",
+                "value": "=Se eliminó correctamente la cita:\n{{ $('Traer_citas').item.json.summary }}\n\nNo se pudo enviar el mensaje al cliente.\nMotivo: El numero con el que se agendo la cita es invalido.\n\nAcción requerida: el usuario debe enviar el mensaje manualmente si lo considera necesario.",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          2240,
+          -240
+        ],
+        "id": "aa85da56-a298-4fdf-84af-d3e0ba6f8742",
+        "name": "Exitoso2"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "6bbd8632-ba8d-4657-8ca5-5d585252bf21",
+                "name": "Respuesta",
+                "value": "=Se eliminó correctamente la cita:\n{{ $('Traer_citas').item.json.summary }}\n\nSe envio un mensaje al cliente advirtiendole la cancelación.",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          2688,
+          -560
+        ],
+        "id": "7d42413b-f701-49cf-90cb-981e032f24f7",
+        "name": "Exitoso3"
+      },
+      {
+        "parameters": {
+          "mode": "insert",
+          "messages": {
+            "messageValues": [
+              {
+                "type": "ai",
+                "message": "={{ $json.message.conversation }}"
+              }
+            ]
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.memoryManager",
+        "typeVersion": 1.1,
+        "position": [
+          2336,
+          -560
+        ],
+        "id": "0e06f539-abd8-4922-bd79-818e28ca4c4d",
+        "name": "Chat Memory Manager",
+        "retryOnFail": true,
+        "maxTries": 5,
+        "waitBetweenTries": 5000,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "sessionIdType": "customKey",
+          "sessionKey": "={{ $json.key.remoteJid }}",
+          "sessionTTL": 172800
+        },
+        "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
+        "typeVersion": 1.5,
+        "position": [
+          2336,
+          -368
+        ],
+        "id": "0a6b4f87-6f02-42e8-9e02-6e7a194a00a9",
+        "name": "Redis Chat Memory",
+        "credentials": {
+          "redis": {
+            "id": "aqJvBUEfRdgU1LkO",
+            "name": "Redis account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "workflowId": {
+            "__rl": true,
+            "value": "i0aP21thDHY2T8UDlPfgP",
+            "mode": "list",
+            "cachedResultUrl": "/workflow/i0aP21thDHY2T8UDlPfgP",
+            "cachedResultName": "Configuracion Global"
+          },
+          "workflowInputs": {
+            "mappingMode": "defineBelow",
+            "value": {},
+            "matchingColumns": [],
+            "schema": [],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": true
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.executeWorkflow",
+        "typeVersion": 1.3,
+        "position": [
+          -1072,
+          32
+        ],
+        "id": "3bdd82c3-ac65-47cd-bfa2-9e7c279a7aef",
+        "name": "Call 'Configuracion Global'"
+      }
+    ],
+    "connections": {
+      "When Executed by Another Workflow": {
+        "main": [
+          [
+            {
+              "node": "Call 'Configuracion Global'",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If": {
+        "main": [
+          [
+            {
+              "node": "fecha_formateada",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "NroNoCohincide",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Formatear_fecha": {
+        "main": [
+          [
+            {
+              "node": "Traer_citas",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Traer_citas": {
+        "main": [
+          [
+            {
+              "node": "If3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "verificarNumero": {
+        "main": [
+          [
+            {
+              "node": "If",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Delete an event": {
+        "main": [
+          [
+            {
+              "node": "If1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "fecha_formateada": {
+        "main": [
+          [
+            {
+              "node": "If2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If1": {
+        "main": [
+          [
+            {
+              "node": "dueño",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Problema",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If2": {
+        "main": [
+          [
+            {
+              "node": "Delete an event",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "CitaNoEncontrada",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Wait": {
+        "main": [
+          [
+            {
+              "node": "Formatear_fecha",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If3": {
+        "main": [
+          [
+            {
+              "node": "fecha_formateada",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "verificarNumero",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "dueño": {
+        "main": [
+          [
+            {
+              "node": "FormatearNumero",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Exitoso",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "FormatearNumero": {
+        "main": [
+          [
+            {
+              "node": "nroValido",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "nroValido": {
+        "main": [
+          [
+            {
+              "node": "turnoCancelado",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Exitoso1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "turnoCancelado": {
+        "main": [
+          [
+            {
+              "node": "Chat Memory Manager",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Exitoso2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Redis Chat Memory": {
+        "ai_memory": [
+          [
+            {
+              "node": "Chat Memory Manager",
+              "type": "ai_memory",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Chat Memory Manager": {
+        "main": [
+          [
+            {
+              "node": "Exitoso3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Call 'Configuracion Global'": {
+        "main": [
+          [
+            {
+              "node": "Wait",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Cognia Empresa",
+    "name": "Version 6ea1e8cd",
+    "description": "",
+    "autosaved": false
+  },
+  "activeVersionId": "6ea1e8cd-97cf-4525-9544-26618ed721dc",
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Call 'Configuracion Global'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "fecha_formateada",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "NroNoCohincide",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Formatear_fecha": {
+      "main": [
+        [
+          {
+            "node": "Traer_citas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Traer_citas": {
+      "main": [
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "verificarNumero": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete an event": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "fecha_formateada": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "dueño",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Problema",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Delete an event",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "CitaNoEncontrada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Formatear_fecha",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "fecha_formateada",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "verificarNumero",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "dueño": {
+      "main": [
+        [
+          {
+            "node": "FormatearNumero",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Exitoso",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FormatearNumero": {
+      "main": [
+        [
+          {
+            "node": "nroValido",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "nroValido": {
+      "main": [
+        [
+          {
+            "node": "turnoCancelado",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Exitoso1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "turnoCancelado": {
+      "main": [
+        [
+          {
+            "node": "Chat Memory Manager",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Exitoso2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Chat Memory Manager",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chat Memory Manager": {
+      "main": [
+        [
+          {
+            "node": "Exitoso3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'Configuracion Global'": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-01-10T18:54:20.969Z",
+  "id": "uOWAlzzNWmxO7AIcF8-tB",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "cancelar_cita",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "jsonExample",
+        "jsonExample": "{\n  \"Fecha\": \"2025-07-10T16:00:00\",\n  \"Telefono\":\"+56954675214\",\n  \"Duracion\":\"25\",\n  \"Dueño\":true\n}"
+      },
+      "id": "3687754b-af85-4d23-bb59-16b89f933844",
+      "typeVersion": 1.1,
+      "name": "When Executed by Another Workflow",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        -1296,
+        32
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "274e25c0-7f3c-499d-8ded-fe06ef7a0f20",
+              "leftValue": "={{ $json.coincide }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        176,
+        128
+      ],
+      "id": "a511a652-a035-4bee-aa16-d1a2329b189f",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Tomamos la fecha de inicio desde el input\nconst fechaInicioTexto = $('When Executed by Another Workflow').first().json.Fecha; // Ej: \"2025-12-01T17:30:00\"\nconst duracionMinutos = Number($('When Executed by Another Workflow').first().json.Duracion); // Ej: \"30\" -> 30\n\n// Convertir a Date\nconst fechaInicio = new Date(fechaInicioTexto);\n\n// Crear fecha fin sumando los minutos\nconst fechaFin = new Date(fechaInicio.getTime() + duracionMinutos * 60000);\n\n// Formatear ambas a 'YYYY-MM-DDTHH:mm:ss'\nfunction formatear(fecha) {\n  return fecha.toISOString().substring(0, 19);\n}\n\nreturn [\n  {\n    json: {\n      FechaInicio: formatear(fechaInicio),\n      FechaFin: formatear(fechaFin),\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -640,
+        32
+      ],
+      "id": "e103a2fe-1539-4ce4-8f25-83bb975d23ee",
+      "name": "Formatear_fecha"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "ulises.rosales.ar@gmail.com",
+          "mode": "list",
+          "cachedResultName": "ulises.rosales.ar@gmail.com"
+        },
+        "limit": 1,
+        "timeMin": "={{ $json.FechaInicio }}{{ $('Call \\'Configuracion Global\\'').item.json.TimezoneOffset }}",
+        "timeMax": "={{ $json.FechaFin }}{{ $('Call \\'Configuracion Global\\'').item.json.TimezoneOffset }}",
+        "options": {
+          "orderBy": "startTime"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        -480,
+        32
+      ],
+      "id": "56a37d53-bdf3-46c8-9c6b-452fc2bee5f5",
+      "name": "Traer_citas",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "uUlIwgQJ1mHXECLz",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "let summary;\nlet telefono;\n\n// Obtener datos\ntry {\n  summary = $input.first().json.summary;\n} catch {\n  summary = undefined;\n}\n\ntry {\n  telefono = $('When Executed by Another Workflow')?.first()?.json?.Telefono;\n} catch {\n  telefono = undefined;\n}\n\n\n// ----------------------------\n// EXTRAER NUMERO\n// ----------------------------\nfunction extraerNumero(valor) {\n\n  if (!valor) return null;\n\n  const texto = String(valor);\n\n  // formato whatsapp jid\n  let match = texto.match(/(\\d+)@s\\.whatsapp\\.net/);\n  if (match) return match[1];\n\n  // numero plano (+54, 549, etc)\n  const digits = texto.replace(/\\D/g, \"\");\n  if (digits.length >= 8) return digits;\n\n  return null;\n}\n\n\n// ----------------------------\n// NUMEROS DETECTADOS\n// ----------------------------\nconst numeroSummary = extraerNumero(summary);\nconst numeroTelefono = extraerNumero(telefono);\n\n\n// ----------------------------\n// LOGICA FINAL\n// ----------------------------\n\n// ✅ Si alguno tiene numero → validar coincidencia\nif (numeroSummary !== null || numeroTelefono !== null) {\n\n  if (numeroSummary === null || numeroTelefono === null) {\n    return [{ json: { coincide: false } }];\n  }\n\n  return [{\n    json: {\n      coincide: numeroSummary === numeroTelefono\n    }\n  }];\n}\n\n// ✅ Ninguno tiene numero → permitir\nreturn [{\n  json: {\n    coincide: true\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -16,
+        128
+      ],
+      "id": "f3951c7a-8426-401f-9c91-6ae25f2596eb",
+      "name": "verificarNumero"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "calendar": {
+          "__rl": true,
+          "value": "ulises.rosales.ar@gmail.com",
+          "mode": "list",
+          "cachedResultName": "ulises.rosales.ar@gmail.com"
+        },
+        "eventId": "={{ $('Traer_citas').item.json.id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        896,
+        0
+      ],
+      "id": "616df274-9707-4292-b60a-0fdc4273fa41",
+      "name": "Delete an event",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "uUlIwgQJ1mHXECLz",
+          "name": "Google Calendar account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ed4bd4d5-c290-4d09-a008-55f561ed8e41",
+              "name": "fecha_formateada",
+              "value": "={{ \n  (() => {\n    const dias = [\"domingo\",\"lunes\",\"martes\",\"miercoles\",\"jueves\",\"viernes\",\"sabado\"];\n    const d = new Date();\n    const dia = dias[d.getDay()];\n    const dd = String(d.getDate()).padStart(2,\"0\");\n    const mm = String(d.getMonth()+1).padStart(2,\"0\");\n    const yyyy = d.getFullYear();\n    return `${dia} ${dd}/${mm}/${yyyy}`;\n  })()\n}}\n",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        416,
+        0
+      ],
+      "id": "03355bd2-a4f4-4a48-91e4-0eaa097533fd",
+      "name": "fecha_formateada"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "8ce77bd3-26d5-432d-8f62-3c5e30f7d1f5",
+              "leftValue": "={{ $json.success }}",
+              "rightValue": false,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1088,
+        0
+      ],
+      "id": "38b6310f-6f47-4410-8171-0041f42caed7",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "35618fe3-477f-430e-91cd-60c46a5c8d9b",
+              "name": "Problema",
+              "value": "=No se puede eliminar la cita por que el número de telefono no cohincide con el número que agendo el turno.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        384,
+        192
+      ],
+      "id": "7e95c016-b67d-4efc-b28d-dbe71c690734",
+      "name": "NroNoCohincide"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6bbd8632-ba8d-4657-8ca5-5d585252bf21",
+              "name": "Respuesta",
+              "value": "=Se elimino correctamente la {{ $('Traer_citas').item.json.summary }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1584,
+        -48
+      ],
+      "id": "7168067e-991e-4b0f-865e-688068e0eff4",
+      "name": "Exitoso"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6bbd8632-ba8d-4657-8ca5-5d585252bf21",
+              "name": "Respuesta",
+              "value": "=Hubo un error el eliminar la cita: {{ $('Delete an event').item.json.error }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1456,
+        128
+      ],
+      "id": "154d9694-7796-4c79-bec3-c44305c4437f",
+      "name": "Problema"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "aec3af4f-a491-4c32-a1c7-487c6ec95c85",
+              "leftValue": "={{ $('Traer_citas').item.json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        624,
+        16
+      ],
+      "id": "81d2f1ae-fbdf-4000-811a-8d79b2e36a1b",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "149563b5-f1e5-46a3-b252-31c6894c8265",
+              "name": "Respuesta",
+              "value": "La cita no fue encontrada en ese día a ese horario.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        768,
+        160
+      ],
+      "id": "dfe95f73-b854-4931-8e60-f84cac04431c",
+      "name": "CitaNoEncontrada"
+    },
+    {
+      "parameters": {
+        "amount": 3
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -816,
+        32
+      ],
+      "id": "828eedc1-655a-4b71-a744-54fa61800524",
+      "name": "Wait",
+      "webhookId": "93857cc1-6f45-4cd8-a8ed-350764f3ec0f"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "f70f5d8d-9f15-49c3-8f7a-3918e86bdc99",
+              "leftValue": "={{ $('When Executed by Another Workflow').item.json['Dueño'] }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -256,
+        32
+      ],
+      "id": "32dc7999-f46d-4da0-a42b-5bf822f310c6",
+      "name": "If3"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "f70f5d8d-9f15-49c3-8f7a-3918e86bdc99",
+              "leftValue": "={{ $('When Executed by Another Workflow').item.json['Dueño'] }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1280,
+        -112
+      ],
+      "id": "244bb96f-1a02-424a-9aad-9c365c58c465",
+      "name": "dueño"
+    },
+    {
+      "parameters": {
+        "jsCode": "const texto = $('Traer_citas').first().json.summary || \"\";\n\n// buscar numero tipo 5492616763104@s.whatsapp.net\nconst match = texto.match(/(\\d+)@s\\.whatsapp\\.net/);\n\nif (!match) {\n  return [\n    {\n      json: {\n        existe: false,\n        mensaje: \"El numero no existe\"\n      }\n    }\n  ];\n}\n\nconst numero = match[1];\n\n// validar numero internacional (8 a 15 digitos)\nconst numeroValido = /^\\d{8,15}$/.test(numero);\n\nif (!numeroValido) {\n  return [\n    {\n      json: {\n        existe: false,\n        mensaje: \"El numero no es valido\",\n        numero: numero\n      }\n    }\n  ];\n}\n\n// valido\nreturn [\n  {\n    json: {\n      existe: true,\n      mensaje: \"Numero valido\",\n      numero: numero\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1520,
+        -240
+      ],
+      "id": "54a68288-750d-4b66-8938-d1e019391b21",
+      "name": "FormatearNumero"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "b71ba646-ba2f-4027-aa8d-4db062dc7ebe",
+              "leftValue": "={{ $json.existe }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1728,
+        -240
+      ],
+      "id": "d76378b2-e86f-4f08-a39b-3f4391bd24a1",
+      "name": "nroValido"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6bbd8632-ba8d-4657-8ca5-5d585252bf21",
+              "name": "Respuesta",
+              "value": "=Se eliminó correctamente la cita:\n{{ $('Traer_citas').item.json.summary }}\n\nNo se pudo enviar el mensaje al cliente.\nMotivo: {{ $('FormatearNumero').item.json.mensaje }}\n\nAcción requerida: el usuario debe enviar el mensaje manualmente si lo considera necesario.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2000,
+        -128
+      ],
+      "id": "3acd9ebb-491c-45ba-b935-5c4d02d5daab",
+      "name": "Exitoso1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').item.json.EvolutionInstance }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionApiKey }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "number",
+              "value": "={{ $json.numero }}@s.whatsapp.net"
+            },
+            {
+              "name": "text",
+              "value": "=Hola, te informo que el/la propietario/a canceló tu turno programado para el {{ \nnew Date($('Traer_citas').item.json.start.dateTime)\n.toLocaleString('es-AR', { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' })\n}} .  \nSi necesitas reprogramarlo, puedes comunicarte nuevamente."
+            },
+            {
+              "name": "delay",
+              "value": "={{ 2000 }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2048,
+        -352
+      ],
+      "id": "50a78288-fd34-47a4-8634-14afd904cc2f",
+      "name": "turnoCancelado",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6bbd8632-ba8d-4657-8ca5-5d585252bf21",
+              "name": "Respuesta",
+              "value": "=Se eliminó correctamente la cita:\n{{ $('Traer_citas').item.json.summary }}\n\nNo se pudo enviar el mensaje al cliente.\nMotivo: El numero con el que se agendo la cita es invalido.\n\nAcción requerida: el usuario debe enviar el mensaje manualmente si lo considera necesario.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2240,
+        -240
+      ],
+      "id": "aa85da56-a298-4fdf-84af-d3e0ba6f8742",
+      "name": "Exitoso2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6bbd8632-ba8d-4657-8ca5-5d585252bf21",
+              "name": "Respuesta",
+              "value": "=Se eliminó correctamente la cita:\n{{ $('Traer_citas').item.json.summary }}\n\nSe envio un mensaje al cliente advirtiendole la cancelación.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2688,
+        -560
+      ],
+      "id": "7d42413b-f701-49cf-90cb-981e032f24f7",
+      "name": "Exitoso3"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "messages": {
+          "messageValues": [
+            {
+              "type": "ai",
+              "message": "={{ $json.message.conversation }}"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryManager",
+      "typeVersion": 1.1,
+      "position": [
+        2336,
+        -560
+      ],
+      "id": "0e06f539-abd8-4922-bd79-818e28ca4c4d",
+      "name": "Chat Memory Manager",
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 5000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.key.remoteJid }}",
+        "sessionTTL": 172800
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
+      "typeVersion": 1.5,
+      "position": [
+        2336,
+        -368
+      ],
+      "id": "0a6b4f87-6f02-42e8-9e02-6e7a194a00a9",
+      "name": "Redis Chat Memory",
+      "credentials": {
+        "redis": {
+          "id": "aqJvBUEfRdgU1LkO",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "i0aP21thDHY2T8UDlPfgP",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/i0aP21thDHY2T8UDlPfgP",
+          "cachedResultName": "Configuracion Global"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        -1072,
+        32
+      ],
+      "id": "3bdd82c3-ac65-47cd-bfa2-9e7c279a7aef",
+      "name": "Call 'Configuracion Global'"
+    }
+  ],
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "Fecha": "2026-03-10T16:00:00",
+          "Telefono": "",
+          "Duracion": "150",
+          "Dueño": true
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": true,
+    "timeSavedMode": "fixed",
+    "timezone": "America/Argentina/Buenos_Aires",
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "esT3Af9Aeha2_IffOfU2d"
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-01-10T18:54:20.972Z",
+      "createdAt": "2026-01-10T18:54:20.972Z",
+      "role": "workflow:owner",
+      "workflowId": "uOWAlzzNWmxO7AIcF8-tB",
+      "projectId": "f3W32VX4HOke6C3N"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "updatedAt": "2026-03-15T14:46:54.854Z",
+      "createdAt": "2026-03-15T14:28:58.602Z",
+      "id": "S9TWg646mw2pIE1k",
+      "name": "Agente Reservas v1"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2026-03-15T14:49:51.438Z",
+  "versionId": "6ea1e8cd-97cf-4525-9544-26618ed721dc"
+}
