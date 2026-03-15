@@ -1,0 +1,1508 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-03-15T14:52:46.000Z",
+    "createdAt": "2026-03-15T14:52:45.012Z",
+    "versionId": "5bab27c4-ca1f-4db7-bd9d-4f1f15dab2f7",
+    "workflowId": "kwVClbJbt8WoecXqVyIQI",
+    "nodes": [
+      {
+        "parameters": {
+          "returnAll": false,
+          "filters": {
+            "tags": ""
+          },
+          "requestOptions": {}
+        },
+        "id": "db763d04-73b3-4394-a683-cbc4c3b50157",
+        "name": "n8n",
+        "type": "n8n-nodes-base.n8n",
+        "position": [
+          1216,
+          96
+        ],
+        "typeVersion": 1,
+        "credentials": {
+          "n8nApi": {
+            "id": "W90YbFDYWkPtRUmY",
+            "name": "n8n account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "url": "={{ $json.download_url }}",
+          "options": {}
+        },
+        "id": "e13749e2-1f04-4846-b912-71ac85379e72",
+        "name": "Get File",
+        "type": "n8n-nodes-base.httpRequest",
+        "position": [
+          2064,
+          480
+        ],
+        "typeVersion": 4.2
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "version": 1,
+              "leftValue": "",
+              "caseSensitive": true,
+              "typeValidation": "strict"
+            },
+            "combinator": "and",
+            "conditions": [
+              {
+                "id": "45ce825e-9fa6-430c-8931-9aaf22c42585",
+                "operator": {
+                  "type": "string",
+                  "operation": "empty",
+                  "singleValue": true
+                },
+                "leftValue": "={{ $json.content }}",
+                "rightValue": ""
+              },
+              {
+                "id": "9619a55f-7fb1-4f24-b1a7-7aeb82365806",
+                "operator": {
+                  "type": "string",
+                  "operation": "notExists",
+                  "singleValue": true
+                },
+                "leftValue": "={{ $json.error }}",
+                "rightValue": ""
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "9a5667c1-5a21-4358-abac-c33290f9fac2",
+        "name": "If file too large",
+        "type": "n8n-nodes-base.if",
+        "position": [
+          1824,
+          496
+        ],
+        "typeVersion": 2
+      },
+      {
+        "parameters": {},
+        "id": "fac50a62-9813-4b5d-851f-cba7a8918b98",
+        "name": "Merge Items",
+        "type": "n8n-nodes-base.merge",
+        "position": [
+          1824,
+          768
+        ],
+        "typeVersion": 2
+      },
+      {
+        "parameters": {
+          "jsCode": "const orderJsonKeys = (jsonObj) => {\n  const ordered = {};\n  Object.keys(jsonObj).sort().forEach(key => {\n    ordered[key] = jsonObj[key];\n  });\n  return ordered;\n}\n\n// Check if file returned with content\nif (Object.keys($input.all()[0].json).includes(\"content\")) {\n  // Decode base64 content and parse JSON\n  const origWorkflow = JSON.parse(Buffer.from($input.all()[0].json.content, 'base64').toString());\n  const n8nWorkflow = $input.all()[1].json;\n  \n  // Order JSON objects\n  const orderedOriginal = orderJsonKeys(origWorkflow);\n  const orderedActual = orderJsonKeys(n8nWorkflow);\n\n  // Determine difference\n  if (JSON.stringify(orderedOriginal) === JSON.stringify(orderedActual)) {\n    $input.all()[0].json.github_status = \"same\";\n  } else {\n    $input.all()[0].json.github_status = \"different\";\n    $input.all()[0].json.n8n_data_stringy = JSON.stringify(orderedActual, null, 2);\n  }\n  $input.all()[0].json.content_decoded = orderedOriginal;\n// No file returned / new workflow\n} else if (Object.keys($input.all()[0].json).includes(\"data\")) {\n  const origWorkflow = JSON.parse($input.all()[0].json.data);\n  const n8nWorkflow = $input.all()[1].json;\n  \n  // Order JSON objects\n  const orderedOriginal = orderJsonKeys(origWorkflow);\n  const orderedActual = orderJsonKeys(n8nWorkflow);\n\n  // Determine difference\n  if (JSON.stringify(orderedOriginal) === JSON.stringify(orderedActual)) {\n    $input.all()[0].json.github_status = \"same\";\n  } else {\n    $input.all()[0].json.github_status = \"different\";\n    $input.all()[0].json.n8n_data_stringy = JSON.stringify(orderedActual, null, 2);\n  }\n  $input.all()[0].json.content_decoded = orderedOriginal;\n\n} else {\n  // Order JSON object\n  const n8nWorkflow = $input.all()[1].json;\n  const orderedActual = orderJsonKeys(n8nWorkflow);\n  \n  // Proper formatting\n  $input.all()[0].json.github_status = \"new\";\n  $input.all()[0].json.n8n_data_stringy = JSON.stringify(orderedActual, null, 2);\n}\n\n// Return items\nreturn $input.all();"
+        },
+        "id": "9f6edbd5-edbe-4adb-9605-ca0daa714ce1",
+        "name": "isDiffOrNew",
+        "type": "n8n-nodes-base.code",
+        "position": [
+          2016,
+          768
+        ],
+        "typeVersion": 1
+      },
+      {
+        "parameters": {
+          "dataType": "string",
+          "value1": "={{$json.github_status}}",
+          "rules": {
+            "rules": [
+              {
+                "value2": "same"
+              },
+              {
+                "value2": "different",
+                "output": 1
+              },
+              {
+                "value2": "new",
+                "output": 2
+              }
+            ]
+          }
+        },
+        "id": "e8bdacdb-e4c3-444c-b08d-417e781825f2",
+        "name": "Check Status",
+        "type": "n8n-nodes-base.switch",
+        "position": [
+          2240,
+          736
+        ],
+        "typeVersion": 1
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "id": "e1697fe1-e6f4-4628-a00e-16869c94c396",
+        "name": "Loop Over Items",
+        "type": "n8n-nodes-base.splitInBatches",
+        "position": [
+          1488,
+          96
+        ],
+        "typeVersion": 3
+      },
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "triggerAtHour": 7
+              }
+            ]
+          }
+        },
+        "id": "2d7acce4-033c-44a3-b1a3-13e74187e27c",
+        "name": "Schedule Trigger",
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "position": [
+          992,
+          96
+        ],
+        "typeVersion": 1.2
+      },
+      {
+        "parameters": {
+          "inputSource": "passthrough"
+        },
+        "id": "84932f19-13b1-4f69-9185-c9f95db70b58",
+        "name": "Execute Workflow Trigger",
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "position": [
+          672,
+          784
+        ],
+        "typeVersion": 1.1
+      },
+      {
+        "parameters": {
+          "workflowId": {
+            "__rl": true,
+            "mode": "id",
+            "value": "={{ $workflow.id }}"
+          },
+          "workflowInputs": {
+            "value": {},
+            "schema": [],
+            "mappingMode": "defineBelow",
+            "matchingColumns": [],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": true
+          },
+          "mode": "each",
+          "options": {}
+        },
+        "id": "ba99dc4e-b65a-48f5-9465-588ee98e94dd",
+        "name": "Execute Workflow",
+        "type": "n8n-nodes-base.executeWorkflow",
+        "position": [
+          1712,
+          112
+        ],
+        "typeVersion": 1.2
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "12cad226-e091-4bbb-aed9-a8e01311772c",
+                "name": "tags[0].name",
+                "type": "string",
+                "value": "={{ $('Execute Workflow Trigger').item.json.tags[0].name }}/"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "4acb5888-2834-467a-9705-34b3c02bde71",
+        "name": "/",
+        "type": "n8n-nodes-base.set",
+        "position": [
+          1168,
+          544
+        ],
+        "typeVersion": 3.4
+      },
+      {
+        "parameters": {
+          "rules": {
+            "values": [
+              {
+                "conditions": {
+                  "options": {
+                    "version": 2,
+                    "leftValue": "",
+                    "caseSensitive": true,
+                    "typeValidation": "strict"
+                  },
+                  "combinator": "and",
+                  "conditions": [
+                    {
+                      "operator": {
+                        "type": "object",
+                        "operation": "exists",
+                        "singleValue": true
+                      },
+                      "leftValue": "={{ $json.tags[0] }}",
+                      "rightValue": ""
+                    }
+                  ]
+                },
+                "renameOutput": true,
+                "outputKey": "tag"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "version": 2,
+                    "leftValue": "",
+                    "caseSensitive": true,
+                    "typeValidation": "strict"
+                  },
+                  "combinator": "and",
+                  "conditions": [
+                    {
+                      "id": "2656fbe3-fe35-4770-9c03-9a455ec618e4",
+                      "operator": {
+                        "type": "object",
+                        "operation": "notExists",
+                        "singleValue": true
+                      },
+                      "leftValue": "={{ $json.tags[0] }}",
+                      "rightValue": ""
+                    }
+                  ]
+                },
+                "renameOutput": true,
+                "outputKey": "none"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "f73b4433-3219-4d48-bc16-f0f959d7266c",
+        "name": "tag?",
+        "type": "n8n-nodes-base.switch",
+        "position": [
+          928,
+          656
+        ],
+        "typeVersion": 3.2
+      },
+      {
+        "parameters": {
+          "authentication": "oAuth2",
+          "resource": "file",
+          "operation": "get",
+          "owner": {
+            "__rl": true,
+            "mode": "name",
+            "value": "={{ $json.repo.owner }}"
+          },
+          "repository": {
+            "__rl": true,
+            "mode": "name",
+            "value": "={{ $json.repo.name }}"
+          },
+          "filePath": "={{ $json.repo.path }}{{ $('Execute Workflow Trigger').item.json.id }}.json",
+          "asBinaryProperty": false,
+          "additionalParameters": {}
+        },
+        "id": "73d1b1dd-7495-43fa-8909-087f93316953",
+        "name": "Coger Datos",
+        "type": "n8n-nodes-base.github",
+        "position": [
+          1616,
+          496
+        ],
+        "typeVersion": 1,
+        "alwaysOutputData": true,
+        "webhookId": "bc762271-1e2a-4d95-86a3-65496fe3042f",
+        "credentials": {
+          "githubOAuth2Api": {
+            "id": "tdvvKq1WqcuTHesE",
+            "name": "GitHub account"
+          }
+        },
+        "continueOnFail": true
+      },
+      {
+        "parameters": {
+          "authentication": "oAuth2",
+          "resource": "file",
+          "operation": "edit",
+          "owner": {
+            "__rl": true,
+            "mode": "name",
+            "value": "={{ $('Info').item.json.repo.owner }}"
+          },
+          "repository": {
+            "__rl": true,
+            "mode": "name",
+            "value": "={{ $('Info').item.json.repo.name }}"
+          },
+          "filePath": "={{ $('Info').item.json.repo.path }}{{$('Execute Workflow Trigger').first().json.id}}.json",
+          "fileContent": "={{$('isDiffOrNew').item.json[\"n8n_data_stringy\"]}}",
+          "commitMessage": "={{$('Execute Workflow Trigger').first().json.name}} ({{$json.github_status}})"
+        },
+        "id": "69e2ea00-8a27-4698-8270-ed4879fd3884",
+        "name": "Editar Archivo",
+        "type": "n8n-nodes-base.github",
+        "position": [
+          2480,
+          752
+        ],
+        "typeVersion": 1,
+        "webhookId": "6585719f-83f3-48ff-b304-95ebf3267ccf",
+        "credentials": {
+          "githubOAuth2Api": {
+            "id": "tdvvKq1WqcuTHesE",
+            "name": "GitHub account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "authentication": "oAuth2",
+          "resource": "file",
+          "owner": {
+            "__rl": true,
+            "mode": "name",
+            "value": "={{ $('Info').item.json.repo.owner }}"
+          },
+          "repository": {
+            "__rl": true,
+            "mode": "name",
+            "value": "={{ $('Info').item.json.repo.name }}"
+          },
+          "filePath": "={{ $('Info').item.json.repo.path }}{{$('Execute Workflow Trigger').first().json.id}}.json",
+          "fileContent": "={{$('isDiffOrNew').item.json[\"n8n_data_stringy\"]}}",
+          "commitMessage": "={{$('Execute Workflow Trigger').first().json.name}} ({{$json.github_status}})"
+        },
+        "id": "644c4f40-138a-4a04-8ad0-b2f32691bbf4",
+        "name": "Crear Nuevo",
+        "type": "n8n-nodes-base.github",
+        "position": [
+          2480,
+          928
+        ],
+        "typeVersion": 1,
+        "webhookId": "1c7b7ce7-bc4b-4759-8b9f-69356cd87bf2",
+        "credentials": {
+          "githubOAuth2Api": {
+            "id": "tdvvKq1WqcuTHesE",
+            "name": "GitHub account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "6cf546c5-5737-4dbd-851b-17d68e0a3780",
+                "name": "repo.owner",
+                "type": "string",
+                "value": "UlisesRosales2004"
+              },
+              {
+                "id": "452efa28-2dc6-4ea3-a7a2-c35d100d0382",
+                "name": "repo.name",
+                "type": "string",
+                "value": "Backup-n8n"
+              },
+              {
+                "id": "81c4dc54-86bf-4432-a23f-22c7ea831e74",
+                "name": "repo.path",
+                "type": "string",
+                "value": "=workflows/{{ $json.tags[0].name }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "7c019fcb-c18d-4e90-8b5a-0ba4ee49da86",
+        "name": "Info",
+        "type": "n8n-nodes-base.set",
+        "position": [
+          1424,
+          672
+        ],
+        "typeVersion": 3.4
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "8d513345-6484-431f-afb7-7cf045c90f4f",
+                "name": "Done",
+                "type": "boolean",
+                "value": true
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "8f0b28fb-ae89-492c-9a49-62c47f5c35a7",
+        "name": "Siguiente",
+        "type": "n8n-nodes-base.set",
+        "position": [
+          2720,
+          576
+        ],
+        "typeVersion": 3.3
+      },
+      {
+        "parameters": {
+          "content": "![jerocuevas.com Logo](https://jerocuevas.com/wp-content/uploads/2025/03/jerocuevashorizontal.jpg)\n## 📍¡N8N Revoluciona los Agentes de IA! 🤯 3 Funciones NUEVAS que Debes Usar YA\n**Realizado por [Jero](https://jerocuevas.com) para la comunidad de [jerocuevas.com](https://jerocuevas.com)**\n\n¡Hola! Soy Jero de JeroCuevas.com y te doy la bienvenida a esta nueva lección.\n\nHoy vamos a abordar una tarea fundamental: cómo crear una copia de seguridad automática de todas nuestras automatizaciones de n8n. Este es un paso crucial para proteger tu trabajo. Un servidor puede fallar, una actualización puede salir mal, y si n8n deja de funcionar, podrías perder todos tus workflows.\n\nPara evitar este desastre, te enseñaré a construir una automatización que guarda una copia de todos tus workflows en GitHub cada día. Lo mejor de este sistema es que no solo guarda el estado de tus automatizaciones a una hora concreta, sino que también detectará y actualizará cualquier modificación que hayas hecho.\n\nVamos a analizar esta potente automatización paso a paso.\n\nPaso 1: El Disparador (Trigger) – Programando la Tarea\nComo siempre, toda automatización comienza con un disparador o trigger. En este caso, utilizaremos el nodo Schedule.\n\nEste nodo nos permite ejecutar el workflow en un momento programado. Lo hemos configurado para que se active todos los días a las 7 de la mañana. El nodo Schedule es muy versátil y te permite configurar la ejecución por días, horas, semanas o meses, pero para nuestro objetivo, una copia diaria es perfecta.\n\nAsí, cada día a las 7:00 AM, el proceso se pondrá en marcha automáticamente.\n\nPaso 2: Obtener los Workflows con el Nodo n8n\nUna vez que el disparador se activa, el flujo llega a un nodo realmente potente: el nodo n8n.\n\nLo que hace especial a este nodo es que nos permite interactuar con la propia API de n8n. Es decir, usaremos n8n para gestionar n8n. Aunque suene un poco enrevesado, es una capacidad increíblemente útil.\n\nNuestra configuración será la siguiente:\n\nRecurso (Resource): Seleccionamos Workflow. Como ves, podrías interactuar también con credenciales, ejecuciones, etc.\nOperación (Operation): Elegimos Get Many para que nos devuelva una lista con todos los workflows que tenemos.\nCredenciales (Credentials): Para que este nodo funcione, necesita permiso para acceder a tu propia instancia de n8n. Vamos a crear esas credenciales.\nCreando la Credencial de la API de n8n:\n\nEn tu interfaz de n8n, ve a Settings > n8n API.\nHaz clic en Create API key. Dale un nombre descriptivo, como «Backup_Workflows».\nTe recomiendo dejar los Scopes (permisos) todos activados para asegurar un acceso completo.\nGuarda los cambios. n8n te mostrará la API Key. ¡Atención! Cópiala y guárdala en un lugar seguro, porque una vez que cierres esta ventana, no podrás volver a verla.\nVuelve al nodo n8n en tu workflow y crea una nueva credencial. Pega la API Key que acabas de copiar.\nEn el campo Base URL, debes introducir la URL de tu instancia de n8n, incluyendo el https:// y terminando justo antes de la primera barra diagonal. Por ejemplo: https://n8n.midominio.com.\nUna vez guardada la credencial, el nodo estará listo para conectarse a sí mismo y obtener la lista completa de tus automatizaciones.\n\nPaso 3: Procesar Cada Workflow por Separado\nEl nodo anterior nos devolverá una lista con, digamos, 30, 40 o más workflows. Necesitamos procesarlos uno por uno. Para ello, utilizamos el nodo Loop Over Items.\n\nLo configuramos en su modo por defecto, que procesa los elementos de uno en uno (Batch Size: 1), y lo conectamos a un nodo Execute Workflow.\n\nEsto nos permite crear un «sub-workflow» o un flujo secundario que se encargará de la lógica de guardar cada automatización en GitHub. Esta técnica mantiene nuestro workflow principal limpio y mucho más fácil de leer.\n\nCada workflow individual pasará al flujo secundario para ser procesado.\n\nPaso 4: La Lógica del Sub-Workflow – Conexión con GitHub\nEl sub-workflow recibe un workflow cada vez y realiza las siguientes acciones:\n\nA. Gestionar las Etiquetas (Tags)\n\nPara mantener nuestro repositorio de GitHub organizado, vamos a usar las etiquetas de n8n. La idea es simple:\n\nSi un workflow tiene una etiqueta (por ejemplo, «Ventas»), lo guardaremos en una carpeta con ese mismo nombre en GitHub.\nSi no tiene etiqueta, se guardará en la carpeta raíz.\nPara ello, usamos un nodo IF que comprueba si el campo tags del workflow existe.\n\nSi existe, el flujo continúa por la salida true. Creamos una variable con el nombre de la etiqueta seguido de una barra diagonal (ej: Ventas/) para usarlo más adelante como ruta de la carpeta.\nSi no existe, el flujo va por la salida false y no se añade ninguna ruta de carpeta.\nB. Configurar el Nodo GitHub\n\nAquí es donde ocurre la magia. Usamos el nodo GitHub para crear o actualizar los archivos en nuestro repositorio. Pero primero, necesitamos configurar la conexión.\n\n1. Crear un Repositorio en GitHub:\n\nVe a tu cuenta de GitHub y crea un nuevo repositorio.\nDale un nombre, como n8n-backups.\nAñade una descripción si quieres.\nEs muy importante que lo marques como Privado (Private) para que solo tú tengas acceso a tus automatizaciones.\nCrea el repositorio.\n2. Crear Credenciales de GitHub en n8n:\n\nVuelve a n8n y en el nodo de GitHub, crea una nueva credencial. Te recomiendo usar el método OAuth2.\nPara obtener el Client ID y el Client Secret, ve a tu cuenta de GitHub y navega a Settings > Developer settings > OAuth Apps.\nCrea una New OAuth App.\nApplication name: Dale un nombre descriptivo (ej: «Conexión n8n Jero»).\nHomepage URL: La URL de tu instancia de n8n (ej: https://n8n.midominio.com).\nAuthorization callback URL: n8n te proporciona esta URL en la ventana de creación de credenciales. Cópiala y pégala aquí.\nRegistra la aplicación. GitHub te proporcionará el Client ID y generará un Client Secret.\nCopia y pega ambos valores en los campos correspondientes en n8n y guarda la credencial. Sigue el proceso para autorizar la conexión con tu cuenta.\nC. Lógica de Sincronización de Archivos\n\nAhora viene la parte más inteligente del proceso. No queremos subir todos los workflows cada día sin más. Queremos:\n\nSubir los workflows nuevos que no existen en GitHub.\nActualizar los workflows que ya existen pero que han sido modificados.\nIgnorar los workflows que no han cambiado.\nPara lograr esto, el flujo sigue estos pasos:\n\nObtener Archivos Existentes: Primero, el nodo de GitHub usa la operación Get All para listar los archivos que ya están en el repositorio.\nComparar Contenido: A continuación, un nodo Code compara el contenido JSON del workflow que viene de n8n con el contenido del archivo correspondiente que ya existe en GitHub (si es que existe).\nTomar Decisiones (Nodo IF): Basado en la comparación anterior, decidimos qué hacer:\nSalida 0 (Son iguales): Si los archivos son idénticos, no se hace nada. El flujo termina para ese workflow.\nSalida 1 (Son diferentes): Si el workflow existe en GitHub pero el contenido es diferente, usamos el nodo GitHub con la operación Edit para actualizar el archivo con la nueva versión.\nSalida 2 (Es nuevo): Si el archivo no existe en GitHub, usamos el nodo GitHub con la operación Create para subirlo por primera vez.\nEl nombre del archivo que guardamos en GitHub será el ID único del workflow. ¿Por qué? Porque el nombre del workflow puede cambiar, pero su ID es permanente. Esto asegura que la comparación siempre sea fiable.\n\nPaso 5: Ejecución y Verificación\n¡Ya está todo configurado! Guarda los cambios en tu workflow y actívalo. La primera vez que lo ejecutes manualmente, verás cómo procesa cada una de tus automatizaciones.\n\nSi vas a tu repositorio en GitHub, verás cómo se crea una estructura de carpetas. Una carpeta principal (ej: workflows) y, dentro de ella, carpetas para cada etiqueta que hayas usado, además de los workflows sin etiqueta.\n\nA partir de ahora, cada día a las 7 de la mañana, este sistema revisará tus automatizaciones y mantendrá tu copia de seguridad en GitHub perfectamente actualizada.\n\nEspero que esta lección te haya sido de gran utilidad. Has construido un sistema de backup robusto y profesional que te dará una gran tranquilidad.\n\nNos vemos en la siguiente clase. ¡Hasta luego!",
+          "height": 3277,
+          "width": 636,
+          "color": 7
+        },
+        "id": "a0b83b59-fa51-40a4-bd7a-14b71a3cc2c8",
+        "name": "Sticky Note4",
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          -64,
+          -80
+        ],
+        "typeVersion": 1
+      },
+      {
+        "parameters": {
+          "operation": "create",
+          "workflowObject": "{ \"name\": , \"nodes\": [], \"connections\": {}, \"settings\": {} }",
+          "requestOptions": {}
+        },
+        "type": "n8n-nodes-base.n8n",
+        "typeVersion": 1,
+        "position": [
+          1984,
+          224
+        ],
+        "id": "a3a2f006-cf11-49c8-9028-2107deca95e8",
+        "name": "Create a workflow",
+        "credentials": {
+          "n8nApi": {
+            "id": "W90YbFDYWkPtRUmY",
+            "name": "n8n account"
+          }
+        },
+        "disabled": true
+      }
+    ],
+    "connections": {
+      "/": {
+        "main": [
+          [
+            {
+              "node": "Info",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "n8n": {
+        "main": [
+          [
+            {
+              "node": "Loop Over Items",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "tag?": {
+        "main": [
+          [
+            {
+              "node": "/",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Info",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get File": {
+        "main": [
+          [
+            {
+              "node": "Merge Items",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Merge Items": {
+        "main": [
+          [
+            {
+              "node": "isDiffOrNew",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "isDiffOrNew": {
+        "main": [
+          [
+            {
+              "node": "Check Status",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Check Status": {
+        "main": [
+          [
+            {
+              "node": "Siguiente",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Editar Archivo",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Crear Nuevo",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Loop Over Items": {
+        "main": [
+          [],
+          [
+            {
+              "node": "Execute Workflow",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Execute Workflow": {
+        "main": [
+          [
+            {
+              "node": "Loop Over Items",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Schedule Trigger": {
+        "main": [
+          [
+            {
+              "node": "n8n",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If file too large": {
+        "main": [
+          [
+            {
+              "node": "Get File",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Merge Items",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Execute Workflow Trigger": {
+        "main": [
+          [
+            {
+              "node": "Merge Items",
+              "type": "main",
+              "index": 1
+            },
+            {
+              "node": "tag?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Coger Datos": {
+        "main": [
+          [
+            {
+              "node": "If file too large",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Editar Archivo": {
+        "main": [
+          [
+            {
+              "node": "Siguiente",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Crear Nuevo": {
+        "main": [
+          [
+            {
+              "node": "Siguiente",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Info": {
+        "main": [
+          [
+            {
+              "node": "Coger Datos",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Cognia Empresa",
+    "name": "Version 5bab27c4",
+    "description": "",
+    "autosaved": false
+  },
+  "activeVersionId": "5bab27c4-ca1f-4db7-bd9d-4f1f15dab2f7",
+  "connections": {
+    "/": {
+      "main": [
+        [
+          {
+            "node": "Info",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "n8n": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "tag?": {
+      "main": [
+        [
+          {
+            "node": "/",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Info",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get File": {
+      "main": [
+        [
+          {
+            "node": "Merge Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge Items": {
+      "main": [
+        [
+          {
+            "node": "isDiffOrNew",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "isDiffOrNew": {
+      "main": [
+        [
+          {
+            "node": "Check Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Status": {
+      "main": [
+        [
+          {
+            "node": "Siguiente",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Editar Archivo",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Crear Nuevo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "n8n",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If file too large": {
+      "main": [
+        [
+          {
+            "node": "Get File",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Merge Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "Merge Items",
+            "type": "main",
+            "index": 1
+          },
+          {
+            "node": "tag?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Coger Datos": {
+      "main": [
+        [
+          {
+            "node": "If file too large",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Editar Archivo": {
+      "main": [
+        [
+          {
+            "node": "Siguiente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Crear Nuevo": {
+      "main": [
+        [
+          {
+            "node": "Siguiente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Info": {
+      "main": [
+        [
+          {
+            "node": "Coger Datos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-03-05T20:00:54.676Z",
+  "id": "kwVClbJbt8WoecXqVyIQI",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Tutorial n8n 29: Cómo Crear Copias de Seguridad Automáticas de tus Workflows en GitHub",
+  "nodes": [
+    {
+      "parameters": {
+        "returnAll": false,
+        "filters": {
+          "tags": ""
+        },
+        "requestOptions": {}
+      },
+      "id": "db763d04-73b3-4394-a683-cbc4c3b50157",
+      "name": "n8n",
+      "type": "n8n-nodes-base.n8n",
+      "position": [
+        1216,
+        96
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "n8nApi": {
+          "id": "W90YbFDYWkPtRUmY",
+          "name": "n8n account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.download_url }}",
+        "options": {}
+      },
+      "id": "e13749e2-1f04-4846-b912-71ac85379e72",
+      "name": "Get File",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        2064,
+        480
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 1,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "45ce825e-9fa6-430c-8931-9aaf22c42585",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              },
+              "leftValue": "={{ $json.content }}",
+              "rightValue": ""
+            },
+            {
+              "id": "9619a55f-7fb1-4f24-b1a7-7aeb82365806",
+              "operator": {
+                "type": "string",
+                "operation": "notExists",
+                "singleValue": true
+              },
+              "leftValue": "={{ $json.error }}",
+              "rightValue": ""
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9a5667c1-5a21-4358-abac-c33290f9fac2",
+      "name": "If file too large",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        1824,
+        496
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {},
+      "id": "fac50a62-9813-4b5d-851f-cba7a8918b98",
+      "name": "Merge Items",
+      "type": "n8n-nodes-base.merge",
+      "position": [
+        1824,
+        768
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "jsCode": "const orderJsonKeys = (jsonObj) => {\n  const ordered = {};\n  Object.keys(jsonObj).sort().forEach(key => {\n    ordered[key] = jsonObj[key];\n  });\n  return ordered;\n}\n\n// Check if file returned with content\nif (Object.keys($input.all()[0].json).includes(\"content\")) {\n  // Decode base64 content and parse JSON\n  const origWorkflow = JSON.parse(Buffer.from($input.all()[0].json.content, 'base64').toString());\n  const n8nWorkflow = $input.all()[1].json;\n  \n  // Order JSON objects\n  const orderedOriginal = orderJsonKeys(origWorkflow);\n  const orderedActual = orderJsonKeys(n8nWorkflow);\n\n  // Determine difference\n  if (JSON.stringify(orderedOriginal) === JSON.stringify(orderedActual)) {\n    $input.all()[0].json.github_status = \"same\";\n  } else {\n    $input.all()[0].json.github_status = \"different\";\n    $input.all()[0].json.n8n_data_stringy = JSON.stringify(orderedActual, null, 2);\n  }\n  $input.all()[0].json.content_decoded = orderedOriginal;\n// No file returned / new workflow\n} else if (Object.keys($input.all()[0].json).includes(\"data\")) {\n  const origWorkflow = JSON.parse($input.all()[0].json.data);\n  const n8nWorkflow = $input.all()[1].json;\n  \n  // Order JSON objects\n  const orderedOriginal = orderJsonKeys(origWorkflow);\n  const orderedActual = orderJsonKeys(n8nWorkflow);\n\n  // Determine difference\n  if (JSON.stringify(orderedOriginal) === JSON.stringify(orderedActual)) {\n    $input.all()[0].json.github_status = \"same\";\n  } else {\n    $input.all()[0].json.github_status = \"different\";\n    $input.all()[0].json.n8n_data_stringy = JSON.stringify(orderedActual, null, 2);\n  }\n  $input.all()[0].json.content_decoded = orderedOriginal;\n\n} else {\n  // Order JSON object\n  const n8nWorkflow = $input.all()[1].json;\n  const orderedActual = orderJsonKeys(n8nWorkflow);\n  \n  // Proper formatting\n  $input.all()[0].json.github_status = \"new\";\n  $input.all()[0].json.n8n_data_stringy = JSON.stringify(orderedActual, null, 2);\n}\n\n// Return items\nreturn $input.all();"
+      },
+      "id": "9f6edbd5-edbe-4adb-9605-ca0daa714ce1",
+      "name": "isDiffOrNew",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        2016,
+        768
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{$json.github_status}}",
+        "rules": {
+          "rules": [
+            {
+              "value2": "same"
+            },
+            {
+              "value2": "different",
+              "output": 1
+            },
+            {
+              "value2": "new",
+              "output": 2
+            }
+          ]
+        }
+      },
+      "id": "e8bdacdb-e4c3-444c-b08d-417e781825f2",
+      "name": "Check Status",
+      "type": "n8n-nodes-base.switch",
+      "position": [
+        2208,
+        736
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "e1697fe1-e6f4-4628-a00e-16869c94c396",
+      "name": "Loop Over Items",
+      "type": "n8n-nodes-base.splitInBatches",
+      "position": [
+        1488,
+        96
+      ],
+      "typeVersion": 3
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 7
+            }
+          ]
+        }
+      },
+      "id": "2d7acce4-033c-44a3-b1a3-13e74187e27c",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "position": [
+        992,
+        96
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "id": "84932f19-13b1-4f69-9185-c9f95db70b58",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        672,
+        784
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $workflow.id }}"
+        },
+        "workflowInputs": {
+          "value": {},
+          "schema": [],
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "mode": "each",
+        "options": {}
+      },
+      "id": "ba99dc4e-b65a-48f5-9465-588ee98e94dd",
+      "name": "Execute Workflow",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "position": [
+        1712,
+        112
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "12cad226-e091-4bbb-aed9-a8e01311772c",
+              "name": "tags[0].name",
+              "type": "string",
+              "value": "={{ $('Execute Workflow Trigger').item.json.tags[0].name }}/"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4acb5888-2834-467a-9705-34b3c02bde71",
+      "name": "/",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        1168,
+        544
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "version": 2,
+                  "leftValue": "",
+                  "caseSensitive": true,
+                  "typeValidation": "strict"
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "operator": {
+                      "type": "object",
+                      "operation": "exists",
+                      "singleValue": true
+                    },
+                    "leftValue": "={{ $json.tags[0] }}",
+                    "rightValue": ""
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "tag"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "version": 2,
+                  "leftValue": "",
+                  "caseSensitive": true,
+                  "typeValidation": "strict"
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "id": "2656fbe3-fe35-4770-9c03-9a455ec618e4",
+                    "operator": {
+                      "type": "object",
+                      "operation": "notExists",
+                      "singleValue": true
+                    },
+                    "leftValue": "={{ $json.tags[0] }}",
+                    "rightValue": ""
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "none"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f73b4433-3219-4d48-bc16-f0f959d7266c",
+      "name": "tag?",
+      "type": "n8n-nodes-base.switch",
+      "position": [
+        928,
+        656
+      ],
+      "typeVersion": 3.2
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "operation": "get",
+        "owner": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $json.repo.owner }}"
+        },
+        "repository": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $json.repo.name }}"
+        },
+        "filePath": "={{ $json.repo.path }}{{ $('Execute Workflow Trigger').item.json.id }}.json",
+        "asBinaryProperty": false,
+        "additionalParameters": {}
+      },
+      "id": "73d1b1dd-7495-43fa-8909-087f93316953",
+      "name": "Coger Datos",
+      "type": "n8n-nodes-base.github",
+      "position": [
+        1616,
+        496
+      ],
+      "typeVersion": 1,
+      "alwaysOutputData": true,
+      "webhookId": "bc762271-1e2a-4d95-86a3-65496fe3042f",
+      "credentials": {
+        "githubApi": {
+          "id": "Chwkv07DEPXudjQx",
+          "name": "Git Ulises token"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "operation": "edit",
+        "owner": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $('Info').item.json.repo.owner }}"
+        },
+        "repository": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $('Info').item.json.repo.name }}"
+        },
+        "filePath": "={{ $('Info').item.json.repo.path }}{{$('Execute Workflow Trigger').first().json.id}}.json",
+        "fileContent": "={{$('isDiffOrNew').item.json[\"n8n_data_stringy\"]}}",
+        "commitMessage": "={{$('Execute Workflow Trigger').first().json.name}} ({{$json.github_status}})"
+      },
+      "id": "69e2ea00-8a27-4698-8270-ed4879fd3884",
+      "name": "Editar Archivo",
+      "type": "n8n-nodes-base.github",
+      "position": [
+        2480,
+        752
+      ],
+      "typeVersion": 1,
+      "webhookId": "6585719f-83f3-48ff-b304-95ebf3267ccf",
+      "credentials": {
+        "githubApi": {
+          "id": "Chwkv07DEPXudjQx",
+          "name": "Git Ulises token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "owner": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $('Info').item.json.repo.owner }}"
+        },
+        "repository": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $('Info').item.json.repo.name }}"
+        },
+        "filePath": "={{ $('Info').item.json.repo.path }}{{$('Execute Workflow Trigger').first().json.id}}.json",
+        "fileContent": "={{$('isDiffOrNew').item.json[\"n8n_data_stringy\"]}}",
+        "commitMessage": "={{$('Execute Workflow Trigger').first().json.name}} ({{$json.github_status}})"
+      },
+      "id": "644c4f40-138a-4a04-8ad0-b2f32691bbf4",
+      "name": "Crear Nuevo",
+      "type": "n8n-nodes-base.github",
+      "position": [
+        2480,
+        928
+      ],
+      "typeVersion": 1,
+      "webhookId": "1c7b7ce7-bc4b-4759-8b9f-69356cd87bf2",
+      "credentials": {
+        "githubApi": {
+          "id": "Chwkv07DEPXudjQx",
+          "name": "Git Ulises token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6cf546c5-5737-4dbd-851b-17d68e0a3780",
+              "name": "repo.owner",
+              "type": "string",
+              "value": "UlisesRosales2004"
+            },
+            {
+              "id": "452efa28-2dc6-4ea3-a7a2-c35d100d0382",
+              "name": "repo.name",
+              "type": "string",
+              "value": "Backup-n8n"
+            },
+            {
+              "id": "81c4dc54-86bf-4432-a23f-22c7ea831e74",
+              "name": "repo.path",
+              "type": "string",
+              "value": "=workflows/{{ $json.tags[0].name }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "7c019fcb-c18d-4e90-8b5a-0ba4ee49da86",
+      "name": "Info",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        1424,
+        672
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8d513345-6484-431f-afb7-7cf045c90f4f",
+              "name": "Done",
+              "type": "boolean",
+              "value": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "8f0b28fb-ae89-492c-9a49-62c47f5c35a7",
+      "name": "Siguiente",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        2704,
+        592
+      ],
+      "typeVersion": 3.3
+    },
+    {
+      "parameters": {
+        "content": "![jerocuevas.com Logo](https://jerocuevas.com/wp-content/uploads/2025/03/jerocuevashorizontal.jpg)\n## 📍¡N8N Revoluciona los Agentes de IA! 🤯 3 Funciones NUEVAS que Debes Usar YA\n**Realizado por [Jero](https://jerocuevas.com) para la comunidad de [jerocuevas.com](https://jerocuevas.com)**\n\n¡Hola! Soy Jero de JeroCuevas.com y te doy la bienvenida a esta nueva lección.\n\nHoy vamos a abordar una tarea fundamental: cómo crear una copia de seguridad automática de todas nuestras automatizaciones de n8n. Este es un paso crucial para proteger tu trabajo. Un servidor puede fallar, una actualización puede salir mal, y si n8n deja de funcionar, podrías perder todos tus workflows.\n\nPara evitar este desastre, te enseñaré a construir una automatización que guarda una copia de todos tus workflows en GitHub cada día. Lo mejor de este sistema es que no solo guarda el estado de tus automatizaciones a una hora concreta, sino que también detectará y actualizará cualquier modificación que hayas hecho.\n\nVamos a analizar esta potente automatización paso a paso.\n\nPaso 1: El Disparador (Trigger) – Programando la Tarea\nComo siempre, toda automatización comienza con un disparador o trigger. En este caso, utilizaremos el nodo Schedule.\n\nEste nodo nos permite ejecutar el workflow en un momento programado. Lo hemos configurado para que se active todos los días a las 7 de la mañana. El nodo Schedule es muy versátil y te permite configurar la ejecución por días, horas, semanas o meses, pero para nuestro objetivo, una copia diaria es perfecta.\n\nAsí, cada día a las 7:00 AM, el proceso se pondrá en marcha automáticamente.\n\nPaso 2: Obtener los Workflows con el Nodo n8n\nUna vez que el disparador se activa, el flujo llega a un nodo realmente potente: el nodo n8n.\n\nLo que hace especial a este nodo es que nos permite interactuar con la propia API de n8n. Es decir, usaremos n8n para gestionar n8n. Aunque suene un poco enrevesado, es una capacidad increíblemente útil.\n\nNuestra configuración será la siguiente:\n\nRecurso (Resource): Seleccionamos Workflow. Como ves, podrías interactuar también con credenciales, ejecuciones, etc.\nOperación (Operation): Elegimos Get Many para que nos devuelva una lista con todos los workflows que tenemos.\nCredenciales (Credentials): Para que este nodo funcione, necesita permiso para acceder a tu propia instancia de n8n. Vamos a crear esas credenciales.\nCreando la Credencial de la API de n8n:\n\nEn tu interfaz de n8n, ve a Settings > n8n API.\nHaz clic en Create API key. Dale un nombre descriptivo, como «Backup_Workflows».\nTe recomiendo dejar los Scopes (permisos) todos activados para asegurar un acceso completo.\nGuarda los cambios. n8n te mostrará la API Key. ¡Atención! Cópiala y guárdala en un lugar seguro, porque una vez que cierres esta ventana, no podrás volver a verla.\nVuelve al nodo n8n en tu workflow y crea una nueva credencial. Pega la API Key que acabas de copiar.\nEn el campo Base URL, debes introducir la URL de tu instancia de n8n, incluyendo el https:// y terminando justo antes de la primera barra diagonal. Por ejemplo: https://n8n.midominio.com.\nUna vez guardada la credencial, el nodo estará listo para conectarse a sí mismo y obtener la lista completa de tus automatizaciones.\n\nPaso 3: Procesar Cada Workflow por Separado\nEl nodo anterior nos devolverá una lista con, digamos, 30, 40 o más workflows. Necesitamos procesarlos uno por uno. Para ello, utilizamos el nodo Loop Over Items.\n\nLo configuramos en su modo por defecto, que procesa los elementos de uno en uno (Batch Size: 1), y lo conectamos a un nodo Execute Workflow.\n\nEsto nos permite crear un «sub-workflow» o un flujo secundario que se encargará de la lógica de guardar cada automatización en GitHub. Esta técnica mantiene nuestro workflow principal limpio y mucho más fácil de leer.\n\nCada workflow individual pasará al flujo secundario para ser procesado.\n\nPaso 4: La Lógica del Sub-Workflow – Conexión con GitHub\nEl sub-workflow recibe un workflow cada vez y realiza las siguientes acciones:\n\nA. Gestionar las Etiquetas (Tags)\n\nPara mantener nuestro repositorio de GitHub organizado, vamos a usar las etiquetas de n8n. La idea es simple:\n\nSi un workflow tiene una etiqueta (por ejemplo, «Ventas»), lo guardaremos en una carpeta con ese mismo nombre en GitHub.\nSi no tiene etiqueta, se guardará en la carpeta raíz.\nPara ello, usamos un nodo IF que comprueba si el campo tags del workflow existe.\n\nSi existe, el flujo continúa por la salida true. Creamos una variable con el nombre de la etiqueta seguido de una barra diagonal (ej: Ventas/) para usarlo más adelante como ruta de la carpeta.\nSi no existe, el flujo va por la salida false y no se añade ninguna ruta de carpeta.\nB. Configurar el Nodo GitHub\n\nAquí es donde ocurre la magia. Usamos el nodo GitHub para crear o actualizar los archivos en nuestro repositorio. Pero primero, necesitamos configurar la conexión.\n\n1. Crear un Repositorio en GitHub:\n\nVe a tu cuenta de GitHub y crea un nuevo repositorio.\nDale un nombre, como n8n-backups.\nAñade una descripción si quieres.\nEs muy importante que lo marques como Privado (Private) para que solo tú tengas acceso a tus automatizaciones.\nCrea el repositorio.\n2. Crear Credenciales de GitHub en n8n:\n\nVuelve a n8n y en el nodo de GitHub, crea una nueva credencial. Te recomiendo usar el método OAuth2.\nPara obtener el Client ID y el Client Secret, ve a tu cuenta de GitHub y navega a Settings > Developer settings > OAuth Apps.\nCrea una New OAuth App.\nApplication name: Dale un nombre descriptivo (ej: «Conexión n8n Jero»).\nHomepage URL: La URL de tu instancia de n8n (ej: https://n8n.midominio.com).\nAuthorization callback URL: n8n te proporciona esta URL en la ventana de creación de credenciales. Cópiala y pégala aquí.\nRegistra la aplicación. GitHub te proporcionará el Client ID y generará un Client Secret.\nCopia y pega ambos valores en los campos correspondientes en n8n y guarda la credencial. Sigue el proceso para autorizar la conexión con tu cuenta.\nC. Lógica de Sincronización de Archivos\n\nAhora viene la parte más inteligente del proceso. No queremos subir todos los workflows cada día sin más. Queremos:\n\nSubir los workflows nuevos que no existen en GitHub.\nActualizar los workflows que ya existen pero que han sido modificados.\nIgnorar los workflows que no han cambiado.\nPara lograr esto, el flujo sigue estos pasos:\n\nObtener Archivos Existentes: Primero, el nodo de GitHub usa la operación Get All para listar los archivos que ya están en el repositorio.\nComparar Contenido: A continuación, un nodo Code compara el contenido JSON del workflow que viene de n8n con el contenido del archivo correspondiente que ya existe en GitHub (si es que existe).\nTomar Decisiones (Nodo IF): Basado en la comparación anterior, decidimos qué hacer:\nSalida 0 (Son iguales): Si los archivos son idénticos, no se hace nada. El flujo termina para ese workflow.\nSalida 1 (Son diferentes): Si el workflow existe en GitHub pero el contenido es diferente, usamos el nodo GitHub con la operación Edit para actualizar el archivo con la nueva versión.\nSalida 2 (Es nuevo): Si el archivo no existe en GitHub, usamos el nodo GitHub con la operación Create para subirlo por primera vez.\nEl nombre del archivo que guardamos en GitHub será el ID único del workflow. ¿Por qué? Porque el nombre del workflow puede cambiar, pero su ID es permanente. Esto asegura que la comparación siempre sea fiable.\n\nPaso 5: Ejecución y Verificación\n¡Ya está todo configurado! Guarda los cambios en tu workflow y actívalo. La primera vez que lo ejecutes manualmente, verás cómo procesa cada una de tus automatizaciones.\n\nSi vas a tu repositorio en GitHub, verás cómo se crea una estructura de carpetas. Una carpeta principal (ej: workflows) y, dentro de ella, carpetas para cada etiqueta que hayas usado, además de los workflows sin etiqueta.\n\nA partir de ahora, cada día a las 7 de la mañana, este sistema revisará tus automatizaciones y mantendrá tu copia de seguridad en GitHub perfectamente actualizada.\n\nEspero que esta lección te haya sido de gran utilidad. Has construido un sistema de backup robusto y profesional que te dará una gran tranquilidad.\n\nNos vemos en la siguiente clase. ¡Hasta luego!",
+        "height": 3277,
+        "width": 636,
+        "color": 7
+      },
+      "id": "a0b83b59-fa51-40a4-bd7a-14b71a3cc2c8",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -64,
+        -80
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "workflowObject": "{ \"name\": , \"nodes\": [], \"connections\": {}, \"settings\": {} }",
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-base.n8n",
+      "typeVersion": 1,
+      "position": [
+        1984,
+        224
+      ],
+      "id": "a3a2f006-cf11-49c8-9028-2107deca95e8",
+      "name": "Create a workflow",
+      "credentials": {
+        "n8nApi": {
+          "id": "W90YbFDYWkPtRUmY",
+          "name": "n8n account"
+        }
+      },
+      "disabled": true
+    }
+  ],
+  "pinData": {
+    "Execute Workflow Trigger": [
+      {
+        "json": {
+          "createdAt": "2025-08-07T15:30:49.068Z",
+          "updatedAt": "2025-08-07T15:30:49.068Z",
+          "id": "HFaqjOWAkZwz5roh",
+          "name": "My workflow 8",
+          "active": false,
+          "isArchived": false,
+          "nodes": [
+            {
+              "parameters": {
+                "path": "370cc0e6-d243-4846-8641-9f8ba6e20ddb",
+                "authentication": "headerAuth",
+                "options": {}
+              },
+              "type": "n8n-nodes-base.webhook",
+              "typeVersion": 2,
+              "position": [
+                0,
+                0
+              ],
+              "id": "7b92691c-d711-496e-8c08-5454f5ed372f",
+              "name": "Webhook",
+              "webhookId": "370cc0e6-d243-4846-8641-9f8ba6e20ddb",
+              "credentials": {
+                "httpHeaderAuth": {
+                  "id": "t6EfrNqqTXR5O6B4",
+                  "name": "Header Auth account 2"
+                }
+              }
+            }
+          ],
+          "connections": {},
+          "settings": {
+            "executionOrder": "v1"
+          },
+          "staticData": null,
+          "meta": {
+            "templateCredsSetupCompleted": true
+          },
+          "pinData": {},
+          "versionId": "96e53251-5f50-4738-9e56-9482db45e4dd",
+          "triggerCount": 0,
+          "tags": []
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-03-05T20:00:54.678Z",
+      "createdAt": "2026-03-05T20:00:54.678Z",
+      "role": "workflow:owner",
+      "workflowId": "kwVClbJbt8WoecXqVyIQI",
+      "projectId": "f3W32VX4HOke6C3N"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-03-15T15:02:12.377Z",
+  "versionId": "2d7b8cd6-9e27-4015-b69f-1d977556f9d6"
+}
