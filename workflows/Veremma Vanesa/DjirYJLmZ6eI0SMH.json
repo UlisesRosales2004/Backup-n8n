@@ -1,0 +1,361 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Call 'Configuracion Global'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dar formato fechas": {
+      "main": [
+        [
+          {
+            "node": "Get many events",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fecha mala",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many events": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete an event": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Delete an event",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'Configuracion Global'": {
+      "main": [
+        [
+          {
+            "node": "Dar formato fechas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-03-15T16:05:39.532Z",
+  "id": "DjirYJLmZ6eI0SMH",
+  "isArchived": false,
+  "meta": null,
+  "name": "liberar_horario-Veremma-V1",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "jsonExample",
+        "jsonExample": "{\n  \"Inicio\":\"2025-07-13T15:30:00\",\n  \"Fin\":\"2025-07-13T21:00:00\"\n}"
+      },
+      "id": "21bcdbab-4c58-4e26-a024-65a305d85609",
+      "typeVersion": 1.1,
+      "name": "When Executed by Another Workflow",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        -112,
+        544
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $('When Executed by Another Workflow').all();\nreturn items.map(item => {\n\n  const fechaInicio = item.json.Inicio;\n  const fechaFin = item.json.Fin;\n\n  if (!fechaInicio || !fechaFin) {\n    throw new Error(\"Fecha_inicio o Fecha_fin no fueron enviadas.\");\n  }\n\n  const startObj = new Date(fechaInicio);\n  const endObj = new Date(fechaFin);\n\n  // Validar que sean fechas reales\n  if (isNaN(startObj.getTime()) || isNaN(endObj.getTime())) {\n    throw new Error(\"Una de las fechas no es válida.\");\n  }\n\n  // Validar que fin sea mayor que inicio\n  if (endObj <= startObj) {\n    throw new Error(\"La Fecha_fin debe ser mayor que la Fecha_inicio.\");\n  }\n\n  return {\n    json: {\n      startTime: fechaInicio,\n      endTime: fechaFin\n    }\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        336,
+        544
+      ],
+      "id": "8b266658-f68a-4bdf-b703-84a0b022ae61",
+      "name": "Dar formato fechas",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "16d5942c-7d6a-40b8-a1f7-9bfd217f5c3b",
+              "name": "Respuesta",
+              "value": "={{ $json.error }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        528,
+        688
+      ],
+      "id": "0affa7b5-fc1e-4ee5-9eb3-25d697313dc8",
+      "name": "Fecha mala"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "ulises.rosales.ar@gmail.com",
+          "mode": "list",
+          "cachedResultName": "ulises.rosales.ar@gmail.com"
+        },
+        "returnAll": true,
+        "timeMin": "={{ $json.startTime }}{{ $('Call \\'Configuracion Global\\'').item.json.TimezoneOffset }}",
+        "timeMax": "={{ $json.endTime }}{{ $('Call \\'Configuracion Global\\'').item.json.TimezoneOffset }}",
+        "options": {
+          "query": "Horario bloqueado"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        608,
+        528
+      ],
+      "id": "264cd847-429d-4094-ad62-2ad7d869dbdb",
+      "name": "Get many events",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "uUlIwgQJ1mHXECLz",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "calendar": {
+          "__rl": true,
+          "value": "ulises.rosales.ar@gmail.com",
+          "mode": "list",
+          "cachedResultName": "ulises.rosales.ar@gmail.com"
+        },
+        "eventId": "={{ $json.id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        1136,
+        496
+      ],
+      "id": "08d735ec-b93e-4479-b1c6-318baa9a5fec",
+      "name": "Delete an event",
+      "retryOnFail": true,
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "uUlIwgQJ1mHXECLz",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "success"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1360,
+        496
+      ],
+      "id": "112e5cc6-487b-49f9-815e-357a8ecd6f12",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Resultados del nodo anterior\nconst successArray = $json.success || [];\n\n// Eventos obtenidos del nodo \"Get many events\"\nconst eventos = $('Get many events').all();\n\n// Función para formatear fecha\nfunction formatear(fechaISO) {\n  if (!fechaISO) return \"Sin fecha\";\n  return fechaISO.substring(0, 16).replace(\"T\", \" \");\n}\n\n// Contar resultados\nconst trueCount = successArray.filter(v => v === true).length;\nconst hasFalse = successArray.includes(false);\n\nlet message = \"\";\n\n// Armamos lista de eliminados (solo los true)\nconst eliminados = successArray\n  .map((ok, index) => {\n    if (!ok) return null;\n\n    const evento = eventos[index]?.json;\n\n    const inicio = formatear(evento?.start?.dateTime);\n    const fin = formatear(evento?.end?.dateTime);\n\n    return `• inicio: ${inicio}\n  fin: ${fin}`;\n  })\n  .filter(Boolean)\n  .join(\"\\n\\n\");\n\n// Mensaje final\nif (successArray.length === 0) {\n  message = \"No se recibieron resultados para procesar.\";\n} else if (!hasFalse) {\n  message = `Se eliminaron ${trueCount} horarios bloqueados correctamente:\n\n${eliminados}`;\n} else {\n  const falseCount = successArray.length - trueCount;\n\n  message = `Se eliminaron ${trueCount} horarios bloqueados correctamente, pero ${falseCount} no pudieron eliminarse.\n\nHorarios eliminados:\n${eliminados}`;\n}\n\nreturn [\n  {\n    json: {\n      mensaje: message\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1568,
+        496
+      ],
+      "id": "947af4fd-dd91-4f66-92ea-d78448ffb898",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "6ee05b57-f5e6-4e57-91fa-15367690a643",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        816,
+        528
+      ],
+      "id": "3fac5454-a8ba-4fd1-a7bf-99e4cf2ede1f",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1242a7a9-c1d1-41d8-9406-6ea4061ff754",
+              "name": "Respuesta",
+              "value": "No existe ningún bloqueo dentro del horario especificado.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1216,
+        720
+      ],
+      "id": "572f20f1-f46b-4fa5-81f1-d724556deed4",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "i0aP21thDHY2T8UDlPfgP",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/i0aP21thDHY2T8UDlPfgP",
+          "cachedResultName": "Configuracion Global"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        96,
+        544
+      ],
+      "id": "39e76283-7831-4d3c-9b7f-66b9c0858da2",
+      "name": "Call 'Configuracion Global'"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-03-15T16:05:39.535Z",
+      "createdAt": "2026-03-15T16:05:39.535Z",
+      "role": "workflow:owner",
+      "workflowId": "DjirYJLmZ6eI0SMH",
+      "projectId": "f3W32VX4HOke6C3N"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "updatedAt": "2026-03-15T16:07:50.175Z",
+      "createdAt": "2026-03-15T16:07:50.175Z",
+      "id": "tfFKp0SW2OnDy7Ub",
+      "name": "Veremma Vanesa"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2026-03-15T16:09:13.157Z",
+  "versionId": "e1b94033-0f16-45e7-a600-6c175939e8e9"
+}
