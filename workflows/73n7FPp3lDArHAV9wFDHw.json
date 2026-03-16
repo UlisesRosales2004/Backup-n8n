@@ -1,0 +1,280 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-03-15T16:00:08.000Z",
+    "createdAt": "2026-03-15T16:00:06.831Z",
+    "versionId": "82d08bc9-4fb6-414b-8b46-674a2d707eef",
+    "workflowId": "73n7FPp3lDArHAV9wFDHw",
+    "nodes": [
+      {
+        "parameters": {
+          "returnAll": false,
+          "filters": {
+            "tags": "Agente Reservas v1"
+          },
+          "requestOptions": {}
+        },
+        "id": "4a4a4e1a-1225-4eab-b88b-3b6d1380dcc4",
+        "name": "n8n",
+        "type": "n8n-nodes-base.n8n",
+        "position": [
+          608,
+          160
+        ],
+        "typeVersion": 1,
+        "credentials": {
+          "n8nApi": {
+            "id": "W90YbFDYWkPtRUmY",
+            "name": "n8n account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "id": "271fd32d-5be2-480a-b270-553940c2f8e9",
+        "name": "Loop Over Items",
+        "type": "n8n-nodes-base.splitInBatches",
+        "position": [
+          880,
+          160
+        ],
+        "typeVersion": 3
+      },
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "triggerAtHour": 3
+              }
+            ]
+          }
+        },
+        "id": "c997d35b-ddc6-4ef8-ad96-89a3eff80be8",
+        "name": "Schedule Trigger",
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "position": [
+          384,
+          160
+        ],
+        "typeVersion": 1.2
+      },
+      {
+        "parameters": {
+          "operation": "create",
+          "workflowObject": "={{\nJSON.stringify({\n  name: $json.name + \"-Veremma-V1\",\n  nodes: $json.activeVersion?.nodes ?? $json.nodes,\n  connections: $json.activeVersion?.connections ?? $json.connections,\n  settings: {}\n})\n}}",
+          "requestOptions": {}
+        },
+        "type": "n8n-nodes-base.n8n",
+        "typeVersion": 1,
+        "position": [
+          1088,
+          240
+        ],
+        "id": "2fbf6839-588c-4cf4-bab1-230dd707b668",
+        "name": "Create a workflow",
+        "credentials": {
+          "n8nApi": {
+            "id": "W90YbFDYWkPtRUmY",
+            "name": "n8n account"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "n8n": {
+        "main": [
+          [
+            {
+              "node": "Loop Over Items",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Loop Over Items": {
+        "main": [
+          [],
+          [
+            {
+              "node": "Create a workflow",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Schedule Trigger": {
+        "main": [
+          [
+            {
+              "node": "n8n",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a workflow": {
+        "main": [
+          [
+            {
+              "node": "Loop Over Items",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Cognia Empresa",
+    "name": "Version 82d08bc9",
+    "description": "",
+    "autosaved": false
+  },
+  "activeVersionId": "82d08bc9-4fb6-414b-8b46-674a2d707eef",
+  "connections": {
+    "n8n": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Create a workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a workflow": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "n8n",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-03-15T15:31:25.922Z",
+  "id": "73n7FPp3lDArHAV9wFDHw",
+  "isArchived": false,
+  "meta": null,
+  "name": "Copiar Workflows",
+  "nodes": [
+    {
+      "parameters": {
+        "returnAll": false,
+        "filters": {
+          "tags": "Agente Reservas v1"
+        },
+        "requestOptions": {}
+      },
+      "id": "4a4a4e1a-1225-4eab-b88b-3b6d1380dcc4",
+      "name": "n8n",
+      "type": "n8n-nodes-base.n8n",
+      "position": [
+        608,
+        160
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "n8nApi": {
+          "id": "W90YbFDYWkPtRUmY",
+          "name": "n8n account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "271fd32d-5be2-480a-b270-553940c2f8e9",
+      "name": "Loop Over Items",
+      "type": "n8n-nodes-base.splitInBatches",
+      "position": [
+        880,
+        160
+      ],
+      "typeVersion": 3
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "workflowObject": "={{\nJSON.stringify({\n  name: $json.name + \"-Veremma-V1\",\n  nodes: $json.activeVersion?.nodes ?? $json.nodes,\n  connections: $json.activeVersion?.connections ?? $json.connections,\n  settings: {}\n})\n}}",
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-base.n8n",
+      "typeVersion": 1,
+      "position": [
+        1088,
+        240
+      ],
+      "id": "2fbf6839-588c-4cf4-bab1-230dd707b668",
+      "name": "Create a workflow",
+      "credentials": {
+        "n8nApi": {
+          "id": "W90YbFDYWkPtRUmY",
+          "name": "n8n account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        416,
+        160
+      ],
+      "id": "7f3d96be-c9f5-441c-b3ed-ff1855fad95e",
+      "name": "When clicking ‘Execute workflow’"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-03-15T15:31:25.926Z",
+      "createdAt": "2026-03-15T15:31:25.926Z",
+      "role": "workflow:owner",
+      "workflowId": "73n7FPp3lDArHAV9wFDHw",
+      "projectId": "f3W32VX4HOke6C3N"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-03-15T16:06:58.154Z",
+  "versionId": "c318dcef-357d-4ce7-b00e-efbe5e5b4f2e"
+}
