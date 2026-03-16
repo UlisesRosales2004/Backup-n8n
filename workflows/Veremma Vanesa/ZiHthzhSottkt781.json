@@ -1,0 +1,85 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-03-15T16:05:39.707Z",
+  "id": "ZiHthzhSottkt781",
+  "isArchived": false,
+  "meta": null,
+  "name": "ErrorWorkflow-Veremma-V1",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "1421bd45-ec22-4dc1-b6cd-192bcc11433f",
+      "name": "Error Trigger"
+    },
+    {
+      "parameters": {
+        "chatId": "=1450492684",
+        "text": "=Se produjo un error el {{ $now }} en el proyecto de veremma. \nWorkflow:  \nid: {{ $json.workflow.id }}\nNombre: {{ $json.workflow.name }}\n\nExecution: \nid: {{ $json.execution.id }}\nurl: {{ $json.execution.url }}\n\nNodo de error: {{ $json.execution.lastNodeExecuted }}\nMensaje de error: {{ $json.execution.error.message }}\nStack: {{ $json.execution.error.stack }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        256,
+        0
+      ],
+      "id": "a4d3d49e-19eb-4298-a561-3208a0611509",
+      "name": "Send a text message",
+      "webhookId": "c11a6f96-510b-41af-ac40-1101cbd147c7",
+      "retryOnFail": true,
+      "credentials": {
+        "telegramApi": {
+          "id": "5Kl62VkSpYm7Hhzy",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-03-15T16:05:39.709Z",
+      "createdAt": "2026-03-15T16:05:39.709Z",
+      "role": "workflow:owner",
+      "workflowId": "ZiHthzhSottkt781",
+      "projectId": "f3W32VX4HOke6C3N"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "updatedAt": "2026-03-15T16:07:50.175Z",
+      "createdAt": "2026-03-15T16:07:50.175Z",
+      "id": "tfFKp0SW2OnDy7Ub",
+      "name": "Veremma Vanesa"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2026-03-15T16:08:53.167Z",
+  "versionId": "3a8a1199-c6a2-4b9f-9319-be8790364f27"
+}
