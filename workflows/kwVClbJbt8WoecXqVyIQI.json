@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-03-15T14:52:46.000Z",
-    "createdAt": "2026-03-15T14:52:45.012Z",
-    "versionId": "5bab27c4-ca1f-4db7-bd9d-4f1f15dab2f7",
+    "updatedAt": "2026-03-15T15:14:24.000Z",
+    "createdAt": "2026-03-15T15:14:23.259Z",
+    "versionId": "11695493-8618-4294-9254-c1f78b703de8",
     "workflowId": "kwVClbJbt8WoecXqVyIQI",
     "nodes": [
       {
@@ -135,7 +135,7 @@
         "name": "Check Status",
         "type": "n8n-nodes-base.switch",
         "position": [
-          2240,
+          2208,
           736
         ],
         "typeVersion": 1
@@ -158,7 +158,7 @@
           "rule": {
             "interval": [
               {
-                "triggerAtHour": 7
+                "triggerAtHour": 3
               }
             ]
           }
@@ -207,7 +207,7 @@
         "name": "Execute Workflow",
         "type": "n8n-nodes-base.executeWorkflow",
         "position": [
-          1712,
+          1728,
           112
         ],
         "typeVersion": 1.2
@@ -303,7 +303,6 @@
       },
       {
         "parameters": {
-          "authentication": "oAuth2",
           "resource": "file",
           "operation": "get",
           "owner": {
@@ -331,16 +330,15 @@
         "alwaysOutputData": true,
         "webhookId": "bc762271-1e2a-4d95-86a3-65496fe3042f",
         "credentials": {
-          "githubOAuth2Api": {
-            "id": "tdvvKq1WqcuTHesE",
-            "name": "GitHub account"
+          "githubApi": {
+            "id": "Chwkv07DEPXudjQx",
+            "name": "Git Ulises token"
           }
         },
         "continueOnFail": true
       },
       {
         "parameters": {
-          "authentication": "oAuth2",
           "resource": "file",
           "operation": "edit",
           "owner": {
@@ -367,15 +365,14 @@
         "typeVersion": 1,
         "webhookId": "6585719f-83f3-48ff-b304-95ebf3267ccf",
         "credentials": {
-          "githubOAuth2Api": {
-            "id": "tdvvKq1WqcuTHesE",
-            "name": "GitHub account"
+          "githubApi": {
+            "id": "Chwkv07DEPXudjQx",
+            "name": "Git Ulises token"
           }
         }
       },
       {
         "parameters": {
-          "authentication": "oAuth2",
           "resource": "file",
           "owner": {
             "__rl": true,
@@ -401,9 +398,9 @@
         "typeVersion": 1,
         "webhookId": "1c7b7ce7-bc4b-4759-8b9f-69356cd87bf2",
         "credentials": {
-          "githubOAuth2Api": {
-            "id": "tdvvKq1WqcuTHesE",
-            "name": "GitHub account"
+          "githubApi": {
+            "id": "Chwkv07DEPXudjQx",
+            "name": "Git Ulises token"
           }
         }
       },
@@ -460,8 +457,8 @@
         "name": "Siguiente",
         "type": "n8n-nodes-base.set",
         "position": [
-          2720,
-          576
+          2704,
+          592
         ],
         "typeVersion": 3.3
       },
@@ -484,14 +481,14 @@
       {
         "parameters": {
           "operation": "create",
-          "workflowObject": "{ \"name\": , \"nodes\": [], \"connections\": {}, \"settings\": {} }",
+          "workflowObject": "={{\n{\n  name: $json.name + \" V2\",\n  nodes: $json.activeVersion.nodes,\n  connections: $json.activeVersion.connections,\n  settings: $json.settings\n}\n}}",
           "requestOptions": {}
         },
         "type": "n8n-nodes-base.n8n",
         "typeVersion": 1,
         "position": [
-          1984,
-          224
+          2032,
+          64
         ],
         "id": "a3a2f006-cf11-49c8-9028-2107deca95e8",
         "name": "Create a workflow",
@@ -717,11 +714,11 @@
       }
     },
     "authors": "Cognia Empresa",
-    "name": "Version 5bab27c4",
+    "name": "Version 11695493",
     "description": "",
     "autosaved": false
   },
-  "activeVersionId": "5bab27c4-ca1f-4db7-bd9d-4f1f15dab2f7",
+  "activeVersionId": "11695493-8618-4294-9254-c1f78b703de8",
   "connections": {
     "/": {
       "main": [
@@ -932,6 +929,22 @@
           }
         ]
       ]
+    },
+    "Create a workflow": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        []
+      ]
     }
   },
   "createdAt": "2026-03-05T20:00:54.676Z",
@@ -940,7 +953,7 @@
   "meta": {
     "templateCredsSetupCompleted": true
   },
-  "name": "Tutorial n8n 29: Cómo Crear Copias de Seguridad Automáticas de tus Workflows en GitHub",
+  "name": "Crear Copias de Seguridad Automáticas de tus Workflows en GitHub",
   "nodes": [
     {
       "parameters": {
@@ -1094,7 +1107,7 @@
         "rule": {
           "interval": [
             {
-              "triggerAtHour": 7
+              "triggerAtHour": 3
             }
           ]
         }
@@ -1143,7 +1156,7 @@
       "name": "Execute Workflow",
       "type": "n8n-nodes-base.executeWorkflow",
       "position": [
-        1712,
+        1760,
         112
       ],
       "typeVersion": 1.2
@@ -1417,14 +1430,14 @@
     {
       "parameters": {
         "operation": "create",
-        "workflowObject": "{ \"name\": , \"nodes\": [], \"connections\": {}, \"settings\": {} }",
+        "workflowObject": "={{\n{\n  name: $json.name + \" V2\",\n  nodes: $json.activeVersion.nodes,\n  connections: $json.activeVersion.connections,\n  settings: $json.settings\n}\n}}",
         "requestOptions": {}
       },
       "type": "n8n-nodes-base.n8n",
       "typeVersion": 1,
       "position": [
-        1984,
-        224
+        2032,
+        64
       ],
       "id": "a3a2f006-cf11-49c8-9028-2107deca95e8",
       "name": "Create a workflow",
@@ -1435,6 +1448,52 @@
         }
       },
       "disabled": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=http://TU_N8N/rest/projects/PROJECT_ID/workflows/{{$json.id}}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "n8nApi",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        2240,
+        64
+      ],
+      "id": "af6b7c03-2655-4081-bd61-96931cebd0ba",
+      "name": "HTTP Request",
+      "credentials": {
+        "n8nApi": {
+          "id": "W90YbFDYWkPtRUmY",
+          "name": "n8n account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:5678/api/v1/workflows",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-N8N-API-KEY",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmZWQ4NjQzOS01NTYzLTRmOWEtOGExMy0yMzdmYjAzNTJjNGQiLCJpc3MiOiJuOG4iLCJhdWQiOiJwdWJsaWMtYXBpIiwiaWF0IjoxNzczNTg4MjU5fQ.RFul2G05_GAxArHvEj7DyBfx9f_PamJc6c5iv1Fko0A"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        2192,
+        288
+      ],
+      "id": "1861a8ac-b88b-4200-972d-c8b270ff5d85",
+      "name": "HTTP Request1"
     }
   ],
   "pinData": {
@@ -1489,7 +1548,10 @@
   },
   "settings": {
     "executionOrder": "v1",
-    "availableInMCP": false
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "timezone": "America/Argentina/Buenos_Aires",
+    "callerPolicy": "workflowsFromSameOwner"
   },
   "shared": [
     {
@@ -1503,6 +1565,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-03-15T15:02:12.377Z",
-  "versionId": "2d7b8cd6-9e27-4015-b69f-1d977556f9d6"
+  "updatedAt": "2026-03-15T15:39:54.290Z",
+  "versionId": "a11ad2b4-58d4-4e2b-8d22-028c013c2d56"
 }
