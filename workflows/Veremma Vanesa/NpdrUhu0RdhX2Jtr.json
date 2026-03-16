@@ -1,0 +1,1159 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Call 'Configuracion Global'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Calendar": {
+      "main": [
+        [
+          {
+            "node": "Hay turnos agendados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "diaSemana": {
+      "main": [
+        [
+          {
+            "node": "Activo?7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fecha y horarios de atencion": {
+      "main": [
+        [
+          {
+            "node": "Google Calendar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hay turnos agendados": {
+      "main": [
+        [
+          {
+            "node": "HorasOcupadas",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Sin -horarios-Recomendacion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HorasOcupadas": {
+      "main": [
+        [
+          {
+            "node": "HorariosDisponiblesYSugeridos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "quitar 00",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "quitar 00": {
+      "main": [
+        [
+          {
+            "node": "Horarios Formateados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Horarios Formateados": {
+      "main": [
+        [
+          {
+            "node": "diaSemana",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Activo?7": {
+      "main": [
+        [
+          {
+            "node": "Disponible",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Dia no disponible7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SiempreDisponible": {
+      "main": [
+        [
+          {
+            "node": "Fecha y horarios de atencion",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Dia disponible",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Comparar Fechas": {
+      "main": [
+        [
+          {
+            "node": "cohincide",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dia Seleccionado": {
+      "main": [
+        [
+          {
+            "node": "Comparar Fechas",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Dia invalido1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "cohincide": {
+      "main": [
+        [
+          {
+            "node": "Fecha y horarios de atencion",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Dia invalido1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dia disponible": {
+      "main": [
+        [
+          {
+            "node": "Fecha y horarios de atencion",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Dia Seleccionado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Traer Servicio": {
+      "main": [
+        [
+          {
+            "node": "Chequear Dias",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chequear Dias": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Disponible": {
+      "main": [
+        [
+          {
+            "node": "SiempreDisponible",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Servicio no disponible",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HorariosDisponiblesYSugeridos": {
+      "main": [
+        []
+      ]
+    },
+    "Call 'Configuracion Global'": {
+      "main": [
+        [
+          {
+            "node": "Traer Servicio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-03-15T16:05:40.146Z",
+  "id": "NpdrUhu0RdhX2Jtr",
+  "isArchived": false,
+  "meta": null,
+  "name": "entregar_horarios-Veremma-V1",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "jsonExample",
+        "jsonExample": "{\n  \"Fecha\": \"2025-07-10T11:00:00\",\n  \"id_servicio\":\"3\"\n}"
+      },
+      "id": "3a2a90a9-2aba-4c05-885d-8649aa10849d",
+      "typeVersion": 1.1,
+      "name": "When Executed by Another Workflow",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        -2016,
+        608
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "ulises.rosales.ar@gmail.com",
+          "mode": "list",
+          "cachedResultName": "ulises.rosales.ar@gmail.com"
+        },
+        "limit": 15,
+        "timeMin": "={{ $json.fechaInicio }}{{ $('Call \\'Configuracion Global\\'').item.json.TimezoneOffset }}",
+        "timeMax": "={{ $json.fechaFin }}{{ $('Call \\'Configuracion Global\\'').item.json.TimezoneOffset }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        1616,
+        48
+      ],
+      "id": "38847e69-806e-46be-8b60-a3f6a5eadc93",
+      "name": "Google Calendar",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "uUlIwgQJ1mHXECLz",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const fechaTexto = $('When Executed by Another Workflow').first().json.Fecha;\n\n// Crear objeto Date\nconst fecha = new Date(fechaTexto);\n\n// Obtener el día (0 = domingo, 1 = lunes, etc.)\nconst dias = [\"Domingo\", \"Lunes\", \"Martes\", \"Miercoles\", \"Jueves\", \"Viernes\", \"Sabado\"];\nconst diaSemana = dias[fecha.getDay()];\n\nreturn [\n  {\n    json: {\n      fecha: fechaTexto,\n      diaSemana\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -512,
+        512
+      ],
+      "id": "e0cf5b06-ec69-422f-985d-cd1cef3563d0",
+      "name": "diaSemana"
+    },
+    {
+      "parameters": {
+        "jsCode": "for (const item of $input.all()) {\n\n  const fechaBase = new Date($('diaSemana').first().json.fecha);\n\n  const año = fechaBase.getFullYear();\n  const mes = fechaBase.getMonth();\n  const dia = fechaBase.getDate();\n\n  const diaSemana = $('diaSemana').first().json.diaSemana;\n\n  const inicioStr = $('Horarios Formateados').first().json[`HoEn-${diaSemana}`];\n  const finStr = $('Horarios Formateados').first().json[`HoSal-${diaSemana}`];\n\n  const [horaInicio, minInicio] = inicioStr.split(':').map(Number);\n  const [horaFin, minFin] = finStr.split(':').map(Number);\n\n  const fechaInicio = new Date(año, mes, dia, horaInicio, minInicio, 0);\n  const fechaFin = new Date(año, mes, dia, horaFin, minFin, 0);\n\n  const formatear = (date) => {\n    const pad = (n) => n.toString().padStart(2, '0');\n    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;\n  };\n\n  item.json.fechaInicio = formatear(fechaInicio);\n  item.json.fechaFin = formatear(fechaFin);\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1392,
+        48
+      ],
+      "id": "05da775d-6ad2-42cd-b31d-221eb170e954",
+      "name": "Fecha y horarios de atencion"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "9571ab83-6027-4223-b8bd-d87976d23bab",
+              "leftValue": "={{ $json.start.dateTime }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1840,
+        48
+      ],
+      "id": "e68133b6-1577-4083-9635-05c57d271dcc",
+      "name": "Hay turnos agendados"
+    },
+    {
+      "parameters": {
+        "jsCode": "const salida = [];\n\nfor (const item of $input.all()) {\n\n  // Inicio\n  const dateTimeStart = item.json.start.dateTime;\n  const horaInicio = dateTimeStart.split(\"T\")[1].substring(0,5); // HH:mm\n\n  // Fin\n  const dateTimeEnd = item.json.end.dateTime;\n  const horaFin = dateTimeEnd.split(\"T\")[1].substring(0,5); // HH:mm\n\n  salida.push({\n    inicio: horaInicio,\n    fin: horaFin\n  });\n}\n\n// Ordenar por hora de inicio\nsalida.sort((a, b) => a.inicio.localeCompare(b.inicio));\n\nreturn [\n  {\n    json: {\n      horasOcupadas: salida\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2064,
+        -48
+      ],
+      "id": "043c4a00-86cb-4e7a-a163-2b3d621a1824",
+      "name": "HorasOcupadas"
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "Día de la Semana"
+            },
+            {
+              "fieldToAggregate": "Hora de Apertura"
+            },
+            {
+              "fieldToAggregate": "Inicio de Receso"
+            },
+            {
+              "fieldToAggregate": "Fin de Receso"
+            },
+            {
+              "fieldToAggregate": "Hora de Cierre"
+            },
+            {
+              "fieldToAggregate": "Abierto"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        -1184,
+        512
+      ],
+      "id": "eb21ce99-7f29-40eb-b5b3-f7188d3c1f3d",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = items[0].json;\n\nfunction quitarSegundos(arr) {\n  return arr.map(hora => {\n    if (typeof hora === \"string\") {\n      return hora.slice(0, 5); // \"08:00:00\" -> \"08:00\"\n    }\n    return hora;\n  });\n}\n\ndata[\"Hora de Apertura\"] = quitarSegundos(data[\"Hora de Apertura\"]);\ndata[\"Inicio de Receso\"] = quitarSegundos(data[\"Inicio de Receso\"]);\ndata[\"Fin de Receso\"] = quitarSegundos(data[\"Fin de Receso\"]);\ndata[\"Hora de Cierre\"] = quitarSegundos(data[\"Hora de Cierre\"]);\n\nreturn [{ json: data }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -960,
+        512
+      ],
+      "id": "6574a1d9-737e-4c10-83da-c38003a2d37e",
+      "name": "quitar 00"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "539a697d-f98f-4e25-a610-dcdf0dccf5b2",
+              "name": "HoEn-Domingo",
+              "value": "={{ $json['Hora de Apertura'][6] }}",
+              "type": "string"
+            },
+            {
+              "id": "7a3e71ce-f835-499e-b143-60ea6ce513cd",
+              "name": "HoInRec-Domingo",
+              "value": "={{ $json['Inicio de Receso'][6] }}",
+              "type": "string"
+            },
+            {
+              "id": "003d5787-291c-42f2-9728-0bb026150a54",
+              "name": "HoFiRec-Domingo",
+              "value": "={{ $json['Fin de Receso'][6] }}",
+              "type": "string"
+            },
+            {
+              "id": "9767e8bb-ee0e-4412-aa9e-2ec5d347cf23",
+              "name": "HoSal-Domingo",
+              "value": "={{ $json['Hora de Cierre'][6] }}",
+              "type": "string"
+            },
+            {
+              "id": "7405e177-138a-4c25-9bcf-5a51fd762518",
+              "name": "Dispo-Domingo",
+              "value": "={{ $json.Abierto[6] }}",
+              "type": "boolean"
+            },
+            {
+              "id": "20383693-9d14-483f-8405-c26b754e0cb7",
+              "name": "HoEn-Lunes",
+              "value": "={{ $json['Hora de Apertura'][0] }}",
+              "type": "string"
+            },
+            {
+              "id": "b9cf4c83-44f0-488f-9b32-8bf64399a8c5",
+              "name": "HoInRec-Lunes",
+              "value": "={{ $json['Inicio de Receso'][0] }}",
+              "type": "string"
+            },
+            {
+              "id": "bd797cef-b3af-4b02-91fd-5d88a5c98c8f",
+              "name": "HoFiRec-Lunes",
+              "value": "={{ $json['Fin de Receso'][0] }}",
+              "type": "string"
+            },
+            {
+              "id": "d502bfae-0c03-4172-a087-8e51ff4cb93f",
+              "name": "HoSal-Lunes",
+              "value": "={{ $json['Hora de Cierre'][0] }}",
+              "type": "string"
+            },
+            {
+              "id": "82ac0e27-7865-4505-9f64-6c6e8cd520fe",
+              "name": "Dispo-Lunes",
+              "value": "={{ $json.Abierto[0] }}",
+              "type": "boolean"
+            },
+            {
+              "id": "922648b5-dc5b-4064-ad97-526110fbbcbb",
+              "name": "HoEn-Martes",
+              "value": "={{ $json['Hora de Apertura'][1] }}",
+              "type": "string"
+            },
+            {
+              "id": "60fb0e35-11a2-4535-a3c8-64b251a8cc99",
+              "name": "HoInRec-Martes",
+              "value": "={{ $json['Inicio de Receso'][1] }}",
+              "type": "string"
+            },
+            {
+              "id": "6bb88062-30a1-4c94-96b0-3fc9cc61e641",
+              "name": "HoFiRec-Martes",
+              "value": "={{ $json['Fin de Receso'][1] }}",
+              "type": "string"
+            },
+            {
+              "id": "8e45c8ae-e413-4f83-9b72-5ec73c17db0a",
+              "name": "HoSal-Martes",
+              "value": "={{ $json['Hora de Cierre'][1] }}",
+              "type": "string"
+            },
+            {
+              "id": "d5390564-8ac9-4cf1-bb54-ee7f72ebf13d",
+              "name": "Dispo-Martes",
+              "value": "={{ $json.Abierto[1] }}",
+              "type": "boolean"
+            },
+            {
+              "id": "52dcc8f4-a74a-4eb7-bd00-7af636bc3042",
+              "name": "HoEn-Miercoles",
+              "value": "={{ $json['Hora de Apertura'][2] }}",
+              "type": "string"
+            },
+            {
+              "id": "eaa41b33-975f-473e-9134-6b661298f735",
+              "name": "HoInRec-Miercoles",
+              "value": "={{ $json['Inicio de Receso'][2] }}",
+              "type": "string"
+            },
+            {
+              "id": "1268cb91-29ae-4d4e-9a21-6e0c9f93663f",
+              "name": "HoFiRec-Miercoles",
+              "value": "= {{ $json['Fin de Receso'][2] }}",
+              "type": "string"
+            },
+            {
+              "id": "849d9d61-895f-4022-bf50-930975f33ca1",
+              "name": "HoSal-Miercoles",
+              "value": "={{ $json['Hora de Cierre'][2] }}",
+              "type": "string"
+            },
+            {
+              "id": "e1874258-0d59-4b2c-abb9-b55d7a53be20",
+              "name": "Dispo-Miercoles",
+              "value": "={{ $json.Abierto[2] }}",
+              "type": "boolean"
+            },
+            {
+              "id": "ad6c124b-b341-42d6-bd23-64f6f5eace30",
+              "name": "HoEn-Jueves",
+              "value": "={{ $json['Hora de Apertura'][3] }}",
+              "type": "string"
+            },
+            {
+              "id": "25f5210e-17a2-42ca-a53a-2b78fdd8848a",
+              "name": "HoInRec-Jueves",
+              "value": "={{ $json['Inicio de Receso'][3] }}",
+              "type": "string"
+            },
+            {
+              "id": "6a064d9f-189b-4f3f-990e-e3c4ccb71960",
+              "name": "HoFiRec-Jueves",
+              "value": "={{ $json['Fin de Receso'][3] }}",
+              "type": "string"
+            },
+            {
+              "id": "72104dba-f187-4e7c-a0eb-f4f45df396e7",
+              "name": "HoSal-Jueves",
+              "value": "={{ $json['Hora de Cierre'][3] }}",
+              "type": "string"
+            },
+            {
+              "id": "91eeb350-3477-4489-9094-540ca806e4b3",
+              "name": "Dispo-Jueves",
+              "value": "={{ $json.Abierto[3] }}",
+              "type": "boolean"
+            },
+            {
+              "id": "1d87ab43-7a22-42f8-88f0-c0e11d8bf17b",
+              "name": "HoEn-Viernes",
+              "value": "={{ $json['Hora de Apertura'][4] }}",
+              "type": "string"
+            },
+            {
+              "id": "15336de1-f5d4-439e-a7ce-d242b6bf5021",
+              "name": "HoInRec-Viernes",
+              "value": "={{ $json['Inicio de Receso'][4] }}",
+              "type": "string"
+            },
+            {
+              "id": "0a64dbb0-9043-4037-9547-201a787f86fe",
+              "name": "HoFiRec-Viernes",
+              "value": "={{ $json['Fin de Receso'][4] }}",
+              "type": "string"
+            },
+            {
+              "id": "ed7f05c1-cdfa-482c-a7f7-b05c12020f48",
+              "name": "HoSal-Viernes",
+              "value": "={{ $json['Hora de Cierre'][4] }}",
+              "type": "string"
+            },
+            {
+              "id": "def72de4-4fd2-4d8a-97c3-337ebb4fb03a",
+              "name": "Dispo-Viernes",
+              "value": "={{ $json.Abierto[4] }}",
+              "type": "boolean"
+            },
+            {
+              "id": "3a9b236d-937a-4de3-8c68-02a9172b2df9",
+              "name": "HoEn-Sabado",
+              "value": "={{ $json['Hora de Apertura'][5] }}",
+              "type": "string"
+            },
+            {
+              "id": "4f7b0ed0-bc27-40a0-9273-110e553b8c53",
+              "name": "HoInRec-Sabado",
+              "value": "={{ $json['Inicio de Receso'][5] }}",
+              "type": "string"
+            },
+            {
+              "id": "e5432df1-2485-4be5-b09d-5c09bdfeadbb",
+              "name": "HoFiRec-Sabado",
+              "value": "={{ $json['Fin de Receso'][5] }}",
+              "type": "string"
+            },
+            {
+              "id": "c2e037e8-f495-4619-aabf-4851d8b98bde",
+              "name": "HoSal-Sabado",
+              "value": "={{ $json['Hora de Cierre'][5] }}",
+              "type": "string"
+            },
+            {
+              "id": "6f93ae74-b7c4-413c-a5b7-806bf165a4a6",
+              "name": "Dispo-Sabado",
+              "value": "={{ $json.Abierto[5] }}",
+              "type": "boolean"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -736,
+        512
+      ],
+      "id": "7039918f-37fb-4ec5-9b22-211c105cee2c",
+      "name": "Horarios Formateados"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "2c2c7a6b-d8d9-42fe-83b7-83f12fb7cbf9",
+              "leftValue": "={{ $('Horarios Formateados').item.json[`Dispo-${$json.diaSemana}`] }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -288,
+        512
+      ],
+      "id": "34029e21-8a8f-4c1e-b3d2-6c3e4b652cb5",
+      "name": "Activo?7"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6d12b307-21cb-482a-a7a2-9c61a5399282",
+              "name": "Justificacion",
+              "value": "=Invalido, el día cae día {{ $('Obtener hora y dia de la semana').item.json.diaSemana }}, el dueño no permite reservar ese día, por favor escoja otro.",
+              "type": "string"
+            },
+            {
+              "id": "c4a09681-b1c2-4ec6-b0d3-ae931c9d7f80",
+              "name": "Valida",
+              "value": false,
+              "type": "boolean"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -64,
+        608
+      ],
+      "id": "892e8237-1a3a-445c-8ad4-164110dc16fa",
+      "name": "Dia no disponible7"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0762aa58-c5fb-435a-9d6f-1d0409e44ada",
+              "name": "Error",
+              "value": "=Hubo un error encontrando el servicio. Existe una posibilidad de que el servicio con ese id no exista.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1408,
+        704
+      ],
+      "id": "e71c0fd7-652f-4351-8e2b-0d3db65bd88c",
+      "name": "Edit Fields3"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "2218225f-f93f-4ecf-b588-cee026958c24",
+              "leftValue": "={{ $('Traer Servicio').item.json.Disponible }}",
+              "rightValue": "Siempre",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        160,
+        320
+      ],
+      "id": "e5974a46-5104-45ca-9d77-15174d578628",
+      "name": "SiempreDisponible"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Obtener datos del nodo\nconst diasEspecialesRaw = $('Traer Servicio').item.json['_nc_m2m_Servicios_Días Especiales'] || [];\nconst fechaCompleta = $('When Executed by Another Workflow').first().json.Fecha;\n\n// Extraer solo la fecha\nconst fechaSoloDia = fechaCompleta.split('T')[0];\n\n// Obtener solo los días del array\nconst arrayDias = diasEspecialesRaw\n  .map(i => i['Días Especiales']?.['Día'])\n  .filter(d => d && d !== 'null')\n  .map(d => d.trim());\n\n// Comparar\nconst esIgual = arrayDias.includes(fechaSoloDia);\n\n// Resultado\nreturn [\n  {\n    json: {\n      resultado: esIgual\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1008,
+        400
+      ],
+      "id": "c4f93a67-65b6-43e0-a5b4-d6cf0fab72ab",
+      "name": "Comparar Fechas"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "2e7db7cc-16ef-40f6-a3a9-b54d0bdfe8a8",
+              "leftValue": "={{ $('Traer Servicio').item.json.Disponible }}",
+              "rightValue": "Día Seleccionado",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        704,
+        480
+      ],
+      "id": "59931269-6279-49f2-9979-7616e683ca36",
+      "name": "Dia Seleccionado"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "960d6d7c-0626-418a-a7ec-24a3371117eb",
+              "leftValue": "={{ $json.resultado }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1232,
+        400
+      ],
+      "id": "b14cd911-aa82-4b8b-b20d-1670f71f36fc",
+      "name": "cohincide"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6d12b307-21cb-482a-a7a2-9c61a5399282",
+              "name": "Justificacion",
+              "value": "={{\n(() => {\n  const servicio = $('Traer Servicio').item.json;\n\n  const disponibleRaw = servicio.Disponible || \"\";\n\n  const disponibles = disponibleRaw\n    .split(',')\n    .map(d => d.trim())\n    .filter(Boolean);\n\n  const tieneDiaSeleccionado = disponibles.includes(\"Día Seleccionado\");\n\n  const diasSemana = disponibles.filter(d => d !== \"Día Seleccionado\" && d !== \"No disponible\");\n\n  let fechasEspeciales = [];\n\n  if (tieneDiaSeleccionado) {\n    fechasEspeciales = servicio['_nc_m2m_Servicios_Días Especiales']\n      ?.map(i => {\n        const fecha = i['Días Especiales']['Día'];\n        if (!fecha) return null;\n\n        const [y,m,d] = fecha.split(\"-\");\n        return `el ${d}/${m}/${y}`;\n      })\n      .filter(Boolean) || [];\n  }\n\n  const todos = [...diasSemana, ...fechasEspeciales];\n\n  if (todos.length === 0) {\n    return \"Inválido. El servicio seleccionado no tiene días disponibles para agendar.\";\n  }\n\n  let lista;\n\n  if (todos.length === 1) {\n    lista = todos[0];\n  } else if (todos.length === 2) {\n    lista = `${todos[0]} y ${todos[1]}`;\n  } else {\n    lista = `${todos.slice(0,-1).join(', ')} y ${todos[todos.length-1]}`;\n  }\n\n  return `Inválido. El servicio seleccionado solo se puede agendar los siguientes días: ${lista}.`;\n})()\n}}",
+              "type": "string"
+            },
+            {
+              "id": "c4a09681-b1c2-4ec6-b0d3-ae931c9d7f80",
+              "name": "Valida",
+              "value": false,
+              "type": "boolean"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1104,
+        656
+      ],
+      "id": "efb36ab5-41e4-43d9-b52f-8e8806681223",
+      "name": "Dia invalido1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "8b1d7c40-d76a-49e1-854e-da3d77ca6e17",
+              "leftValue": "={{ $('Traer Servicio').item.json.Disponible }}",
+              "rightValue": "={{ $('diaSemana').item.json.diaSemana }}",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        432,
+        400
+      ],
+      "id": "d103f224-2ade-4db6-b9ed-e89fa27656e7",
+      "name": "Dia disponible"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "projectId": "pvalhsum160gh07",
+        "table": "m3m2qj8gmy4irp0",
+        "id": "={{ $('When Executed by Another Workflow').item.json.id_servicio }}"
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        -1632,
+        608
+      ],
+      "id": "44f66260-b7d5-418f-b9d9-06ad56de4014",
+      "name": "Traer Servicio",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "maxTries": 5,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "NJEMSwQ8VfnQXOIP",
+          "name": "NocoDB Token account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "pvalhsum160gh07",
+        "table": "mbcz7o961ekrj35",
+        "limit": 8,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        -1408,
+        512
+      ],
+      "id": "d31812f1-ecec-4e2b-94de-42d6bc1a978a",
+      "name": "Chequear Dias",
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 5000,
+      "executeOnce": false,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "NJEMSwQ8VfnQXOIP",
+          "name": "NocoDB Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "2c2c7a6b-d8d9-42fe-83b7-83f12fb7cbf9",
+              "leftValue": "={{ $('Traer Servicio').item.json.Disponible }}",
+              "rightValue": "No disponible",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -64,
+        416
+      ],
+      "id": "ba8c0f3b-bfc2-4f5a-a9f9-51cc4a5c4e43",
+      "name": "Disponible"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6d12b307-21cb-482a-a7a2-9c61a5399282",
+              "name": "Justificacion",
+              "value": "=Invalido, el dueño no permite reservar el servicio seleccionado.",
+              "type": "string"
+            },
+            {
+              "id": "c4a09681-b1c2-4ec6-b0d3-ae931c9d7f80",
+              "name": "Valida",
+              "value": false,
+              "type": "boolean"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        160,
+        512
+      ],
+      "id": "162aa19e-49ae-4c76-a651-8789188e5617",
+      "name": "Servicio no disponible"
+    },
+    {
+      "parameters": {
+        "jsCode": "// ─── CONFIGURACIÓN ────────────────────────────────────────────────────────────\nconst TOTAL_SUGERIDOS = 5;\nconst PASO = 15;\nconst MARGEN_PREFERIDO = 45;\n\n// ─── INPUTS ──────────────────────────────────────────────────────────────────\nconst fechaStr = $('When Executed by Another Workflow').first().json.Fecha;\nconst [datePart] = fechaStr.split('T');\nconst [year, month, day] = datePart.split('-').map(Number);\n\nconst ahoraLuxon = $now.setZone('America/Argentina/Buenos_Aires');\nconst ahoraMin = ahoraLuxon.hour * 60 + ahoraLuxon.minute;\n\nconst inicioHoy = ahoraLuxon.startOf('day');\nconst finHoy = ahoraLuxon.endOf('day');\nconst fechaLuxon = ahoraLuxon.set({ year, month, day, hour: 0, minute: 0, second: 0 });\nconst esHoy = fechaLuxon >= inicioHoy && fechaLuxon <= finHoy;\n\nconst duracion = $('Traer Servicio').first().json.Tiempo_estimado_min;\nconst ocupados = $input.first().json.horasOcupadas;\n\nconst dia = $('diaSemana').first().json.diaSemana;\nconst inicioAtencion = $('Horarios Formateados').first().json[`HoEn-${dia}`];\nconst finAtencion = $('Horarios Formateados').first().json[`HoSal-${dia}`];\nconst inicioAlmuerzo = $('Horarios Formateados').first().json[`HoInRec-${dia}`];\nconst finAlmuerzo = $('Horarios Formateados').first().json[`HoFiRec-${dia}`];\n\n// ─── HELPERS ─────────────────────────────────────────────────────────────────\nconst aMin = (hhmm) => {\n  const [h, m] = hhmm.split(\":\").map(Number);\n  return h * 60 + m;\n};\nconst aHora = (minutos) => {\n  const h = Math.floor(minutos / 60).toString().padStart(2, \"0\");\n  const m = (minutos % 60).toString().padStart(2, \"0\");\n  return `${h}:${m}`;\n};\n\n// ─── HORARIOS BASE ────────────────────────────────────────────────────────────\nconst inicioDia = aMin(inicioAtencion);\nconst finDiaReal = aMin(finAtencion);\nconst finDia = finDiaReal - duracion;\nconst almuerzoInicio = aMin(inicioAlmuerzo);\nconst almuerzoFin = aMin(finAlmuerzo);\n\n// ─── OCUPADOS + BLOQUEADOS ────────────────────────────────────────────────────\nconst ocupadosMin = ocupados\n  .map(o => ({ inicio: aMin(o.inicio), fin: aMin(o.fin) }))\n  .sort((a, b) => a.inicio - b.inicio);\n\nconst bloqueados = [...ocupadosMin, { inicio: almuerzoInicio, fin: almuerzoFin }]\n  .sort((a, b) => a.inicio - b.inicio);\n\n// ─── CURSOR INICIAL ───────────────────────────────────────────────────────────\nlet cursorInicio = inicioDia;\nif (esHoy) {\n  const minimoPermitido = ahoraMin + 60;\n  cursorInicio = Math.ceil(Math.max(inicioDia, minimoPermitido) / PASO) * PASO;\n} else {\n  cursorInicio = Math.ceil(inicioDia / PASO) * PASO;\n}\n\n// ─── FUNCIÓN: slot libre ──────────────────────────────────────────────────────\nconst estaLibre = (slotInicio) => {\n  const slotFin = slotInicio + duracion;\n  for (const bloque of bloqueados) {\n    if (slotInicio < bloque.fin && slotFin > bloque.inicio) return false;\n  }\n  return true;\n};\n\n// ─── TODOS LOS SLOTS LIBRES ───────────────────────────────────────────────────\nconst todosLosSlots = [];\nfor (let t = cursorInicio; t <= finDia; t += PASO) {\n  if (estaLibre(t)) todosLosSlots.push(t);\n}\n\n// ─── DISTANCIA DE UN SLOT A UN TURNO OCUPADO ─────────────────────────────────\nconst distanciaAOcupado = (slotInicio, ocu) => {\n  const slotFin = slotInicio + duracion;\n  const distAntes = slotFin <= ocu.inicio ? ocu.inicio - slotFin : Infinity;\n  const distDespues = slotInicio >= ocu.fin ? slotInicio - ocu.fin : Infinity;\n  return Math.min(distAntes, distDespues);\n};\n\n// ─── FIX 1: ASIGNAR CADA SLOT AL ÚNICO TURNO MÁS CERCANO ────────────────────\n// Evita que slots entre dos turnos cuenten doble y roben cuota\nconst poolPorOcupado = ocupadosMin.map(() => []);\n\nfor (const t of todosLosSlots) {\n  const distancias = ocupadosMin.map((ocu, idx) => ({\n    idx,\n    dist: distanciaAOcupado(t, ocu)\n  }));\n\n  const dentroDelMargen = distancias.filter(d => d.dist <= MARGEN_PREFERIDO);\n  if (dentroDelMargen.length === 0) continue;\n\n  // Slot va SOLO al pool del turno más cercano (empate → el primero cronológico)\n  dentroDelMargen.sort((a, b) => a.dist - b.dist || a.idx - b.idx);\n  poolPorOcupado[dentroDelMargen[0].idx].push(t);\n}\n\n// ─── FIX 2: DISTRIBUCIÓN PROPORCIONAL SIN Math.max ───────────────────────────\n// Sin Math.max(1,...) → muchos turnos no inflan el total de sugeridos\nconst totalCandidatos = poolPorOcupado.reduce((sum, pool) => sum + pool.length, 0);\nconst sugeridosSet = new Set();\n\npoolPorOcupado.forEach((pool, idx) => {\n  if (pool.length === 0) return;\n\n  const proporcion = pool.length / totalCandidatos;\n  const cuota = Math.round(proporcion * TOTAL_SUGERIDOS); // ← sin Math.max(1,...)\n  if (cuota === 0) return; // turno con proporción muy chica, otro cercano ya lo cubre\n\n  const ocu = ocupadosMin[idx];\n  const ordenados = [...pool].sort((a, b) =>\n    distanciaAOcupado(a, ocu) - distanciaAOcupado(b, ocu)\n  );\n\n  ordenados.slice(0, cuota).forEach(t => sugeridosSet.add(t));\n});\n\n// ─── FIX 3: RECORTE ESTRICTO AL LÍMITE ───────────────────────────────────────\n// Por redondeos el Set puede tener 1-2 de más → recortar eliminando los más lejanos\nif (sugeridosSet.size > TOTAL_SUGERIDOS) {\n  const arr = [...sugeridosSet].sort((a, b) => {\n    const distA = Math.min(...ocupadosMin.map(o => distanciaAOcupado(a, o)));\n    const distB = Math.min(...ocupadosMin.map(o => distanciaAOcupado(b, o)));\n    return distB - distA; // más lejanos primero para eliminar\n  });\n  sugeridosSet.clear();\n  arr.slice(0, TOTAL_SUGERIDOS).forEach(t => sugeridosSet.add(t));\n}\n\n// ─── COMPLETAR SI QUEDAMOS CORTOS POR REDONDEO ───────────────────────────────\n// Puede pasar que los redondeos bajen a 4 en vez de 5\nif (sugeridosSet.size < TOTAL_SUGERIDOS) {\n  const restantes = todosLosSlots\n    .filter(t => !sugeridosSet.has(t) && poolPorOcupado.some(pool => pool.includes(t)))\n    .sort((a, b) => {\n      const distA = Math.min(...ocupadosMin.map(o => distanciaAOcupado(a, o)));\n      const distB = Math.min(...ocupadosMin.map(o => distanciaAOcupado(b, o)));\n      return distA - distB;\n    });\n\n  for (const t of restantes) {\n    if (sugeridosSet.size >= TOTAL_SUGERIDOS) break;\n    sugeridosSet.add(t);\n  }\n}\n\n// ─── ARMAR LISTA FINAL ────────────────────────────────────────────────────────\nconst slotsFinales = todosLosSlots.map(t => ({\n  horario: sugeridosSet.has(t) ? `${aHora(t)} → Sugerido` : aHora(t)\n}));\n\n// ─── INSTRUCCIÓN PARA LA IA ───────────────────────────────────────────────────\nconst instruccionIA = `Horarios disponibles para el día seleccionado.\nLos marcados como \"→ Sugerido\" son los más convenientes.\nREGLA: Ofrecé primero y principalmente los horarios \"→ Sugerido\". Solo mostrá otros horarios si el cliente los pide explícitamente o los sugeridos no le convienen.\nNunca listes todos los horarios de golpe.`;\n\nreturn [\n  {\n    json: {\n      slotsDisponibles: slotsFinales,\n      instruccionIA\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2288,
+        -64
+      ],
+      "id": "fa2d89c6-e170-4f9c-ac0c-842321877252",
+      "name": "HorariosDisponiblesYSugeridos"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Fecha seleccionada\nconst fechaStr = $('When Executed by Another Workflow').first().json.Fecha;\n\n// Parse LOCAL seguro\nconst [datePart] = fechaStr.split('T');\nconst [year, month, day] = datePart.split('-').map(Number);\nconst fecha = new Date(year, month - 1, day);\n\n// Hora REAL Argentina del workflow\nconst ahoraLuxon = $now.setZone('America/Argentina/Buenos_Aires');\n\n// Convertimos a minutos SIN Date()\nconst ahoraMin = ahoraLuxon.hour * 60 + ahoraLuxon.minute;\n\n// ----------------------\n\nconst inicioHoy = ahoraLuxon.startOf('day');\nconst finHoy = ahoraLuxon.endOf('day');\n\nconst fechaLuxon = ahoraLuxon.set({\n  year,\n  month,\n  day,\n  hour: 0,\n  minute: 0,\n  second: 0\n});\n\nconst esHoy = fechaLuxon >= inicioHoy && fechaLuxon <= finHoy;\n\n// ----------------------\n\nconst duracion = $('Traer Servicio').first().json.Tiempo_estimado_min;\nconst ocupados = $input.first().json.horasOcupadas;\n\n// ----------------------\n// DIA DINAMICO\nconst dia = $('diaSemana').first().json.diaSemana;\n\n// HORARIOS DINAMICOS\nconst inicioAtencion = $('Horarios Formateados').first().json[`HoEn-${dia}`];\nconst finAtencion = $('Horarios Formateados').first().json[`HoSal-${dia}`];\nconst inicioAlmuerzo = $('Horarios Formateados').first().json[`HoInRec-${dia}`];\nconst finAlmuerzo = $('Horarios Formateados').first().json[`HoFiRec-${dia}`];\n\n// ----------------------\n// Helpers\n\nconst aMin = (hhmm) => {\n  const [h, m] = hhmm.split(\":\").map(Number);\n  return h * 60 + m;\n};\n\nconst aHora = (minutos) => {\n  const h = Math.floor(minutos / 60).toString().padStart(2, \"0\");\n  const m = (minutos % 60).toString().padStart(2, \"0\");\n  return `${h}:${m}`;\n};\n\n// ----------------------\n// Convertir horarios\n\nconst inicioDia = aMin(inicioAtencion);\nconst finDiaReal = aMin(finAtencion);\nconst finDia = finDiaReal - duracion;\n\nconst almuerzoInicio = aMin(inicioAlmuerzo);\nconst almuerzoFin = aMin(finAlmuerzo);\n\n// ----------------------\n// Ocupados\n\nconst ocupadosMin = ocupados\n  .map(o => ({\n    inicio: aMin(o.inicio),\n    fin: aMin(o.fin)\n  }))\n  .sort((a, b) => a.inicio - b.inicio);\n\nocupadosMin.push({ inicio: almuerzoInicio, fin: almuerzoFin });\nocupadosMin.sort((a, b) => a.inicio - b.inicio);\n\n// ----------------------\n// Lógica HOY\n\nlet cursor = inicioDia;\n\nif (esHoy) {\n\n  const minimoPermitido = ahoraMin + 60;\n\n  cursor = Math.max(cursor, minimoPermitido);\n\n}\n\n// ----------------------\n\nconst intervalos = [];\n\nfor (const bloque of ocupadosMin) {\n\n  const huecoInicio = cursor;\n  const huecoFin = bloque.inicio;\n\n  if (huecoFin - huecoInicio >= duracion) {\n    intervalos.push({\n      desde: aHora(huecoInicio),\n      hasta: aHora(huecoFin - duracion)\n    });\n  }\n\n  cursor = Math.max(cursor, bloque.fin);\n}\n\nif (finDia - cursor >= 0) {\n  intervalos.push({\n    desde: aHora(cursor),\n    hasta: aHora(finDia)\n  });\n}\n\nreturn [\n  {\n    json: {\n      intervalosDisponibles: intervalos\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2544,
+        -48
+      ],
+      "id": "70cd355c-4f95-4d50-907f-ac122d3db17f",
+      "name": "HorariosDisponiblesSlot",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// Fecha seleccionada\nconst fechaStr = $('When Executed by Another Workflow').first().json.Fecha;\n\n// Parse seguro\nconst [datePart] = fechaStr.split('T');\nconst [year, month, day] = datePart.split('-').map(Number);\n\n// Hora REAL Argentina\nconst ahoraLuxon = $now.setZone('America/Argentina/Buenos_Aires');\nconst ahoraMin = ahoraLuxon.hour * 60 + ahoraLuxon.minute;\n\n// Fecha Luxon para comparar\nconst fechaLuxon = ahoraLuxon.set({\n  year,\n  month,\n  day,\n  hour: 0,\n  minute: 0,\n  second: 0\n});\n\nconst esHoy = fechaLuxon.hasSame(ahoraLuxon, 'day');\n\n// ----------------------\n// Configuración\n// ----------------------\n\nconst duracion = $('Traer Servicio').first().json.Tiempo_estimado_min;\n\n// DIA DINAMICO\nconst dia = $('diaSemana').first().json.diaSemana;\n\n// HORARIOS DINAMICOS\nconst inicioAtencion = $('Horarios Formateados').first().json[`HoEn-${dia}`];\nconst finAtencion = $('Horarios Formateados').first().json[`HoSal-${dia}`];\nconst inicioAlmuerzo = $('Horarios Formateados').first().json[`HoInRec-${dia}`];\nconst finAlmuerzo = $('Horarios Formateados').first().json[`HoFiRec-${dia}`];\n\n// ----------------------\n// Helpers\n// ----------------------\n\nconst aMin = (hhmm) => {\n  const [h, m] = hhmm.split(\":\").map(Number);\n  return h * 60 + m;\n};\n\nconst aHora = (minutos) => {\n  const h = Math.floor(minutos / 60).toString().padStart(2, \"0\");\n  const m = (minutos % 60).toString().padStart(2, \"0\");\n  return `${h}:${m}`;\n};\n\n// ----------------------\n// Convertir horarios\n// ----------------------\n\nconst inicioDiaBase = aMin(inicioAtencion);\nconst cierreReal = aMin(finAtencion);\nconst finDia = cierreReal - duracion;\n\nconst almuerzoInicio = aMin(inicioAlmuerzo);\nconst almuerzoFin = aMin(finAlmuerzo);\n\n// ----------------------\n// ⏰ Ajuste SOLO HOY\n// ----------------------\n\nlet inicioDia = inicioDiaBase;\n\nif (esHoy) {\n  const minimoPermitido = ahoraMin + 60;\n  inicioDia = Math.max(inicioDia, minimoPermitido);\n}\n\n// ----------------------\n// Intervalos directos\n// ----------------------\n\nconst intervalos = [];\n\n// Mañana\nif (almuerzoInicio - inicioDia >= duracion) {\n  intervalos.push({\n    desde: aHora(inicioDia),\n    hasta: aHora(almuerzoInicio - duracion)\n  });\n}\n\n// Tarde\nconst inicioTarde = Math.max(almuerzoFin, inicioDia);\n\nif (finDia - inicioTarde >= 0) {\n  intervalos.push({\n    desde: aHora(inicioTarde),\n    hasta: aHora(finDia)\n  });\n}\n\nreturn [\n  {\n    json: {\n      intervalosDisponibles: intervalos\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2448,
+        224
+      ],
+      "id": "cf3f8e8d-7b43-4ae4-884b-e1ed65a3d6b0",
+      "name": "Sin horarios Slot",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// ─── CONFIGURACIÓN ────────────────────────────────────────────────────────────\nconst TOTAL_SUGERIDOS = 6;\nconst PASO = 30;\n\n// ─── INPUTS ──────────────────────────────────────────────────────────────────\nconst fechaStr = $('When Executed by Another Workflow').first().json.Fecha;\nconst [datePart] = fechaStr.split('T');\nconst [year, month, day] = datePart.split('-').map(Number);\n\nconst ahoraLuxon = $now.setZone('America/Argentina/Buenos_Aires');\nconst ahoraMin = ahoraLuxon.hour * 60 + ahoraLuxon.minute;\nconst fechaLuxon = ahoraLuxon.set({ year, month, day, hour: 0, minute: 0, second: 0 });\nconst esHoy = fechaLuxon.hasSame(ahoraLuxon, 'day');\n\nconst duracion = $('Traer Servicio').first().json.Tiempo_estimado_min;\nconst dia = $('diaSemana').first().json.diaSemana;\nconst inicioAtencion = $('Horarios Formateados').first().json[`HoEn-${dia}`];\nconst finAtencion = $('Horarios Formateados').first().json[`HoSal-${dia}`];\nconst inicioAlmuerzo = $('Horarios Formateados').first().json[`HoInRec-${dia}`];\nconst finAlmuerzo = $('Horarios Formateados').first().json[`HoFiRec-${dia}`];\n\n// ─── HELPERS ─────────────────────────────────────────────────────────────────\nconst aMin = (hhmm) => {\n  const [h, m] = hhmm.split(\":\").map(Number);\n  return h * 60 + m;\n};\nconst aHora = (minutos) => {\n  const h = Math.floor(minutos / 60).toString().padStart(2, \"0\");\n  const m = (minutos % 60).toString().padStart(2, \"0\");\n  return `${h}:${m}`;\n};\n\n// ─── HORARIOS BASE ────────────────────────────────────────────────────────────\nconst inicioDiaBase = aMin(inicioAtencion);\nconst cierreReal = aMin(finAtencion);\nconst finDia = cierreReal - duracion;\nconst almuerzoInicio = aMin(inicioAlmuerzo);\nconst almuerzoFin = aMin(finAlmuerzo);\n\n// ─── AJUSTE HOY ───────────────────────────────────────────────────────────────\nlet cursorInicio = inicioDiaBase;\nif (esHoy) {\n  const minimoPermitido = ahoraMin + 60;\n  cursorInicio = Math.ceil(Math.max(inicioDiaBase, minimoPermitido) / PASO) * PASO;\n} else {\n  cursorInicio = Math.ceil(inicioDiaBase / PASO) * PASO;\n}\n\n// ─── FUNCIÓN: slot libre (solo bloquea almuerzo) ──────────────────────────────\nconst estaLibre = (slotInicio) => {\n  const slotFin = slotInicio + duracion;\n  return !(slotInicio < almuerzoFin && slotFin > almuerzoInicio);\n};\n\n// ─── TODOS LOS SLOTS LIBRES ───────────────────────────────────────────────────\nconst todosLosSlots = [];\nfor (let t = cursorInicio; t <= finDia; t += PASO) {\n  if (estaLibre(t)) todosLosSlots.push(t);\n}\n\n// ─── ANCLAS: puntos de referencia para sugeridos en día libre ────────────────\n// Sin turnos ocupados usamos los extremos naturales del día como anclas.\n// Así los sugeridos se distribuyen entre mañana y tarde proporcionalmente.\n//\n//  Ancla 1 → inicio de mañana  (primeros slots disponibles)\n//  Ancla 2 → fin de mañana     (slots justo antes del almuerzo)\n//  Ancla 3 → inicio de tarde   (slots justo después del almuerzo)\n//  Ancla 4 → fin de tarde      (últimos slots del día)\n//\n// Cada ancla atrae los 2 slots más cercanos a ella.\n// Resultado: sugeridos naturalmente repartidos en ambas mitades.\n\nconst finManana = almuerzoInicio - duracion; // último slot que termina antes del almuerzo\nconst inicioTarde = almuerzoFin;             // primer slot después del almuerzo\n\nconst anclas = [\n  cursorInicio,  // inicio mañana\n  finManana,     // fin mañana\n  inicioTarde,   // inicio tarde\n  finDia         // fin tarde\n].filter(ancla => ancla >= cursorInicio && ancla <= finDia);\n\n// Para cada ancla, encontrar los slots más cercanos\nconst SLOTS_POR_ANCLA = Math.ceil(TOTAL_SUGERIDOS / anclas.length);\nconst sugeridosSet = new Set();\n\nfor (const ancla of anclas) {\n  if (sugeridosSet.size >= TOTAL_SUGERIDOS) break;\n\n  // Ordenar todos los slots libres por distancia a esta ancla\n  const cercanos = [...todosLosSlots]\n    .filter(t => !sugeridosSet.has(t))\n    .sort((a, b) => Math.abs(a - ancla) - Math.abs(b - ancla));\n\n  cercanos.slice(0, SLOTS_POR_ANCLA).forEach(t => {\n    if (sugeridosSet.size < TOTAL_SUGERIDOS) sugeridosSet.add(t);\n  });\n}\n\n// ─── ARMAR LISTA FINAL ────────────────────────────────────────────────────────\nconst slotsFinales = todosLosSlots.map(t => ({\n  horario: sugeridosSet.has(t) ? `${aHora(t)} → Sugerido` : aHora(t)\n}));\n\n// ─── INSTRUCCIÓN PARA LA IA ───────────────────────────────────────────────────\nconst instruccionIA = `Horarios disponibles para el día seleccionado. No hay turnos reservados aún.\nLos marcados como \"→ Sugerido\" están distribuidos para orientar al cliente.\nREGLA: Ofrecé primero los horarios \"→ Sugerido\". Solo mostrá otros si el cliente los pide o los sugeridos no le convienen.\nNunca listes todos los horarios de golpe.`;\n\nreturn [\n  {\n    json: {\n      slotsDisponibles: slotsFinales,\n      instruccionIA\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2048,
+        224
+      ],
+      "id": "4bd7c929-5698-4f2b-9456-09a84f5a7e36",
+      "name": "Sin -horarios-Recomendacion"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "i0aP21thDHY2T8UDlPfgP",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/i0aP21thDHY2T8UDlPfgP",
+          "cachedResultName": "Configuracion Global"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        -1808,
+        608
+      ],
+      "id": "74fb4a9c-ba78-41a5-aad7-e7a4eff5333a",
+      "name": "Call 'Configuracion Global'"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-03-15T16:05:40.148Z",
+      "createdAt": "2026-03-15T16:05:40.148Z",
+      "role": "workflow:owner",
+      "workflowId": "NpdrUhu0RdhX2Jtr",
+      "projectId": "f3W32VX4HOke6C3N"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "updatedAt": "2026-03-15T16:07:50.175Z",
+      "createdAt": "2026-03-15T16:07:50.175Z",
+      "id": "tfFKp0SW2OnDy7Ub",
+      "name": "Veremma Vanesa"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2026-03-15T16:07:51.623Z",
+  "versionId": "545176f2-0c0d-4498-a702-3de2ad72e3c4"
+}
