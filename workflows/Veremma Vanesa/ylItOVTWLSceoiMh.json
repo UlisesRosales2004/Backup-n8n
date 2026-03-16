@@ -1,0 +1,135 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Variables Globales",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-03-15T16:05:39.755Z",
+  "id": "ylItOVTWLSceoiMh",
+  "isArchived": false,
+  "meta": null,
+  "name": "Configuracion Global-Veremma-V1",
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1",
+              "name": "NombreDueño",
+              "value": "Carla",
+              "type": "string"
+            },
+            {
+              "id": "2",
+              "name": "CelularDueño",
+              "value": "5492616763104@s.whatsapp.net",
+              "type": "string"
+            },
+            {
+              "id": "ff1df30d-8048-4b3d-bf59-a5ad2e9dd30b",
+              "name": "Telefono_Del_Agente",
+              "value": "5492634649502@s.whatsapp.net",
+              "type": "string"
+            },
+            {
+              "id": "3",
+              "name": "NombreDelNegocio",
+              "value": "VEREMMA",
+              "type": "string"
+            },
+            {
+              "id": "4",
+              "name": "EvolutionUrl",
+              "value": "http://evolution-api:8080",
+              "type": "string"
+            },
+            {
+              "id": "4b9f7be8-504f-431b-afb9-54d56eee6862",
+              "name": "EvolutionInstance",
+              "value": "AgenteEstetica",
+              "type": "string"
+            },
+            {
+              "id": "5",
+              "name": "EvolutionApiKey",
+              "value": "F9BC45165023-4F29-A211-F72337ADD8F3",
+              "type": "string"
+            },
+            {
+              "id": "6",
+              "name": "TelegramChatId",
+              "value": "1450492684",
+              "type": "string"
+            },
+            {
+              "id": "7",
+              "name": "TimezoneOffset",
+              "value": "-03:00",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "23abe884-827e-4c61-aa61-e4ccfec2b9a1",
+      "name": "Variables Globales",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        224,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "2471871c-e941-4aa5-bbba-77fe97b90f6e",
+      "name": "When Executed by Another Workflow"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-03-15T16:05:39.757Z",
+      "createdAt": "2026-03-15T16:05:39.757Z",
+      "role": "workflow:owner",
+      "workflowId": "ylItOVTWLSceoiMh",
+      "projectId": "f3W32VX4HOke6C3N"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "updatedAt": "2026-03-15T16:07:50.175Z",
+      "createdAt": "2026-03-15T16:07:50.175Z",
+      "id": "tfFKp0SW2OnDy7Ub",
+      "name": "Veremma Vanesa"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2026-03-15T16:08:45.895Z",
+  "versionId": "3610f7fd-ddde-4f0d-bea0-d59d2ee8aa66"
+}
