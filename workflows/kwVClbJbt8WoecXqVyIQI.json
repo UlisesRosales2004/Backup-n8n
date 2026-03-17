@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-03-15T15:14:24.000Z",
-    "createdAt": "2026-03-15T15:14:23.259Z",
-    "versionId": "11695493-8618-4294-9254-c1f78b703de8",
+    "updatedAt": "2026-03-16T13:29:10.000Z",
+    "createdAt": "2026-03-16T13:29:09.572Z",
+    "versionId": "b41cb8a2-7d92-470f-8e96-4432a8c7b19c",
     "workflowId": "kwVClbJbt8WoecXqVyIQI",
     "nodes": [
       {
@@ -207,7 +207,7 @@
         "name": "Execute Workflow",
         "type": "n8n-nodes-base.executeWorkflow",
         "position": [
-          1728,
+          1760,
           112
         ],
         "typeVersion": 1.2
@@ -477,28 +477,6 @@
           -80
         ],
         "typeVersion": 1
-      },
-      {
-        "parameters": {
-          "operation": "create",
-          "workflowObject": "={{\n{\n  name: $json.name + \" V2\",\n  nodes: $json.activeVersion.nodes,\n  connections: $json.activeVersion.connections,\n  settings: $json.settings\n}\n}}",
-          "requestOptions": {}
-        },
-        "type": "n8n-nodes-base.n8n",
-        "typeVersion": 1,
-        "position": [
-          2032,
-          64
-        ],
-        "id": "a3a2f006-cf11-49c8-9028-2107deca95e8",
-        "name": "Create a workflow",
-        "credentials": {
-          "n8nApi": {
-            "id": "W90YbFDYWkPtRUmY",
-            "name": "n8n account"
-          }
-        },
-        "disabled": true
       }
     ],
     "connections": {
@@ -714,11 +692,11 @@
       }
     },
     "authors": "Cognia Empresa",
-    "name": "Version 11695493",
+    "name": "Version b41cb8a2",
     "description": "",
     "autosaved": false
   },
-  "activeVersionId": "11695493-8618-4294-9254-c1f78b703de8",
+  "activeVersionId": "b41cb8a2-7d92-470f-8e96-4432a8c7b19c",
   "connections": {
     "/": {
       "main": [
@@ -928,22 +906,6 @@
             "index": 0
           }
         ]
-      ]
-    },
-    "Create a workflow": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTTP Request": {
-      "main": [
-        []
       ]
     }
   },
@@ -1426,74 +1388,6 @@
         -80
       ],
       "typeVersion": 1
-    },
-    {
-      "parameters": {
-        "operation": "create",
-        "workflowObject": "={{\n{\n  name: $json.name + \" V2\",\n  nodes: $json.activeVersion.nodes,\n  connections: $json.activeVersion.connections,\n  settings: $json.settings\n}\n}}",
-        "requestOptions": {}
-      },
-      "type": "n8n-nodes-base.n8n",
-      "typeVersion": 1,
-      "position": [
-        2032,
-        64
-      ],
-      "id": "a3a2f006-cf11-49c8-9028-2107deca95e8",
-      "name": "Create a workflow",
-      "credentials": {
-        "n8nApi": {
-          "id": "W90YbFDYWkPtRUmY",
-          "name": "n8n account"
-        }
-      },
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "=http://TU_N8N/rest/projects/PROJECT_ID/workflows/{{$json.id}}",
-        "authentication": "predefinedCredentialType",
-        "nodeCredentialType": "n8nApi",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.3,
-      "position": [
-        2240,
-        64
-      ],
-      "id": "af6b7c03-2655-4081-bd61-96931cebd0ba",
-      "name": "HTTP Request",
-      "credentials": {
-        "n8nApi": {
-          "id": "W90YbFDYWkPtRUmY",
-          "name": "n8n account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "url": "http://localhost:5678/api/v1/workflows",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "X-N8N-API-KEY",
-              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmZWQ4NjQzOS01NTYzLTRmOWEtOGExMy0yMzdmYjAzNTJjNGQiLCJpc3MiOiJuOG4iLCJhdWQiOiJwdWJsaWMtYXBpIiwiaWF0IjoxNzczNTg4MjU5fQ.RFul2G05_GAxArHvEj7DyBfx9f_PamJc6c5iv1Fko0A"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.3,
-      "position": [
-        2192,
-        288
-      ],
-      "id": "1861a8ac-b88b-4200-972d-c8b270ff5d85",
-      "name": "HTTP Request1"
     }
   ],
   "pinData": {
@@ -1565,6 +1459,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-03-15T15:39:54.290Z",
-  "versionId": "a11ad2b4-58d4-4e2b-8d22-028c013c2d56"
+  "updatedAt": "2026-03-16T13:29:09.570Z",
+  "versionId": "b41cb8a2-7d92-470f-8e96-4432a8c7b19c"
 }
