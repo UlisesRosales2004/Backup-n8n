@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-03-15T14:50:45.000Z",
-    "createdAt": "2026-03-15T14:50:44.586Z",
-    "versionId": "79e9fb62-40e2-4afa-90d7-c07fc5b77141",
+    "updatedAt": "2026-03-16T21:22:09.000Z",
+    "createdAt": "2026-03-16T21:22:08.397Z",
+    "versionId": "f28374c7-a05a-4d64-aa2c-1d710feecdf0",
     "workflowId": "a7PR02q4rt2w7LszRKKhQ",
     "nodes": [
       {
@@ -16,7 +16,7 @@
         "name": "When Executed by Another Workflow",
         "type": "n8n-nodes-base.executeWorkflowTrigger",
         "position": [
-          -2016,
+          -2240,
           192
         ]
       },
@@ -40,7 +40,7 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          -352,
+          -144,
           80
         ],
         "id": "75b01371-80d4-4c76-bb1a-586b84e85185",
@@ -74,7 +74,7 @@
         "type": "n8n-nodes-base.if",
         "typeVersion": 2.2,
         "position": [
-          -128,
+          80,
           80
         ],
         "id": "8ffddb15-48dc-4687-9921-913e7a56e060",
@@ -99,7 +99,7 @@
         "type": "n8n-nodes-base.googleCalendar",
         "typeVersion": 1.3,
         "position": [
-          -1024,
+          -1072,
           96
         ],
         "id": "50f2f877-43a3-4bce-98d6-bd00afafebb0",
@@ -129,8 +129,8 @@
         "type": "n8n-nodes-base.set",
         "typeVersion": 3.4,
         "position": [
-          -576,
-          192
+          -656,
+          208
         ],
         "id": "576417be-ee2b-480d-a187-d1862aab9e8f",
         "name": "CitaNoEncontrada"
@@ -163,7 +163,7 @@
         "type": "n8n-nodes-base.if",
         "typeVersion": 2.3,
         "position": [
-          -800,
+          -864,
           96
         ],
         "id": "75251744-e10f-405f-9684-cc7c6ebfe914",
@@ -237,7 +237,7 @@
         "type": "n8n-nodes-base.executeWorkflow",
         "typeVersion": 1.3,
         "position": [
-          96,
+          304,
           -96
         ],
         "id": "481a20c3-482d-4382-afdd-d76e57c5aaec",
@@ -263,7 +263,7 @@
         "type": "n8n-nodes-base.googleCalendar",
         "typeVersion": 1.3,
         "position": [
-          1888,
+          2096,
           -288
         ],
         "id": "5a953482-ac89-4ba7-a8ec-e540ca55cac4",
@@ -322,7 +322,7 @@
         "type": "n8n-nodes-base.executeWorkflow",
         "typeVersion": 1.3,
         "position": [
-          1888,
+          2096,
           -80
         ],
         "id": "a4855875-c539-4104-bcc0-344d4e2beac7",
@@ -345,7 +345,7 @@
         "type": "n8n-nodes-base.set",
         "typeVersion": 3.4,
         "position": [
-          96,
+          304,
           128
         ],
         "id": "2510a9f1-2872-4773-bffb-514a76b69e03",
@@ -368,7 +368,7 @@
         "type": "n8n-nodes-base.set",
         "typeVersion": 3.4,
         "position": [
-          544,
+          752,
           0
         ],
         "id": "caa22894-9db9-4163-a32d-31b55f167584",
@@ -415,7 +415,7 @@
         "type": "n8n-nodes-base.if",
         "typeVersion": 2.3,
         "position": [
-          -576,
+          -368,
           0
         ],
         "id": "2b2e34fd-caa9-4381-9651-26359b509b13",
@@ -448,7 +448,7 @@
         "type": "n8n-nodes-base.if",
         "typeVersion": 2.3,
         "position": [
-          320,
+          528,
           -96
         ],
         "id": "028beb6d-e8c4-4371-8e2a-1c8ef8d4838d",
@@ -462,7 +462,7 @@
         "type": "n8n-nodes-base.stickyNote",
         "typeVersion": 1,
         "position": [
-          400,
+          608,
           -528
         ],
         "id": "63ceaaa6-9830-4ee8-82d8-6db2ae5cb347",
@@ -532,7 +532,7 @@
         "type": "n8n-nodes-base.googleCalendar",
         "typeVersion": 1.3,
         "position": [
-          1216,
+          1424,
           -128
         ],
         "id": "402e62f4-e696-4599-8a77-ff5ce5263f4b",
@@ -572,7 +572,7 @@
         "type": "n8n-nodes-base.if",
         "typeVersion": 2.3,
         "position": [
-          1664,
+          1872,
           -128
         ],
         "id": "f8934a23-8d3e-482b-b266-9fa91976576b",
@@ -586,7 +586,7 @@
         "type": "n8n-nodes-base.splitOut",
         "typeVersion": 1,
         "position": [
-          992,
+          1200,
           -128
         ],
         "id": "afc70cf2-0c99-4c0d-933c-afb63784653c",
@@ -606,7 +606,7 @@
         "type": "n8n-nodes-base.aggregate",
         "typeVersion": 1,
         "position": [
-          1440,
+          1648,
           -128
         ],
         "id": "e25033d6-c26d-4a45-9c05-bb679f11da02",
@@ -619,7 +619,7 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          544,
+          752,
           -192
         ],
         "id": "93d69eb9-6985-47ab-b310-f360b54cfec4",
@@ -653,7 +653,7 @@
         "type": "n8n-nodes-base.if",
         "typeVersion": 2.3,
         "position": [
-          768,
+          976,
           -192
         ],
         "id": "77ca8648-d4e4-4352-9bc1-681d22d5e86d",
@@ -666,7 +666,7 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          2128,
+          2336,
           -80
         ],
         "id": "5be44545-8b25-464c-aac4-3d455d0ff25e",
@@ -690,7 +690,7 @@
         "type": "n8n-nodes-base.set",
         "typeVersion": 3.4,
         "position": [
-          2576,
+          2784,
           -304
         ],
         "id": "8ee5fb24-d5c9-430b-9563-4a816b618426",
@@ -723,7 +723,7 @@
         "type": "n8n-nodes-base.if",
         "typeVersion": 2.3,
         "position": [
-          2288,
+          2496,
           -400
         ],
         "id": "3247bd36-4724-43b6-9ebe-6e08cce67ae3",
@@ -736,7 +736,7 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          2528,
+          2736,
           -528
         ],
         "id": "6b174f77-e757-4127-96d7-f409dd6e8a2d",
@@ -769,7 +769,7 @@
         "type": "n8n-nodes-base.if",
         "typeVersion": 2.3,
         "position": [
-          2736,
+          2944,
           -528
         ],
         "id": "ce435e94-64c9-4f99-97da-e1031d38f6d0",
@@ -792,7 +792,7 @@
         "type": "n8n-nodes-base.set",
         "typeVersion": 3.4,
         "position": [
-          3008,
+          3216,
           -416
         ],
         "id": "ed1e2f61-6eae-45b2-a111-ee4f5f2c3a92",
@@ -815,7 +815,7 @@
         "type": "n8n-nodes-base.set",
         "typeVersion": 3.4,
         "position": [
-          3248,
+          3456,
           -528
         ],
         "id": "13cf4fc2-10be-42e5-a0d7-9574692b3fa6",
@@ -838,7 +838,7 @@
         "type": "n8n-nodes-base.set",
         "typeVersion": 3.4,
         "position": [
-          3696,
+          3904,
           -848
         ],
         "id": "05e88eda-d81c-4cf5-a4a8-c85275354b06",
@@ -859,7 +859,7 @@
         "type": "@n8n/n8n-nodes-langchain.memoryManager",
         "typeVersion": 1.1,
         "position": [
-          3344,
+          3552,
           -848
         ],
         "id": "71750fec-a5e3-4cfd-84e5-2700ed6c4750",
@@ -878,7 +878,7 @@
         "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
         "typeVersion": 1.5,
         "position": [
-          3344,
+          3552,
           -656
         ],
         "id": "f6468ae7-b5ee-4aaa-b0c0-2e3f2e57af40",
@@ -925,7 +925,7 @@
         "type": "n8n-nodes-base.httpRequest",
         "typeVersion": 4.2,
         "position": [
-          3056,
+          3264,
           -640
         ],
         "id": "8d8e6548-fb9b-4d29-94cb-b8262cd7b3d0",
@@ -956,11 +956,67 @@
         "type": "n8n-nodes-base.executeWorkflow",
         "typeVersion": 1.3,
         "position": [
-          -1856,
+          -1904,
           192
         ],
         "id": "cb443a25-164a-470d-bc6f-86db34ae46fd",
         "name": "Call 'Configuracion Global'"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "55f68382-fbf4-467d-ad66-0dbb6b19773b",
+                "leftValue": "={{$now}}",
+                "rightValue": "={{ $json.start.dateTime }}",
+                "operator": {
+                  "type": "dateTime",
+                  "operation": "before"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          -656,
+          64
+        ],
+        "id": "969e2d10-ced1-4388-a6e2-36ea8ed9be32",
+        "name": "fecha actual futura"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "149563b5-f1e5-46a3-b252-31c6894c8265",
+                "name": "Respuesta",
+                "value": "No se puede modificar una cita que ya paso.",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -416,
+          176
+        ],
+        "id": "0b008c85-ed52-4210-9313-ff46954a9a6e",
+        "name": "Fecha pasada"
       }
     ],
     "connections": {
@@ -1030,7 +1086,7 @@
         "main": [
           [
             {
-              "node": "If3",
+              "node": "fecha actual futura",
               "type": "main",
               "index": 0
             }
@@ -1313,14 +1369,32 @@
             }
           ]
         ]
+      },
+      "fecha actual futura": {
+        "main": [
+          [
+            {
+              "node": "If3",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Fecha pasada",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
       }
     },
     "authors": "Cognia Empresa",
-    "name": "Version 79e9fb62",
+    "name": "Version f28374c7",
     "description": "",
     "autosaved": false
   },
-  "activeVersionId": "79e9fb62-40e2-4afa-90d7-c07fc5b77141",
+  "activeVersionId": "f28374c7-a05a-4d64-aa2c-1d710feecdf0",
   "connections": {
     "When Executed by Another Workflow": {
       "main": [
@@ -1388,7 +1462,7 @@
       "main": [
         [
           {
-            "node": "If3",
+            "node": "fecha actual futura",
             "type": "main",
             "index": 0
           }
@@ -1671,6 +1745,24 @@
           }
         ]
       ]
+    },
+    "fecha actual futura": {
+      "main": [
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fecha pasada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2026-01-10T18:52:16.066Z",
@@ -1691,7 +1783,7 @@
       "name": "When Executed by Another Workflow",
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "position": [
-        -2016,
+        -2240,
         192
       ]
     },
@@ -1715,7 +1807,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -352,
+        -144,
         80
       ],
       "id": "75b01371-80d4-4c76-bb1a-586b84e85185",
@@ -1749,7 +1841,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -128,
+        80,
         80
       ],
       "id": "8ffddb15-48dc-4687-9921-913e7a56e060",
@@ -1774,7 +1866,7 @@
       "type": "n8n-nodes-base.googleCalendar",
       "typeVersion": 1.3,
       "position": [
-        -1024,
+        -1072,
         96
       ],
       "id": "50f2f877-43a3-4bce-98d6-bd00afafebb0",
@@ -1804,8 +1896,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -576,
-        192
+        -656,
+        208
       ],
       "id": "576417be-ee2b-480d-a187-d1862aab9e8f",
       "name": "CitaNoEncontrada"
@@ -1838,7 +1930,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        -800,
+        -864,
         96
       ],
       "id": "75251744-e10f-405f-9684-cc7c6ebfe914",
@@ -1912,7 +2004,7 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.3,
       "position": [
-        96,
+        304,
         -96
       ],
       "id": "481a20c3-482d-4382-afdd-d76e57c5aaec",
@@ -1938,7 +2030,7 @@
       "type": "n8n-nodes-base.googleCalendar",
       "typeVersion": 1.3,
       "position": [
-        1888,
+        2096,
         -288
       ],
       "id": "5a953482-ac89-4ba7-a8ec-e540ca55cac4",
@@ -1997,7 +2089,7 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.3,
       "position": [
-        1888,
+        2096,
         -80
       ],
       "id": "a4855875-c539-4104-bcc0-344d4e2beac7",
@@ -2020,7 +2112,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        96,
+        304,
         128
       ],
       "id": "2510a9f1-2872-4773-bffb-514a76b69e03",
@@ -2043,7 +2135,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        544,
+        752,
         0
       ],
       "id": "caa22894-9db9-4163-a32d-31b55f167584",
@@ -2090,7 +2182,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        -576,
+        -368,
         0
       ],
       "id": "2b2e34fd-caa9-4381-9651-26359b509b13",
@@ -2123,7 +2215,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        320,
+        528,
         -96
       ],
       "id": "028beb6d-e8c4-4371-8e2a-1c8ef8d4838d",
@@ -2137,7 +2229,7 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        400,
+        608,
         -528
       ],
       "id": "63ceaaa6-9830-4ee8-82d8-6db2ae5cb347",
@@ -2207,7 +2299,7 @@
       "type": "n8n-nodes-base.googleCalendar",
       "typeVersion": 1.3,
       "position": [
-        1216,
+        1424,
         -128
       ],
       "id": "402e62f4-e696-4599-8a77-ff5ce5263f4b",
@@ -2247,7 +2339,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        1664,
+        1872,
         -128
       ],
       "id": "f8934a23-8d3e-482b-b266-9fa91976576b",
@@ -2261,7 +2353,7 @@
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        992,
+        1200,
         -128
       ],
       "id": "afc70cf2-0c99-4c0d-933c-afb63784653c",
@@ -2281,7 +2373,7 @@
       "type": "n8n-nodes-base.aggregate",
       "typeVersion": 1,
       "position": [
-        1440,
+        1648,
         -128
       ],
       "id": "e25033d6-c26d-4a45-9c05-bb679f11da02",
@@ -2294,7 +2386,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        544,
+        752,
         -192
       ],
       "id": "93d69eb9-6985-47ab-b310-f360b54cfec4",
@@ -2328,7 +2420,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        768,
+        976,
         -192
       ],
       "id": "77ca8648-d4e4-4352-9bc1-681d22d5e86d",
@@ -2341,7 +2433,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2128,
+        2336,
         -80
       ],
       "id": "5be44545-8b25-464c-aac4-3d455d0ff25e",
@@ -2365,7 +2457,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2576,
+        2784,
         -304
       ],
       "id": "8ee5fb24-d5c9-430b-9563-4a816b618426",
@@ -2398,7 +2490,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        2288,
+        2496,
         -400
       ],
       "id": "3247bd36-4724-43b6-9ebe-6e08cce67ae3",
@@ -2411,7 +2503,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2528,
+        2736,
         -528
       ],
       "id": "6b174f77-e757-4127-96d7-f409dd6e8a2d",
@@ -2444,7 +2536,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        2736,
+        2944,
         -528
       ],
       "id": "ce435e94-64c9-4f99-97da-e1031d38f6d0",
@@ -2467,7 +2559,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        3008,
+        3216,
         -416
       ],
       "id": "ed1e2f61-6eae-45b2-a111-ee4f5f2c3a92",
@@ -2490,7 +2582,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        3248,
+        3456,
         -528
       ],
       "id": "13cf4fc2-10be-42e5-a0d7-9574692b3fa6",
@@ -2513,7 +2605,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        3696,
+        3904,
         -848
       ],
       "id": "05e88eda-d81c-4cf5-a4a8-c85275354b06",
@@ -2534,7 +2626,7 @@
       "type": "@n8n/n8n-nodes-langchain.memoryManager",
       "typeVersion": 1.1,
       "position": [
-        3344,
+        3552,
         -848
       ],
       "id": "71750fec-a5e3-4cfd-84e5-2700ed6c4750",
@@ -2553,7 +2645,7 @@
       "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
       "typeVersion": 1.5,
       "position": [
-        3344,
+        3552,
         -656
       ],
       "id": "f6468ae7-b5ee-4aaa-b0c0-2e3f2e57af40",
@@ -2600,7 +2692,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        3056,
+        3264,
         -640
       ],
       "id": "8d8e6548-fb9b-4d29-94cb-b8262cd7b3d0",
@@ -2631,18 +2723,74 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.3,
       "position": [
-        -1856,
+        -1904,
         192
       ],
       "id": "cb443a25-164a-470d-bc6f-86db34ae46fd",
       "name": "Call 'Configuracion Global'"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "55f68382-fbf4-467d-ad66-0dbb6b19773b",
+              "leftValue": "={{$now}}",
+              "rightValue": "={{ $json.start.dateTime }}",
+              "operator": {
+                "type": "dateTime",
+                "operation": "before"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -656,
+        64
+      ],
+      "id": "969e2d10-ced1-4388-a6e2-36ea8ed9be32",
+      "name": "fecha actual futura"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "149563b5-f1e5-46a3-b252-31c6894c8265",
+              "name": "Respuesta",
+              "value": "No se puede modificar una cita que ya paso.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -416,
+        176
+      ],
+      "id": "0b008c85-ed52-4210-9313-ff46954a9a6e",
+      "name": "Fecha pasada"
     }
   ],
   "pinData": {
     "When Executed by Another Workflow": [
       {
         "json": {
-          "Fecha actual": "2026-03-19T17:00:00",
+          "Fecha actual": "2026-03-14T08:00:00",
           "Fecha nueva": "2026-03-19T17:30:00",
           "Nombre": "Rocío Bleisen",
           "Telefono": "5492616763104@s.whatsapp.net",
@@ -2679,6 +2827,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2026-03-15T14:50:49.639Z",
-  "versionId": "79e9fb62-40e2-4afa-90d7-c07fc5b77141"
+  "updatedAt": "2026-03-16T21:22:08.396Z",
+  "versionId": "f28374c7-a05a-4d64-aa2c-1d710feecdf0"
 }
