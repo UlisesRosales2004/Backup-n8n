@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-03-13T23:37:00.000Z",
-    "createdAt": "2026-03-13T23:36:59.267Z",
-    "versionId": "0d33bc15-4ec3-4395-a1f5-a41e52109dac",
+    "updatedAt": "2026-03-16T19:48:12.000Z",
+    "createdAt": "2026-03-16T19:48:10.581Z",
+    "versionId": "f5ee35d6-8285-4e77-9d9e-1afbe7028c42",
     "workflowId": "i0aP21thDHY2T8UDlPfgP",
     "nodes": [
       {
@@ -19,7 +19,7 @@
               {
                 "id": "2",
                 "name": "CelularDueño",
-                "value": "5492616763104@s.whatsapp.net",
+                "value": "5492616763100@s.whatsapp.net",
                 "type": "string"
               },
               {
@@ -105,11 +105,11 @@
       }
     },
     "authors": "Cognia Empresa",
-    "name": "Version 0d33bc15",
+    "name": "Version f5ee35d6",
     "description": "",
     "autosaved": false
   },
-  "activeVersionId": "0d33bc15-4ec3-4395-a1f5-a41e52109dac",
+  "activeVersionId": "f5ee35d6-8285-4e77-9d9e-1afbe7028c42",
   "connections": {
     "When Executed by Another Workflow": {
       "main": [
@@ -142,7 +142,7 @@
             {
               "id": "2",
               "name": "CelularDueño",
-              "value": "5492616763104@s.whatsapp.net",
+              "value": "5492616763100@s.whatsapp.net",
               "type": "string"
             },
             {
@@ -242,6 +242,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2026-03-15T15:40:29.060Z",
-  "versionId": "0d33bc15-4ec3-4395-a1f5-a41e52109dac"
+  "updatedAt": "2026-03-16T19:48:10.579Z",
+  "versionId": "f5ee35d6-8285-4e77-9d9e-1afbe7028c42"
 }
