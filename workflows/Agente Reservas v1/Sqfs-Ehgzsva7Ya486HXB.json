@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-03-15T14:51:13.000Z",
-    "createdAt": "2026-03-15T14:51:12.696Z",
-    "versionId": "adbe9a33-71f0-4832-8c6b-cd0e1b61ab72",
+    "updatedAt": "2026-03-16T20:40:08.000Z",
+    "createdAt": "2026-03-16T20:40:06.912Z",
+    "versionId": "b2e962de-fd60-4aa9-8365-0f45fb7a5906",
     "workflowId": "Sqfs-Ehgzsva7Ya486HXB",
     "nodes": [
       {
@@ -27,7 +27,7 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          608,
+          576,
           -16
         ],
         "id": "2880883f-1d9e-469f-a734-4c2758790709",
@@ -363,7 +363,9 @@
         "name": "Edit Fields2"
       },
       {
-        "parameters": {},
+        "parameters": {
+          "amount": 3
+        },
         "type": "n8n-nodes-base.wait",
         "typeVersion": 1.1,
         "position": [
@@ -611,11 +613,11 @@
       }
     },
     "authors": "Cognia Empresa",
-    "name": "Version adbe9a33",
+    "name": "Version b2e962de",
     "description": "",
     "autosaved": false
   },
-  "activeVersionId": "adbe9a33-71f0-4832-8c6b-cd0e1b61ab72",
+  "activeVersionId": "b2e962de-fd60-4aa9-8365-0f45fb7a5906",
   "connections": {
     "When Executed by Another Workflow": {
       "main": [
@@ -790,7 +792,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        608,
+        576,
         -16
       ],
       "id": "2880883f-1d9e-469f-a734-4c2758790709",
@@ -1126,7 +1128,9 @@
       "name": "Edit Fields2"
     },
     {
-      "parameters": {},
+      "parameters": {
+        "amount": 3
+      },
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
@@ -1267,6 +1271,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2026-03-15T14:51:12.695Z",
-  "versionId": "adbe9a33-71f0-4832-8c6b-cd0e1b61ab72"
+  "updatedAt": "2026-03-16T20:40:06.911Z",
+  "versionId": "b2e962de-fd60-4aa9-8365-0f45fb7a5906"
 }
