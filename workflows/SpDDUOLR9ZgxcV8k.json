@@ -1,0 +1,1139 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Get many rows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fecha pasada o futura?": {
+      "main": [
+        [
+          {
+            "node": "valida?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Formatear fecha": {
+      "main": [
+        [
+          {
+            "node": "Obtener hora y dia de la semana",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener hora y dia de la semana": {
+      "main": [
+        [
+          {
+            "node": "Activo?7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "valida?": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Hoy-Pasada?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hoy-Pasada?": {
+      "main": [
+        [
+          {
+            "node": "valida",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "valida": {
+      "main": [
+        [
+          {
+            "node": "Formatear fecha",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many rows": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "quitar 00",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "quitar 00": {
+      "main": [
+        [
+          {
+            "node": "Horarios Formateados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Horarios Formateados": {
+      "main": [
+        [
+          {
+            "node": "Fecha pasada o futura?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Activo?7": {
+      "main": [
+        [
+          {
+            "node": "Disponible",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Dia no disponible7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verificar horarios": {
+      "main": [
+        [
+          {
+            "node": "HorariosSemana9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SiempreDisponible": {
+      "main": [
+        [
+          {
+            "node": "Verificar horarios",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Dia disponible",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Comparar Fechas": {
+      "main": [
+        [
+          {
+            "node": "cohincide",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dia Seleccionado": {
+      "main": [
+        [
+          {
+            "node": "Comparar Fechas",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Dia invalido1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "cohincide": {
+      "main": [
+        [
+          {
+            "node": "Verificar horarios",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Dia invalido1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dia disponible": {
+      "main": [
+        [
+          {
+            "node": "Verificar horarios",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Dia Seleccionado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Disponible": {
+      "main": [
+        [
+          {
+            "node": "SiempreDisponible",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Servicio no disponible",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-03-16T07:00:02.020Z",
+  "id": "SpDDUOLR9ZgxcV8k",
+  "isArchived": true,
+  "meta": null,
+  "name": "comprobar_fecha_clinica-Veremma-V1",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "jsonExample",
+        "jsonExample": "{\n  \"Fecha\" : \"2025-07-09T15:30:00\",\n  \"Duracion\" :2,\n  \"Disponibilidad\": \"Siempre\",\n  \"DiaDisponible\":\"\"\n}"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -1856,
+        3008
+      ],
+      "id": "83758aa5-fc2e-4778-ab0f-2b9502eae78d",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d31283d5-aa5a-432d-a457-9a071ee666f6",
+              "name": "Justificacion",
+              "value": "La fecha ingresada es pasada, porfavor ingrese una fecha valida",
+              "type": "string"
+            },
+            {
+              "id": "c5c1814e-fad8-4782-89d5-4b9ef2df6dd2",
+              "name": "Valida",
+              "value": false,
+              "type": "boolean"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -288,
+        2912
+      ],
+      "id": "6f510d6d-fbea-4e4a-911c-085ce36d40ab",
+      "name": "Edit Fields3"
+    },
+    {
+      "parameters": {
+        "jsCode": "const fechaTexto = $('When Executed by Another Workflow').first().json.Fecha\nconst fechaInput = new Date(fechaTexto);\nconst fechaActual = new Date();\n\n// Formatear ambas fechas a YYYY-MM-DD\nconst formatoFecha = (fecha) => fecha.toISOString().substring(0, 10);\n\nconst fechaInputStr = formatoFecha(fechaInput);\nconst fechaActualStr = formatoFecha(fechaActual);\n\nif (fechaInputStr < fechaActualStr) {\n  return [\n    {\n      json: {\n        valida: false,\n        mensaje: \"Fecha inválida. Es una fecha pasada.\",\n        fecha: fechaInputStr\n      }\n    }\n  ];\n} else {\n  return [\n    {\n      json: {\n        valida: true,\n        mensaje: \"La fecha es válida (hoy o en el futuro).\",\n        fecha: fechaInputStr\n      }\n    }\n  ];\n}\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -736,
+        3008
+      ],
+      "id": "ece0cbf6-678a-436c-88ea-81cc0049628d",
+      "name": "Fecha pasada o futura?"
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = $('When Executed by Another Workflow').first().json.Fecha;\n\n// Convertir a objeto Date\nconst date = new Date(raw);\n\n// Formatear componentes\nconst dd = String(date.getDate()).padStart(2, '0');\nconst mm = String(date.getMonth() + 1).padStart(2, '0'); // getMonth() es base 0\nconst yyyy = date.getFullYear();\nconst HH = String(date.getHours()).padStart(2, '0');\nconst min = String(date.getMinutes()).padStart(2, '0');\n\n// Resultado final\nconst formatted = `${dd}/${mm}/${yyyy} ${HH}:${min}`;\n\nreturn [{ json: { formato_final: formatted } }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        160,
+        3008
+      ],
+      "id": "b75a6452-a6e8-4c2b-8424-cac9b709d806",
+      "name": "Formatear fecha"
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = $input.first().json.formato_final; // \"17/04/2025 08:00\"\n\nconst [fechaRaw, hora] = input.split(\" \");\nconst [dia, mes, año] = fechaRaw.split(\"/\");\n\nconst fechaISO = `${año}-${mes}-${dia}T00:00:00Z`;\nconst fechaDate = new Date(fechaISO);\n\nconst diasSemana = [\"Domingo\", \"Lunes\", \"Martes\", \"Miercoles\", \"Jueves\", \"Viernes\", \"Sabado\"];\nconst diaSemana = diasSemana[fechaDate.getUTCDay()];\n\nreturn [{\n  json: {\n    query: input,\n    fecha: fechaRaw,\n    hora: hora,\n    diaSemana: diaSemana\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        384,
+        3008
+      ],
+      "id": "84c9410a-e443-4ee4-8d6f-0ef01a3a2d5c",
+      "name": "Obtener hora y dia de la semana"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b5fbe098-7ea1-4cda-abc8-ec9b060131c3",
+              "leftValue": "={{ $json.valida }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -512,
+        3008
+      ],
+      "id": "95c14b44-c21e-4b92-9670-e39929d790d8",
+      "name": "valida?"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Fecha recibida\nconst fechaStr = $('When Executed by Another Workflow').first().json.Fecha;\n\n/*\nParse seguro SIN Date(string)\n*/\nconst [datePart, timePart] = fechaStr.split('T');\nconst [year, month, day] = datePart.split('-').map(Number);\nconst [hour, minute, second] = timePart.split(':').map(Number);\n\n// Convertimos la fecha a Luxon (hora local real)\nconst ahoraLuxon = $now.setZone('America/Argentina/Buenos_Aires');\n\nconst fechaLuxon = ahoraLuxon.set({\n  year,\n  month,\n  day,\n  hour,\n  minute,\n  second: second || 0\n});\n\n// ----------------------\n// Margen configurable\n// ----------------------\nconst margenMin = 30; // ← CAMBIAR SOLO ESTO\n\nconst ahoraMasMargen = ahoraLuxon.plus({ minutes: margenMin });\n\n// ----------------------\n// ¿Es hoy?\n// ----------------------\nconst esHoy = fechaLuxon.hasSame(ahoraLuxon, 'day');\n\nlet valida;\n\nif (!esHoy) {\n  valida = true;\n} else {\n  valida = fechaLuxon > ahoraMasMargen;\n}\n\nreturn [\n  {\n    json: {\n      valida,\n      debug: {\n        ahoraArgentina: ahoraLuxon.toFormat('HH:mm'),\n        fechaArgentina: fechaLuxon.toFormat('HH:mm'),\n        ahoraMasMargen: ahoraMasMargen.toFormat('HH:mm'),\n        margenMin,\n        esHoy\n      }\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -288,
+        3104
+      ],
+      "id": "750a800d-e8e8-43e1-9e7e-3481839138cf",
+      "name": "Hoy-Pasada?"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "c126f29b-6796-4cae-a0bf-bd32d38271f7",
+              "leftValue": "={{ $json.valida }}",
+              "rightValue": "=",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -64,
+        3104
+      ],
+      "id": "d5ae4e80-f541-4fb1-8d6b-af5e273532d5",
+      "name": "valida"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d31283d5-aa5a-432d-a457-9a071ee666f6",
+              "name": "Justificacion",
+              "value": "=Para el día de hoy debe seleccionar una hora posterior a las {{$now.setZone('America/Argentina/Buenos_Aires').plus({ hours: 1 }).toFormat('HH:mm')}}.",
+              "type": "string"
+            },
+            {
+              "id": "c5c1814e-fad8-4782-89d5-4b9ef2df6dd2",
+              "name": "Valida",
+              "value": false,
+              "type": "boolean"
+            },
+            {
+              "id": "df43f195-2bdf-4003-8271-be4b5ed51d17",
+              "name": "",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        160,
+        3200
+      ],
+      "id": "56f0cfda-6fb3-47c4-ae79-cfed1c7572cb",
+      "name": "Edit Fields4"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "pvalhsum160gh07",
+        "table": "mbcz7o961ekrj35",
+        "limit": 8,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        -1632,
+        3008
+      ],
+      "id": "45f87d25-39fb-4aea-93fc-b86259894773",
+      "name": "Get many rows",
+      "executeOnce": false,
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "NJEMSwQ8VfnQXOIP",
+          "name": "NocoDB Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "Día de la Semana"
+            },
+            {
+              "fieldToAggregate": "Hora de Apertura"
+            },
+            {
+              "fieldToAggregate": "Inicio de Receso"
+            },
+            {
+              "fieldToAggregate": "Fin de Receso"
+            },
+            {
+              "fieldToAggregate": "Hora de Cierre"
+            },
+            {
+              "fieldToAggregate": "Abierto"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        -1408,
+        3008
+      ],
+      "id": "a6842416-dc99-4242-b6e8-ab21e0b325dc",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = items[0].json;\n\nfunction quitarSegundos(arr) {\n  return arr.map(hora => {\n    if (typeof hora === \"string\") {\n      return hora.slice(0, 5); // \"08:00:00\" -> \"08:00\"\n    }\n    return hora;\n  });\n}\n\ndata[\"Hora de Apertura\"] = quitarSegundos(data[\"Hora de Apertura\"]);\ndata[\"Inicio de Receso\"] = quitarSegundos(data[\"Inicio de Receso\"]);\ndata[\"Fin de Receso\"] = quitarSegundos(data[\"Fin de Receso\"]);\ndata[\"Hora de Cierre\"] = quitarSegundos(data[\"Hora de Cierre\"]);\n\nreturn [{ json: data }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1184,
+        3008
+      ],
+      "id": "6b0dce17-1a21-45e7-b012-4004b6f25bf7",
+      "name": "quitar 00"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "539a697d-f98f-4e25-a610-dcdf0dccf5b2",
+              "name": "HoEn-Domingo",
+              "value": "={{ $json['Hora de Apertura'][6] }}",
+              "type": "string"
+            },
+            {
+              "id": "7a3e71ce-f835-499e-b143-60ea6ce513cd",
+              "name": "HoInRec-Domingo",
+              "value": "={{ $json['Inicio de Receso'][6] }}",
+              "type": "string"
+            },
+            {
+              "id": "003d5787-291c-42f2-9728-0bb026150a54",
+              "name": "HoFiRec-Domingo",
+              "value": "={{ $json['Fin de Receso'][6] }}",
+              "type": "string"
+            },
+            {
+              "id": "9767e8bb-ee0e-4412-aa9e-2ec5d347cf23",
+              "name": "HoSal-Domingo",
+              "value": "={{ $json['Hora de Cierre'][6] }}",
+              "type": "string"
+            },
+            {
+              "id": "7405e177-138a-4c25-9bcf-5a51fd762518",
+              "name": "Dispo-Domingo",
+              "value": "={{ $json.Abierto[6] }}",
+              "type": "boolean"
+            },
+            {
+              "id": "20383693-9d14-483f-8405-c26b754e0cb7",
+              "name": "HoEn-Lunes",
+              "value": "={{ $json['Hora de Apertura'][0] }}",
+              "type": "string"
+            },
+            {
+              "id": "b9cf4c83-44f0-488f-9b32-8bf64399a8c5",
+              "name": "HoInRec-Lunes",
+              "value": "={{ $json['Inicio de Receso'][0] }}",
+              "type": "string"
+            },
+            {
+              "id": "bd797cef-b3af-4b02-91fd-5d88a5c98c8f",
+              "name": "HoFiRec-Lunes",
+              "value": "={{ $json['Fin de Receso'][0] }}",
+              "type": "string"
+            },
+            {
+              "id": "d502bfae-0c03-4172-a087-8e51ff4cb93f",
+              "name": "HoSal-Lunes",
+              "value": "={{ $json['Hora de Cierre'][0] }}",
+              "type": "string"
+            },
+            {
+              "id": "82ac0e27-7865-4505-9f64-6c6e8cd520fe",
+              "name": "Dispo-Lunes",
+              "value": "={{ $json.Abierto[0] }}",
+              "type": "boolean"
+            },
+            {
+              "id": "922648b5-dc5b-4064-ad97-526110fbbcbb",
+              "name": "HoEn-Martes",
+              "value": "={{ $json['Hora de Apertura'][1] }}",
+              "type": "string"
+            },
+            {
+              "id": "60fb0e35-11a2-4535-a3c8-64b251a8cc99",
+              "name": "HoInRec-Martes",
+              "value": "={{ $json['Inicio de Receso'][1] }}",
+              "type": "string"
+            },
+            {
+              "id": "6bb88062-30a1-4c94-96b0-3fc9cc61e641",
+              "name": "HoFiRec-Martes",
+              "value": "={{ $json['Fin de Receso'][1] }}",
+              "type": "string"
+            },
+            {
+              "id": "8e45c8ae-e413-4f83-9b72-5ec73c17db0a",
+              "name": "HoSal-Martes",
+              "value": "={{ $json['Hora de Cierre'][1] }}",
+              "type": "string"
+            },
+            {
+              "id": "d5390564-8ac9-4cf1-bb54-ee7f72ebf13d",
+              "name": "Dispo-Martes",
+              "value": "={{ $json.Abierto[1] }}",
+              "type": "boolean"
+            },
+            {
+              "id": "52dcc8f4-a74a-4eb7-bd00-7af636bc3042",
+              "name": "HoEn-Miercoles",
+              "value": "={{ $json['Hora de Apertura'][2] }}",
+              "type": "string"
+            },
+            {
+              "id": "eaa41b33-975f-473e-9134-6b661298f735",
+              "name": "HoInRec-Miercoles",
+              "value": "={{ $json['Inicio de Receso'][2] }}",
+              "type": "string"
+            },
+            {
+              "id": "1268cb91-29ae-4d4e-9a21-6e0c9f93663f",
+              "name": "HoFiRec-Miercoles",
+              "value": "= {{ $json['Fin de Receso'][2] }}",
+              "type": "string"
+            },
+            {
+              "id": "849d9d61-895f-4022-bf50-930975f33ca1",
+              "name": "HoSal-Miercoles",
+              "value": "={{ $json['Hora de Cierre'][2] }}",
+              "type": "string"
+            },
+            {
+              "id": "e1874258-0d59-4b2c-abb9-b55d7a53be20",
+              "name": "Dispo-Miercoles",
+              "value": "={{ $json.Abierto[2] }}",
+              "type": "boolean"
+            },
+            {
+              "id": "ad6c124b-b341-42d6-bd23-64f6f5eace30",
+              "name": "HoEn-Jueves",
+              "value": "={{ $json['Hora de Apertura'][3] }}",
+              "type": "string"
+            },
+            {
+              "id": "25f5210e-17a2-42ca-a53a-2b78fdd8848a",
+              "name": "HoInRec-Jueves",
+              "value": "={{ $json['Inicio de Receso'][3] }}",
+              "type": "string"
+            },
+            {
+              "id": "6a064d9f-189b-4f3f-990e-e3c4ccb71960",
+              "name": "HoFiRec-Jueves",
+              "value": "={{ $json['Fin de Receso'][3] }}",
+              "type": "string"
+            },
+            {
+              "id": "72104dba-f187-4e7c-a0eb-f4f45df396e7",
+              "name": "HoSal-Jueves",
+              "value": "={{ $json['Hora de Cierre'][3] }}",
+              "type": "string"
+            },
+            {
+              "id": "91eeb350-3477-4489-9094-540ca806e4b3",
+              "name": "Dispo-Jueves",
+              "value": "={{ $json.Abierto[3] }}",
+              "type": "boolean"
+            },
+            {
+              "id": "1d87ab43-7a22-42f8-88f0-c0e11d8bf17b",
+              "name": "HoEn-Viernes",
+              "value": "={{ $json['Hora de Apertura'][4] }}",
+              "type": "string"
+            },
+            {
+              "id": "15336de1-f5d4-439e-a7ce-d242b6bf5021",
+              "name": "HoInRec-Viernes",
+              "value": "={{ $json['Inicio de Receso'][4] }}",
+              "type": "string"
+            },
+            {
+              "id": "0a64dbb0-9043-4037-9547-201a787f86fe",
+              "name": "HoFiRec-Viernes",
+              "value": "={{ $json['Fin de Receso'][4] }}",
+              "type": "string"
+            },
+            {
+              "id": "ed7f05c1-cdfa-482c-a7f7-b05c12020f48",
+              "name": "HoSal-Viernes",
+              "value": "={{ $json['Hora de Cierre'][4] }}",
+              "type": "string"
+            },
+            {
+              "id": "def72de4-4fd2-4d8a-97c3-337ebb4fb03a",
+              "name": "Dispo-Viernes",
+              "value": "={{ $json.Abierto[4] }}",
+              "type": "boolean"
+            },
+            {
+              "id": "3a9b236d-937a-4de3-8c68-02a9172b2df9",
+              "name": "HoEn-Sabado",
+              "value": "={{ $json['Hora de Apertura'][5] }}",
+              "type": "string"
+            },
+            {
+              "id": "4f7b0ed0-bc27-40a0-9273-110e553b8c53",
+              "name": "HoInRec-Sabado",
+              "value": "={{ $json['Inicio de Receso'][5] }}",
+              "type": "string"
+            },
+            {
+              "id": "e5432df1-2485-4be5-b09d-5c09bdfeadbb",
+              "name": "HoFiRec-Sabado",
+              "value": "={{ $json['Fin de Receso'][5] }}",
+              "type": "string"
+            },
+            {
+              "id": "c2e037e8-f495-4619-aabf-4851d8b98bde",
+              "name": "HoSal-Sabado",
+              "value": "={{ $json['Hora de Cierre'][5] }}",
+              "type": "string"
+            },
+            {
+              "id": "6f93ae74-b7c4-413c-a5b7-806bf165a4a6",
+              "name": "Dispo-Sabado",
+              "value": "={{ $json.Abierto[5] }}",
+              "type": "boolean"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -960,
+        3008
+      ],
+      "id": "50652041-fbaf-4e05-a85d-2fa5e925f61c",
+      "name": "Horarios Formateados"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "2c2c7a6b-d8d9-42fe-83b7-83f12fb7cbf9",
+              "leftValue": "={{ $('Horarios Formateados').item.json[`Dispo-${$json.diaSemana}`] }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        608,
+        3008
+      ],
+      "id": "97fe5973-f545-4ca7-93c5-11d721e0a44a",
+      "name": "Activo?7"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6d12b307-21cb-482a-a7a2-9c61a5399282",
+              "name": "Justificacion",
+              "value": "=Invalido, el día cae día {{ $('Obtener hora y dia de la semana').item.json.diaSemana }}, el dueño no permite reservar ese día, por favor escoja otro.",
+              "type": "string"
+            },
+            {
+              "id": "c4a09681-b1c2-4ec6-b0d3-ae931c9d7f80",
+              "name": "Valida",
+              "value": false,
+              "type": "boolean"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        832,
+        3104
+      ],
+      "id": "97e70706-5dde-4437-b10b-524225e5c05b",
+      "name": "Dia no disponible7"
+    },
+    {
+      "parameters": {
+        "jsCode": "function convertirAHorasMinutos(valor) {\n\n  const debug = {};\n\n  if (!valor) {\n    debug.error = \"valor vacío o null\";\n    return { minutos: NaN, debug };\n  }\n\n  const str = String(valor).trim();\n  const partes = str.split(\":\");\n\n  debug.original = valor;\n  debug.string = str;\n  debug.partes = partes;\n\n  if (partes.length < 2) {\n    debug.error = \"no tiene formato HH:MM\";\n    return { minutos: NaN, debug };\n  }\n\n  const hh = parseInt(partes[0], 10);\n  const mm = parseInt(partes[1], 10);\n\n  debug.hh = hh;\n  debug.mm = mm;\n\n  if (isNaN(hh) || isNaN(mm)) {\n    debug.error = \"hora o minutos no numéricos\";\n    return { minutos: NaN, debug };\n  }\n\n  return { minutos: hh * 60 + mm, debug };\n}\n\n\n/* 📦 DATOS DE OTROS NODOS */\nconst horariosDB = $('Horarios Formateados').first().json;\nconst datosFecha = $('Obtener hora y dia de la semana').first().json;\n\nconst horaInput = datosFecha.hora;\nconst diaSemana = datosFecha.diaSemana;\n\nconst duracionServicioRaw =\n  $('When Executed by Another Workflow').first().json.Duracion;\n\nconst duracionServicio = Number(String(duracionServicioRaw).trim());\n\n\n/* 🔧 HORARIOS SEGÚN DÍA */\nconst HORARIOS = {\n  inicioAtencion: horariosDB[`HoEn-${diaSemana}`],\n  finAtencion: horariosDB[`HoSal-${diaSemana}`],\n  inicioAlmuerzo: horariosDB[`HoInRec-${diaSemana}`],\n  finAlmuerzo: horariosDB[`HoFiRec-${diaSemana}`],\n};\n\n\n/* ⏱ CONVERSIONES */\nconst inicio = convertirAHorasMinutos(horaInput);\nconst inicioAtencion = convertirAHorasMinutos(HORARIOS.inicioAtencion);\nconst finAtencion = convertirAHorasMinutos(HORARIOS.finAtencion);\nconst inicioAlmuerzo = convertirAHorasMinutos(HORARIOS.inicioAlmuerzo);\nconst finAlmuerzo = convertirAHorasMinutos(HORARIOS.finAlmuerzo);\n\n\nfor (const item of $input.all()) {\n\n  let valida = true;\n  let justificacion = \"\";\n\n  if (!Number.isFinite(inicio.minutos)) {\n    valida = false;\n    justificacion = \"Hora inválida\";\n  }\n  else if (!Number.isFinite(duracionServicio) || duracionServicio <= 0) {\n    valida = false;\n    justificacion = \"Duración inválida\";\n  }\n  else {\n\n    const fin = inicio.minutos + duracionServicio;\n\n    if (inicio.minutos < inicioAtencion.minutos) {\n      valida = false;\n      justificacion = `Comienza antes del horario de atención (${HORARIOS.inicioAtencion})`;\n    }\n    else if (inicio.minutos >= finAtencion.minutos) {\n      valida = false;\n      justificacion = `Comienza después del horario de atención (${HORARIOS.finAtencion})`;\n    }\n    else if (fin > finAtencion.minutos) {\n      valida = false;\n      justificacion = `El servicio termina después del cierre (${HORARIOS.finAtencion})`;\n    }\n    else if (inicio.minutos < finAlmuerzo.minutos && fin > inicioAlmuerzo.minutos) {\n      valida = false;\n      justificacion = `Interfiere con el almuerzo (${HORARIOS.inicioAlmuerzo} - ${HORARIOS.finAlmuerzo})`;\n    }\n  }\n\n  item.json.valida = valida;\n  item.json.justificacion = valida ? \"\" : justificacion;\n\n\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2032,
+        2672
+      ],
+      "id": "cf2eb7af-a2f1-4b52-8ea5-fc02a4a35b9b",
+      "name": "Verificar horarios"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "2218225f-f93f-4ecf-b588-cee026958c24",
+              "leftValue": "={{ $('When Executed by Another Workflow').item.json.Disponibilidad }}",
+              "rightValue": "Siempre",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1056,
+        2816
+      ],
+      "id": "101b2592-58ce-4f60-a91d-ae715fee161e",
+      "name": "SiempreDisponible"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Obtener valores\nconst diasDisponibles = $('When Executed by Another Workflow').first().json.DiaDisponible;\nconst fechaCompleta = $('When Executed by Another Workflow').first().json.Fecha;\n\n// Extraer solo la fecha\nconst fechaSoloDia = fechaCompleta.split('T')[0];\n\n// Convertir a array y limpiar valores inválidos\nconst arrayDias = (diasDisponibles || '')\n  .split(',')\n  .map(d => d.trim())\n  .filter(d => d && d !== 'null');\n\n// Comparar\nconst esIgual = arrayDias.includes(fechaSoloDia);\n\n// Resultado\nreturn [\n  {\n    json: {\n      resultado: esIgual\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1680,
+        2944
+      ],
+      "id": "f31c2aea-06e3-4903-869d-efabacd001df",
+      "name": "Comparar Fechas"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "2e7db7cc-16ef-40f6-a3a9-b54d0bdfe8a8",
+              "leftValue": "={{ $('When Executed by Another Workflow').item.json.Disponibilidad }}",
+              "rightValue": "Día Seleccionado",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1456,
+        3056
+      ],
+      "id": "3fd5006d-253e-4926-90e9-e55083ff8ea8",
+      "name": "Dia Seleccionado"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "960d6d7c-0626-418a-a7ec-24a3371117eb",
+              "leftValue": "={{ $json.resultado }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1840,
+        2880
+      ],
+      "id": "5f6b9a05-4920-43a7-be14-15db395eed63",
+      "name": "cohincide"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "35618fe3-477f-430e-91cd-60c46a5c8d9b",
+              "name": "Justificacion",
+              "value": "={{ $json.justificacion }}",
+              "type": "string"
+            },
+            {
+              "id": "4f07e4a0-f261-4213-a326-4bb3cdf04848",
+              "name": "Valida",
+              "value": "={{ $json.valida }}",
+              "type": "boolean"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2240,
+        2656
+      ],
+      "id": "85703ea2-c30c-4595-8c41-03fafbaf1fbc",
+      "name": "HorariosSemana9"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6d12b307-21cb-482a-a7a2-9c61a5399282",
+              "name": "Justificacion",
+              "value": "={{\n(() => {\n\n  const data = $('When Executed by Another Workflow').item.json;\n\n  const disponibilidadRaw = data.Disponibilidad || \"\";\n  const fechasRaw = data.DiaDisponible || \"\";\n\n  const disponibles = disponibilidadRaw\n    .split(',')\n    .map(d => d.trim())\n    .filter(Boolean);\n\n  const tieneDiaSeleccionado = disponibles.includes(\"Día Seleccionado\");\n\n  const diasSemana = disponibles.filter(d => d !== \"Día Seleccionado\");\n\n  let fechas = [];\n\n  if (tieneDiaSeleccionado && fechasRaw) {\n    fechas = fechasRaw\n      .split(',')\n      .map(f => {\n        const fecha = f.trim();\n        if (!fecha) return null;\n\n        const [y,m,d] = fecha.split(\"-\");\n        return `el ${d}/${m}/${y}`;\n      })\n      .filter(Boolean);\n  }\n\n  const todos = [...diasSemana, ...fechas];\n\n  if (todos.length === 0) {\n    return \"Inválido. El servicio seleccionado no tiene días disponibles para agendar.\";\n  }\n\n  let lista;\n\n  if (todos.length === 1) {\n    lista = todos[0];\n  } else if (todos.length === 2) {\n    lista = `${todos[0]} y ${todos[1]}`;\n  } else {\n    lista = `${todos.slice(0,-1).join(', ')} y ${todos[todos.length-1]}`;\n  }\n\n  return `Inválido. El servicio seleccionado solo se puede agendar los siguientes días: ${lista}.`;\n\n})()\n}}",
+              "type": "string"
+            },
+            {
+              "id": "c4a09681-b1c2-4ec6-b0d3-ae931c9d7f80",
+              "name": "Valida",
+              "value": false,
+              "type": "boolean"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1824,
+        3200
+      ],
+      "id": "86dd95e7-ba10-4953-93d7-71cf901a09ae",
+      "name": "Dia invalido1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "8b1d7c40-d76a-49e1-854e-da3d77ca6e17",
+              "leftValue": "={{ $('When Executed by Another Workflow').item.json.Disponibilidad }}",
+              "rightValue": "={{ $('Obtener hora y dia de la semana').item.json.diaSemana }}",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1280,
+        2928
+      ],
+      "id": "9cb2e632-ee33-4a3d-a053-2edb02acea16",
+      "name": "Dia disponible"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "2c2c7a6b-d8d9-42fe-83b7-83f12fb7cbf9",
+              "leftValue": "={{ $('When Executed by Another Workflow').item.json.Disponibilidad }}",
+              "rightValue": "No disponible",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        832,
+        2912
+      ],
+      "id": "5c106e54-1c32-44d5-9527-76eadb0e8cde",
+      "name": "Disponible"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6d12b307-21cb-482a-a7a2-9c61a5399282",
+              "name": "Justificacion",
+              "value": "=Invalido, el dueño no permite reservar el servicio seleccionado.",
+              "type": "string"
+            },
+            {
+              "id": "c4a09681-b1c2-4ec6-b0d3-ae931c9d7f80",
+              "name": "Valida",
+              "value": false,
+              "type": "boolean"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1056,
+        3008
+      ],
+      "id": "96ff3a28-43de-4893-b91a-2439a9a010cc",
+      "name": "Servicio no disponible"
+    }
+  ],
+  "pinData": null,
+  "settings": {
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-03-16T07:00:02.022Z",
+      "createdAt": "2026-03-16T07:00:02.022Z",
+      "role": "workflow:owner",
+      "workflowId": "SpDDUOLR9ZgxcV8k",
+      "projectId": "f3W32VX4HOke6C3N"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-03-16T13:31:50.000Z",
+  "versionId": "23bb8755-953c-4117-a5ad-596237935488"
+}
