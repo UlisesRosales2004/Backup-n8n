@@ -1,0 +1,1339 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Call 'Configuracion Global'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Formatear_input": {
+      "main": [
+        [
+          {
+            "node": "traer_cita_actual",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "comparar_nro": {
+      "main": [
+        [
+          {
+            "node": "coincide",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "coincide": {
+      "main": [
+        [
+          {
+            "node": "Call 'comprobar_fecha_clinica'",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "NumeroNoCoincide",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "traer_cita_actual": {
+      "main": [
+        [
+          {
+            "node": "existe",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "existe": {
+      "main": [
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "CitaNoEncontrada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'comprobar_fecha_clinica'": {
+      "main": [
+        [
+          {
+            "node": "Fecha valida",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'entregar_horarios'": {
+      "main": [
+        []
+      ]
+    },
+    "Update an event": {
+      "main": [
+        [
+          {
+            "node": "dueño",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Get a row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "Call 'comprobar_fecha_clinica'",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "comparar_nro",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fecha valida": {
+      "main": [
+        [
+          {
+            "node": "Horarios a chequear",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a row": {
+      "main": [
+        [
+          {
+            "node": "Formatear_input",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get availability in a calendar5": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Update an event",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Call 'entregar_horarios'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Get availability in a calendar5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Horarios a chequear": {
+      "main": [
+        [
+          {
+            "node": "Sin cheks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sin cheks": {
+      "main": [
+        [
+          {
+            "node": "Update an event",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "dueño": {
+      "main": [
+        [
+          {
+            "node": "FormatearNumero",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Exitoso",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FormatearNumero": {
+      "main": [
+        [
+          {
+            "node": "nroValido",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "nroValido": {
+      "main": [
+        [
+          {
+            "node": "turnoModificado",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Exitoso1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chat Memory Manager": {
+      "main": [
+        [
+          {
+            "node": "Exitoso3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Chat Memory Manager",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "turnoModificado": {
+      "main": [
+        [
+          {
+            "node": "Chat Memory Manager",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Exitoso2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'Configuracion Global'": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-03-16T07:00:02.369Z",
+  "id": "hOOiKMXTVrWXcSBa",
+  "isArchived": true,
+  "meta": null,
+  "name": "modificar_cita_clinica-Veremma-V1",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "jsonExample",
+        "jsonExample": "{\n  \"Fecha actual\": \"2025-07-10T11:00:00\",\n  \"Fecha nueva\": \"2025-07-11T11:00:00\",\n  \"Nombre\": \"Ulises Rosales\",\n  \"Telefono\":\"5492616763104@s.whatsapp.net\",\n  \"id_servicio\":\"4\",\n  \"Dueño\":true\n}"
+      },
+      "id": "e51989f6-a94a-4056-ab7d-9e72edd3230d",
+      "typeVersion": 1.1,
+      "name": "When Executed by Another Workflow",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        -2016,
+        192
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const fechaActualTexto = $('When Executed by Another Workflow').first().json['Fecha actual'] || null;\nconst fechaNuevaTexto = $('When Executed by Another Workflow').first().json['Fecha nueva'] || null;\n\nconst duracionMinutos = Number($input.first().json.Tiempo_estimado_min || 0);\n\nfunction calcularFechaFin(fechaTexto, duracion) {\n  if (!fechaTexto) return null;\n  const fecha = new Date(fechaTexto);\n  fecha.setMinutes(fecha.getMinutes() + duracion);\n  return fecha.toISOString().substring(0, 19);\n}\n\nfunction formatearFechaSimple(fechaTexto) {\n  if (!fechaTexto) return null;\n  const fecha = new Date(fechaTexto);\n  const dia = String(fecha.getDate()).padStart(2, '0');\n  const mes = String(fecha.getMonth() + 1).padStart(2, '0');\n  const anio = fecha.getFullYear();\n  return `${dia}/${mes}/${anio}`;\n}\n\nfunction formatearFechaHoraSimple(fechaTexto) {\n  if (!fechaTexto) return null;\n  const fecha = new Date(fechaTexto);\n  const dia = String(fecha.getDate()).padStart(2, '0');\n  const mes = String(fecha.getMonth() + 1).padStart(2, '0');\n  const anio = fecha.getFullYear();\n  const horas = String(fecha.getHours()).padStart(2, '0');\n  const minutos = String(fecha.getMinutes()).padStart(2, '0');\n  return `${dia}/${mes}/${anio} ${horas}:${minutos}`;\n}\n\nreturn [\n  {\n    json: {\n      \"Fecha actual inicio\": fechaActualTexto,\n      \"Fecha actual fin\": calcularFechaFin(fechaActualTexto, duracionMinutos),\n      \"Fecha nueva inicio\": fechaNuevaTexto,\n      \"Fecha nueva fin\": calcularFechaFin(fechaNuevaTexto, duracionMinutos),\n      \"Fecha Nueva Inicio Simple\": formatearFechaSimple(fechaNuevaTexto),\n      \"Fecha Nueva Inicio Simple con Hora\": formatearFechaHoraSimple(fechaNuevaTexto),\n      \"DuracionMinutos\": String(duracionMinutos)\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1248,
+        96
+      ],
+      "id": "94b7daec-6d18-4ec7-a8fd-c54507fb2867",
+      "name": "Formatear_input"
+    },
+    {
+      "parameters": {
+        "jsCode": "let summary;\nlet telefono;\n\n// Obtener datos\ntry {\n  summary = $input.first().json.summary;\n} catch {\n  summary = undefined;\n}\n\ntry {\n  telefono = $('When Executed by Another Workflow')?.first()?.json?.Telefono;\n} catch {\n  telefono = undefined;\n}\n\n\n// ----------------------------\n// EXTRAER NUMERO\n// ----------------------------\nfunction extraerNumero(valor) {\n\n  if (!valor) return null;\n\n  const texto = String(valor);\n\n  // formato whatsapp jid\n  let match = texto.match(/(\\d+)@s\\.whatsapp\\.net/);\n  if (match) return match[1];\n\n  // numero plano (+54, 549, etc)\n  const digits = texto.replace(/\\D/g, \"\");\n  if (digits.length >= 8) return digits;\n\n  return null;\n}\n\n\n// ----------------------------\n// NUMEROS DETECTADOS\n// ----------------------------\nconst numeroSummary = extraerNumero(summary);\nconst numeroTelefono = extraerNumero(telefono);\n\n\n// ----------------------------\n// LOGICA FINAL\n// ----------------------------\n\n// ✅ Si alguno tiene numero → validar coincidencia\nif (numeroSummary !== null || numeroTelefono !== null) {\n\n  if (numeroSummary === null || numeroTelefono === null) {\n    return [{ json: { coincide: false } }];\n  }\n\n  return [{\n    json: {\n      coincide: numeroSummary === numeroTelefono\n    }\n  }];\n}\n\n// ✅ Ninguno tiene numero → permitir\nreturn [{\n  json: {\n    coincide: true\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -352,
+        80
+      ],
+      "id": "75b01371-80d4-4c76-bb1a-586b84e85185",
+      "name": "comparar_nro"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "274e25c0-7f3c-499d-8ded-fe06ef7a0f20",
+              "leftValue": "={{ $json.coincide }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -128,
+        80
+      ],
+      "id": "8ffddb15-48dc-4687-9921-913e7a56e060",
+      "name": "coincide"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "ulises.rosales.ar@gmail.com",
+          "mode": "list",
+          "cachedResultName": "ulises.rosales.ar@gmail.com"
+        },
+        "limit": 1,
+        "timeMin": "={{ $json['Fecha actual inicio'] }}{{ $('Call \\'Configuracion Global\\'').item.json.TimezoneOffset }}",
+        "timeMax": "={{ $json['Fecha actual fin'] }}{{ $('Call \\'Configuracion Global\\'').item.json.TimezoneOffset }}",
+        "options": {
+          "orderBy": "startTime"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        -1024,
+        96
+      ],
+      "id": "50f2f877-43a3-4bce-98d6-bd00afafebb0",
+      "name": "traer_cita_actual",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "uUlIwgQJ1mHXECLz",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "149563b5-f1e5-46a3-b252-31c6894c8265",
+              "name": "Respuesta",
+              "value": "La cita no fue encontrada ese día a ese horario.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -576,
+        192
+      ],
+      "id": "576417be-ee2b-480d-a187-d1862aab9e8f",
+      "name": "CitaNoEncontrada"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "aec3af4f-a491-4c32-a1c7-487c6ec95c85",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -800,
+        96
+      ],
+      "id": "75251744-e10f-405f-9684-cc7c6ebfe914",
+      "name": "existe"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "JcLddoWI3V8ZtQdGAeAmT",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/JcLddoWI3V8ZtQdGAeAmT",
+          "cachedResultName": "comprobar_fecha_clinica"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Fecha": "={{ $('Formatear_input').item.json['Fecha nueva inicio'] }}",
+            "Duracion": "={{ $('Get a row').item.json.Tiempo_estimado_min }}",
+            "Disponibilidad": "={{ $('Get a row').item.json.Disponible }}",
+            "DiaDisponible": "={{ $('Get a row').item.json['_nc_m2m_Servicios_Días Especiales']\n   .map(i => i['Días Especiales']['Día'])\n   .join(', ') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Fecha",
+              "displayName": "Fecha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "Duracion",
+              "displayName": "Duracion",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number",
+              "removed": false
+            },
+            {
+              "id": "Disponibilidad",
+              "displayName": "Disponibilidad",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "DiaDisponible",
+              "displayName": "DiaDisponible",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        96,
+        -96
+      ],
+      "id": "481a20c3-482d-4382-afdd-d76e57c5aaec",
+      "name": "Call 'comprobar_fecha_clinica'"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "calendar": {
+          "__rl": true,
+          "value": "ulises.rosales.ar@gmail.com",
+          "mode": "list",
+          "cachedResultName": "ulises.rosales.ar@gmail.com"
+        },
+        "eventId": "={{ $('traer_cita_actual').item.json.id }}",
+        "updateFields": {
+          "color": "7",
+          "end": "={{ $('Formatear_input').item.json['Fecha nueva fin'] }}{{ $('Call \\'Configuracion Global\\'').item.json.TimezoneOffset }}",
+          "start": "={{ $('Formatear_input').item.json['Fecha nueva inicio'] }}{{ $('Call \\'Configuracion Global\\'').item.json.TimezoneOffset }}",
+          "summary": "=Cita: {{ $('Get a row').item.json.Nombre }}. id_servicio: {{ $('When Executed by Another Workflow').item.json.id_servicio }}. Duracion estimada: {{ $('Get a row').item.json.Tiempo_estimado_min }} minutos. Para {{ $('When Executed by Another Workflow').item.json.Nombre }}. {{ $('When Executed by Another Workflow').item.json.Telefono }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        1888,
+        -288
+      ],
+      "id": "5a953482-ac89-4ba7-a8ec-e540ca55cac4",
+      "name": "Update an event",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "uUlIwgQJ1mHXECLz",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "uqH8dYw900BtDEIKgLkU9",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/uqH8dYw900BtDEIKgLkU9",
+          "cachedResultName": "entregar_horarios"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Fecha": "={{ $('Formatear_input').item.json['Fecha nueva inicio'] }}",
+            "id_servicio": "={{ $('When Executed by Another Workflow').item.json.id_servicio }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Fecha",
+              "displayName": "Fecha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "id_servicio",
+              "displayName": "id_servicio",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "mode": "each",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        1888,
+        -80
+      ],
+      "id": "a4855875-c539-4104-bcc0-344d4e2beac7",
+      "name": "Call 'entregar_horarios'"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "35618fe3-477f-430e-91cd-60c46a5c8d9b",
+              "name": "Problema",
+              "value": "=El número de telefono no cohincide con el número que agendo el turno.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        96,
+        128
+      ],
+      "id": "2510a9f1-2872-4773-bffb-514a76b69e03",
+      "name": "NumeroNoCoincide"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f05fb27c-c655-46d5-914a-10f355946e81",
+              "name": "Respuesta",
+              "value": "=La fecha no es valida\nJustificacion:\n{{ $json.Justificacion }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        544,
+        0
+      ],
+      "id": "caa22894-9db9-4163-a32d-31b55f167584",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "amount": 3
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -1696,
+        192
+      ],
+      "id": "2b27ba1d-932e-4e85-843c-306d546d0498",
+      "name": "Wait",
+      "webhookId": "7ac9999a-d191-443e-9a5f-7045c48126fe"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "f70f5d8d-9f15-49c3-8f7a-3918e86bdc99",
+              "leftValue": "={{ $('When Executed by Another Workflow').item.json['Dueño'] }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -576,
+        0
+      ],
+      "id": "2b2e34fd-caa9-4381-9651-26359b509b13",
+      "name": "If3"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "a6304e7f-66e0-415e-8df7-2c9e619ef9f3",
+              "leftValue": "={{ $json.Valida }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        320,
+        -96
+      ],
+      "id": "028beb6d-e8c4-4371-8e2a-1c8ef8d4838d",
+      "name": "Fecha valida"
+    },
+    {
+      "parameters": {
+        "content": "Esta logica es para determinar...\nsi es la misma fehca.... no hace falta comprobar disponibilidad (obvio no va a estar disponible ya que es la fecha actual de la cita)\nsi es distinta la fecha, pero tiene el mismo inicio, significa que tiene distinto fin..... entonces si termina antes.... si va a haber disponibilidad..... si termina despues chequeamos la disponibilidad de los minutos faltantes",
+        "height": 288
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        400,
+        -528
+      ],
+      "id": "63ceaaa6-9830-4ee8-82d8-6db2ae5cb347",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "projectId": "pvalhsum160gh07",
+        "table": "m3m2qj8gmy4irp0",
+        "id": "={{ $('When Executed by Another Workflow').item.json.id_servicio }}"
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        -1472,
+        192
+      ],
+      "id": "ee3024d0-79bc-47d7-b48a-d4b344b50d22",
+      "name": "Get a row",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "NJEMSwQ8VfnQXOIP",
+          "name": "NocoDB Token account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0762aa58-c5fb-435a-9d6f-1d0409e44ada",
+              "name": "Error",
+              "value": "=Hubo un error encontrando el servicio. Existe una posibilidad de que el servicio con ese id no exista.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1248,
+        288
+      ],
+      "id": "2daa83e6-2e99-47cd-987c-49bdd2ea8b0f",
+      "name": "Edit Fields3"
+    },
+    {
+      "parameters": {
+        "resource": "calendar",
+        "calendar": {
+          "__rl": true,
+          "value": "ulises.rosales.ar@gmail.com",
+          "mode": "list",
+          "cachedResultName": "ulises.rosales.ar@gmail.com"
+        },
+        "timeMin": "={{ $json.desde }}{{ $('Call \\'Configuracion Global\\'').item.json.TimezoneOffset }}",
+        "timeMax": "={{ $json.hasta }}{{ $('Call \\'Configuracion Global\\'').item.json.TimezoneOffset }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        1216,
+        -128
+      ],
+      "id": "402e62f4-e696-4599-8a77-ff5ce5263f4b",
+      "name": "Get availability in a calendar5",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "uUlIwgQJ1mHXECLz",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "c1de2086-374f-467c-a36c-1755bf88949d",
+              "leftValue": "={{ !$json.available.includes(false) }}",
+              "rightValue": "false",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1664,
+        -128
+      ],
+      "id": "f8934a23-8d3e-482b-b266-9fa91976576b",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "checks",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        992,
+        -128
+      ],
+      "id": "afc70cf2-0c99-4c0d-933c-afb63784653c",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "available"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1440,
+        -128
+      ],
+      "id": "e25033d6-c26d-4a45-9c05-bb679f11da02",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = $('Formatear_input').first().json;\nconst citaActual = $('traer_cita_actual').first().json;\n\n// Sacar el timezone (-03:00) y parsear solo la parte local\nfunction parseLocal(str) {\n  return new Date(str.substring(0, 19));\n}\n\nconst inicioActual = parseLocal(citaActual.start.dateTime);\nconst finActual = parseLocal(citaActual.end.dateTime);\nconst inicioNuevo = parseLocal(input[\"Fecha nueva inicio\"]);\nconst finNuevo = parseLocal(input[\"Fecha nueva fin\"]);\n\nconst checks = [];\n\nfunction mismoDia(a, b) {\n  return (\n    a.getFullYear() === b.getFullYear() &&\n    a.getMonth() === b.getMonth() &&\n    a.getDate() === b.getDate()\n  );\n}\n\nfunction format(date) {\n  const y = date.getFullYear();\n  const m = String(date.getMonth() + 1).padStart(2,'0');\n  const d = String(date.getDate()).padStart(2,'0');\n  const h = String(date.getHours()).padStart(2,'0');\n  const min = String(date.getMinutes()).padStart(2,'0');\n  const s = String(date.getSeconds()).padStart(2,'0');\n  return `${y}-${m}-${d}T${h}:${min}:${s}`;\n}\n\nif (!mismoDia(inicioActual, inicioNuevo)) {\n  checks.push({\n    desde: format(inicioNuevo),\n    hasta: format(finNuevo)\n  });\n} else {\n  if (inicioNuevo < inicioActual) {\n    const hasta = new Date(Math.min(finNuevo.getTime(), inicioActual.getTime()));\n    if (hasta > inicioNuevo) {\n      checks.push({\n        desde: format(inicioNuevo),\n        hasta: format(hasta)\n      });\n    }\n  }\n  if (finNuevo > finActual) {\n    const desde = new Date(Math.max(inicioNuevo.getTime(), finActual.getTime()));\n    if (finNuevo > desde) {\n      checks.push({\n        desde: format(desde),\n        hasta: format(finNuevo)\n      });\n    }\n  }\n}\n\nreturn [{ checks }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        544,
+        -192
+      ],
+      "id": "93d69eb9-6985-47ab-b310-f360b54cfec4",
+      "name": "Horarios a chequear"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "6283a10b-2f59-4423-af18-49ed7f4b7533",
+              "leftValue": "={{ $json.checks }}",
+              "rightValue": "",
+              "operator": {
+                "type": "array",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        768,
+        -192
+      ],
+      "id": "77ca8648-d4e4-4352-9bc1-681d22d5e86d",
+      "name": "Sin cheks"
+    },
+    {
+      "parameters": {
+        "jsCode": "const intervalos = $json.intervalosDisponibles;\nconst fecha = $('Formatear_input').first().json['Fecha Nueva Inicio Simple'];\n\nfunction esManana(hora) {\n  const h = parseInt(hora.split(\":\")[0], 10);\n  return h < 13;\n}\n\nfunction esTarde(hora) {\n  const h = parseInt(hora.split(\":\")[0], 10);\n  return h >= 13;\n}\n\nlet manana = [];\nlet tarde = [];\n\nfor (const i of intervalos) {\n  if (esManana(i.desde)) {\n    manana.push(i);\n  } else {\n    tarde.push(i);\n  }\n}\n\nlet texto = `No hay disponibilidad para el horario solicitado. Estos son los horarios disponibles para el ${fecha}:\\n`;\n\nif (manana.length) {\n  texto += `\\nPor la mañana:\\n`;\n  manana.forEach(i => {\n    texto += `• Desde ${i.desde} hasta ${i.hasta}\\n`;\n  });\n}\n\nif (tarde.length) {\n  texto += `\\nPor la tarde:\\n`;\n  tarde.forEach(i => {\n    texto += `• Desde ${i.desde} hasta ${i.hasta}\\n`;\n  });\n}\n\nreturn [{ texto }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2128,
+        -80
+      ],
+      "id": "5be44545-8b25-464c-aac4-3d455d0ff25e",
+      "name": "FormatearSlots",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6bbd8632-ba8d-4657-8ca5-5d585252bf21",
+              "name": "Respuesta",
+              "value": "=La cita ha sido reagendada exitosamente para el {{ $('Formatear_input').item.json['Fecha Nueva Inicio Simple con Hora'] }} hs.\nAquí tienes los detalles de la reserva:\n{{ $json.summary }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2576,
+        -304
+      ],
+      "id": "8ee5fb24-d5c9-430b-9563-4a816b618426",
+      "name": "Exitoso"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "f70f5d8d-9f15-49c3-8f7a-3918e86bdc99",
+              "leftValue": "={{ $('When Executed by Another Workflow').item.json['Dueño'] }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2288,
+        -400
+      ],
+      "id": "3247bd36-4724-43b6-9ebe-6e08cce67ae3",
+      "name": "dueño"
+    },
+    {
+      "parameters": {
+        "jsCode": "const texto = $('traer_cita_actual').first().json.summary || \"\";\n\n// buscar numero tipo 5492616763104@s.whatsapp.net\nconst match = texto.match(/(\\d+)@s\\.whatsapp\\.net/);\n\nif (!match) {\n  return [\n    {\n      json: {\n        existe: false,\n        mensaje: \"El numero no existe\"\n      }\n    }\n  ];\n}\n\nconst numero = match[1];\n\n// validar numero internacional (8 a 15 digitos)\nconst numeroValido = /^\\d{8,15}$/.test(numero);\n\nif (!numeroValido) {\n  return [\n    {\n      json: {\n        existe: false,\n        mensaje: \"El numero no es valido\",\n        numero: numero\n      }\n    }\n  ];\n}\n\n// valido\nreturn [\n  {\n    json: {\n      existe: true,\n      mensaje: \"Numero valido\",\n      numero: numero\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2528,
+        -528
+      ],
+      "id": "6b174f77-e757-4127-96d7-f409dd6e8a2d",
+      "name": "FormatearNumero"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "b71ba646-ba2f-4027-aa8d-4db062dc7ebe",
+              "leftValue": "={{ $json.existe }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2736,
+        -528
+      ],
+      "id": "ce435e94-64c9-4f99-97da-e1031d38f6d0",
+      "name": "nroValido"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6bbd8632-ba8d-4657-8ca5-5d585252bf21",
+              "name": "Respuesta",
+              "value": "=La cita ha sido modificada exitosamente para el {{ $('Formatear_input').item.json['Fecha Nueva Inicio Simple con Hora'] }} hs.\nDetalles: {{ $('Update an event').item.json.summary }}\n\nNo se pudo enviar el mensaje al cliente informandole el cambio.\nMotivo: {{ $('FormatearNumero').item.json.mensaje }}\n\nAcción requerida: el usuario debe enviar el mensaje manualmente si lo considera necesario.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3008,
+        -416
+      ],
+      "id": "ed1e2f61-6eae-45b2-a111-ee4f5f2c3a92",
+      "name": "Exitoso1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6bbd8632-ba8d-4657-8ca5-5d585252bf21",
+              "name": "Respuesta",
+              "value": "=La cita ha sido modificada exitosamente para el {{ $('Formatear_input').item.json['Fecha Nueva Inicio Simple con Hora'] }} hs.\nDetalles: {{ $('Update an event').item.json.summary }}\n\nNo se pudo enviar el mensaje al cliente informandole el cambio.\nMotivo: El numero con el que se agendo la cita es invalido.\n\nAcción requerida: el usuario debe enviar el mensaje manualmente si lo considera necesario.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3248,
+        -528
+      ],
+      "id": "13cf4fc2-10be-42e5-a0d7-9574692b3fa6",
+      "name": "Exitoso2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6bbd8632-ba8d-4657-8ca5-5d585252bf21",
+              "name": "Respuesta",
+              "value": "=La cita ha sido modificada exitosamente para el {{ $('Formatear_input').item.json['Fecha Nueva Inicio Simple con Hora'] }} hs.\nDetalles: {{ $('Update an event').item.json.summary }}\n\nSe envio un mensaje al cliente advirtiendole la modificación.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3696,
+        -848
+      ],
+      "id": "05e88eda-d81c-4cf5-a4a8-c85275354b06",
+      "name": "Exitoso3"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "messages": {
+          "messageValues": [
+            {
+              "type": "ai",
+              "message": "={{ $json.message.conversation }}"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryManager",
+      "typeVersion": 1.1,
+      "position": [
+        3344,
+        -848
+      ],
+      "id": "71750fec-a5e3-4cfd-84e5-2700ed6c4750",
+      "name": "Chat Memory Manager",
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 5000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.key.remoteJid }}",
+        "sessionTTL": 172800
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
+      "typeVersion": 1.5,
+      "position": [
+        3344,
+        -656
+      ],
+      "id": "f6468ae7-b5ee-4aaa-b0c0-2e3f2e57af40",
+      "name": "Redis Chat Memory",
+      "credentials": {
+        "redis": {
+          "id": "aqJvBUEfRdgU1LkO",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').item.json.EvolutionInstance }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionApiKey }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "number",
+              "value": "={{ $json.numero }}@s.whatsapp.net"
+            },
+            {
+              "name": "text",
+              "value": "=Hola, te informo que el/la propietario/a modificó tu turno.\n\nTurno actualizado para el {{ \nnew Date($('Update an event').item.json.start.dateTime)\n.toLocaleString('es-AR', { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' })\n}}.\n\nDetalle: {{ $('Update an event').item.json.summary }}\n\nSi necesitas hacer otro cambio, puedes comunicarte nuevamente."
+            },
+            {
+              "name": "delay",
+              "value": "={{ 2000 }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3056,
+        -640
+      ],
+      "id": "8d8e6548-fb9b-4d29-94cb-b8262cd7b3d0",
+      "name": "turnoModificado",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "i0aP21thDHY2T8UDlPfgP",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/i0aP21thDHY2T8UDlPfgP",
+          "cachedResultName": "Configuracion Global"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        -1856,
+        192
+      ],
+      "id": "cb443a25-164a-470d-bc6f-86db34ae46fd",
+      "name": "Call 'Configuracion Global'"
+    }
+  ],
+  "pinData": null,
+  "settings": {
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-03-16T07:00:02.371Z",
+      "createdAt": "2026-03-16T07:00:02.371Z",
+      "role": "workflow:owner",
+      "workflowId": "hOOiKMXTVrWXcSBa",
+      "projectId": "f3W32VX4HOke6C3N"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-03-16T13:32:28.000Z",
+  "versionId": "06eb9be1-c005-4680-a8e3-ef9595d6042e"
+}
