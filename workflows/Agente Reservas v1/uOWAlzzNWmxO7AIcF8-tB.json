@@ -1,23 +1,23 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-03-15T14:49:52.000Z",
-    "createdAt": "2026-03-15T14:49:51.440Z",
-    "versionId": "6ea1e8cd-97cf-4525-9544-26618ed721dc",
+    "updatedAt": "2026-03-16T21:21:00.000Z",
+    "createdAt": "2026-03-16T21:20:59.537Z",
+    "versionId": "7cb39b25-1731-46d6-8f9f-62b91955b6d9",
     "workflowId": "uOWAlzzNWmxO7AIcF8-tB",
     "nodes": [
       {
         "parameters": {
           "inputSource": "jsonExample",
-          "jsonExample": "{\n  \"Fecha\": \"2025-07-10T16:00:00\",\n  \"Telefono\":\"+56954675214\",\n  \"Duracion\":\"25\",\n  \"Dueño\":true\n}"
+          "jsonExample": "{\n  \"Fecha\": \"2025-07-10T10:00:00\",\n  \"Telefono\":\"+56954675214\",\n  \"Duracion\":\"25\",\n  \"Dueño\":true\n}"
         },
         "id": "3687754b-af85-4d23-bb59-16b89f933844",
         "typeVersion": 1.1,
         "name": "When Executed by Another Workflow",
         "type": "n8n-nodes-base.executeWorkflowTrigger",
         "position": [
-          -1296,
-          32
+          -1712,
+          112
         ]
       },
       {
@@ -61,8 +61,8 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          -640,
-          32
+          -1056,
+          112
         ],
         "id": "e103a2fe-1539-4ce4-8f25-83bb975d23ee",
         "name": "Formatear_fecha"
@@ -86,8 +86,8 @@
         "type": "n8n-nodes-base.googleCalendar",
         "typeVersion": 1.3,
         "position": [
-          -480,
-          32
+          -896,
+          112
         ],
         "id": "56a37d53-bdf3-46c8-9c6b-452fc2bee5f5",
         "name": "Traer_citas",
@@ -333,8 +333,8 @@
         "type": "n8n-nodes-base.wait",
         "typeVersion": 1.1,
         "position": [
-          -816,
-          32
+          -1232,
+          112
         ],
         "id": "828eedc1-655a-4b71-a744-54fa61800524",
         "name": "Wait",
@@ -633,11 +633,124 @@
         "type": "n8n-nodes-base.executeWorkflow",
         "typeVersion": 1.3,
         "position": [
-          -1072,
-          32
+          -1488,
+          112
         ],
         "id": "3bdd82c3-ac65-47cd-bfa2-9e7c279a7aef",
         "name": "Call 'Configuracion Global'"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "aec3af4f-a491-4c32-a1c7-487c6ec95c85",
+                "leftValue": "={{ $json.id }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "exists",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          -672,
+          112
+        ],
+        "id": "fe57172c-4902-4929-9bdd-54078f0aec3e",
+        "name": "existe"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "55f68382-fbf4-467d-ad66-0dbb6b19773b",
+                "leftValue": "={{$now}}",
+                "rightValue": "={{ $json.start.dateTime }}",
+                "operator": {
+                  "type": "dateTime",
+                  "operation": "before"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          -464,
+          80
+        ],
+        "id": "fa0b451f-dd0c-40fc-a0af-621bfbedf558",
+        "name": "fecha actual futura"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "149563b5-f1e5-46a3-b252-31c6894c8265",
+                "name": "Respuesta",
+                "value": "No se puede eliminar una cita que ya paso.",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -224,
+          192
+        ],
+        "id": "3a982f08-d223-45c9-9a6d-a28f4e9a88c9",
+        "name": "Fecha pasada"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "149563b5-f1e5-46a3-b252-31c6894c8265",
+                "name": "Respuesta",
+                "value": "La cita no fue encontrada ese día a ese horario.",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -464,
+          224
+        ],
+        "id": "5df2df49-645d-4f2d-a981-85486f6cf0bf",
+        "name": "CitaNoEncontrada1"
       }
     ],
     "connections": {
@@ -685,7 +798,7 @@
         "main": [
           [
             {
-              "node": "If3",
+              "node": "existe",
               "type": "main",
               "index": 0
             }
@@ -887,14 +1000,50 @@
             }
           ]
         ]
+      },
+      "existe": {
+        "main": [
+          [
+            {
+              "node": "fecha actual futura",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "CitaNoEncontrada1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "fecha actual futura": {
+        "main": [
+          [
+            {
+              "node": "If3",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Fecha pasada",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
       }
     },
     "authors": "Cognia Empresa",
-    "name": "Version 6ea1e8cd",
+    "name": "Version 7cb39b25",
     "description": "",
     "autosaved": false
   },
-  "activeVersionId": "6ea1e8cd-97cf-4525-9544-26618ed721dc",
+  "activeVersionId": "7cb39b25-1731-46d6-8f9f-62b91955b6d9",
   "connections": {
     "When Executed by Another Workflow": {
       "main": [
@@ -940,7 +1089,7 @@
       "main": [
         [
           {
-            "node": "If3",
+            "node": "existe",
             "type": "main",
             "index": 0
           }
@@ -1142,6 +1291,42 @@
           }
         ]
       ]
+    },
+    "existe": {
+      "main": [
+        [
+          {
+            "node": "fecha actual futura",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "CitaNoEncontrada1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "fecha actual futura": {
+      "main": [
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fecha pasada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2026-01-10T18:54:20.969Z",
@@ -1155,15 +1340,15 @@
     {
       "parameters": {
         "inputSource": "jsonExample",
-        "jsonExample": "{\n  \"Fecha\": \"2025-07-10T16:00:00\",\n  \"Telefono\":\"+56954675214\",\n  \"Duracion\":\"25\",\n  \"Dueño\":true\n}"
+        "jsonExample": "{\n  \"Fecha\": \"2025-07-10T10:00:00\",\n  \"Telefono\":\"+56954675214\",\n  \"Duracion\":\"25\",\n  \"Dueño\":true\n}"
       },
       "id": "3687754b-af85-4d23-bb59-16b89f933844",
       "typeVersion": 1.1,
       "name": "When Executed by Another Workflow",
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "position": [
-        -1296,
-        32
+        -1712,
+        112
       ]
     },
     {
@@ -1207,8 +1392,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -640,
-        32
+        -1056,
+        112
       ],
       "id": "e103a2fe-1539-4ce4-8f25-83bb975d23ee",
       "name": "Formatear_fecha"
@@ -1232,8 +1417,8 @@
       "type": "n8n-nodes-base.googleCalendar",
       "typeVersion": 1.3,
       "position": [
-        -480,
-        32
+        -896,
+        112
       ],
       "id": "56a37d53-bdf3-46c8-9c6b-452fc2bee5f5",
       "name": "Traer_citas",
@@ -1479,8 +1664,8 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        -816,
-        32
+        -1232,
+        112
       ],
       "id": "828eedc1-655a-4b71-a744-54fa61800524",
       "name": "Wait",
@@ -1779,18 +1964,131 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.3,
       "position": [
-        -1072,
-        32
+        -1488,
+        112
       ],
       "id": "3bdd82c3-ac65-47cd-bfa2-9e7c279a7aef",
       "name": "Call 'Configuracion Global'"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "aec3af4f-a491-4c32-a1c7-487c6ec95c85",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -672,
+        112
+      ],
+      "id": "fe57172c-4902-4929-9bdd-54078f0aec3e",
+      "name": "existe"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "55f68382-fbf4-467d-ad66-0dbb6b19773b",
+              "leftValue": "={{$now}}",
+              "rightValue": "={{ $json.start.dateTime }}",
+              "operator": {
+                "type": "dateTime",
+                "operation": "before"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -464,
+        80
+      ],
+      "id": "fa0b451f-dd0c-40fc-a0af-621bfbedf558",
+      "name": "fecha actual futura"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "149563b5-f1e5-46a3-b252-31c6894c8265",
+              "name": "Respuesta",
+              "value": "No se puede eliminar una cita que ya paso.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -224,
+        192
+      ],
+      "id": "3a982f08-d223-45c9-9a6d-a28f4e9a88c9",
+      "name": "Fecha pasada"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "149563b5-f1e5-46a3-b252-31c6894c8265",
+              "name": "Respuesta",
+              "value": "La cita no fue encontrada ese día a ese horario.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -464,
+        224
+      ],
+      "id": "5df2df49-645d-4f2d-a981-85486f6cf0bf",
+      "name": "CitaNoEncontrada1"
     }
   ],
   "pinData": {
     "When Executed by Another Workflow": [
       {
         "json": {
-          "Fecha": "2026-03-10T16:00:00",
+          "Fecha": "2026-03-14T08:00:00",
           "Telefono": "",
           "Duracion": "150",
           "Dueño": true
@@ -1825,6 +2123,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2026-03-15T14:49:51.438Z",
-  "versionId": "6ea1e8cd-97cf-4525-9544-26618ed721dc"
+  "updatedAt": "2026-03-16T21:22:13.912Z",
+  "versionId": "7cb39b25-1731-46d6-8f9f-62b91955b6d9"
 }
