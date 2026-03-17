@@ -1,0 +1,1691 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Google Calendar": {
+      "main": [
+        [
+          {
+            "node": "Bloqueado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Date & Time3": {
+      "main": [
+        [
+          {
+            "node": "Formatear fecha y horarios de atencion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Calendar4": {
+      "main": [
+        [
+          {
+            "node": "formatear datos cita",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "send_estilista_confirmado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "reminder_cliente": {
+      "main": [
+        [
+          {
+            "node": "Chat Memory Manager",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error recordatorio cliente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Chat Memory Manager1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis Chat Memory1": {
+      "ai_memory": [
+        [
+          {
+            "node": "Chat Memory Manager1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chat Memory Manager1": {
+      "main": [
+        []
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis Chat Memory2": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Formatear fecha y horarios de atencion": {
+      "main": [
+        [
+          {
+            "node": "Google Calendar4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "formatear datos cita": {
+      "main": [
+        [
+          {
+            "node": "agrupar citas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "separar citas": {
+      "main": [
+        [
+          {
+            "node": "Update an event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "agrupar citas": {
+      "main": [
+        [
+          {
+            "node": "separar citas",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "9pm": {
+      "main": [
+        [
+          {
+            "node": "Call 'Configuracion Global'1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "reminder_cliente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chat Memory Manager": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update an event": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Error actualizando calendario",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Chat Memory Manager",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "8AM": {
+      "main": [
+        [
+          {
+            "node": "Call 'Configuracion Global'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Son citas?": {
+      "main": [
+        [
+          {
+            "node": "Confirmadas?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No formato",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Formatear fecha": {
+      "main": [
+        [
+          {
+            "node": "Hora inicio y fin",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hora inicio y fin": {
+      "main": [
+        [
+          {
+            "node": "Google Calendar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Confirmadas?": {
+      "main": [
+        [
+          {
+            "node": "Ordenar Datos",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Ordenar Datos1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ordenar Datos": {
+      "main": [
+        [
+          {
+            "node": "Juntar citas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait2": {
+      "main": [
+        [
+          {
+            "node": "send_estilista_no_confirmado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ordenar Datos1": {
+      "main": [
+        [
+          {
+            "node": "Juntar citas1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "send_estilista_confirmado": {
+      "main": [
+        [
+          {
+            "node": "Chat Memory Manager2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error recordatorio estilista1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "send_estilista_no_confirmado": {
+      "main": [
+        [
+          {
+            "node": "Chat Memory Manager2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error recordatorio estilista2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "send_estilista1": {
+      "main": [
+        [
+          {
+            "node": "Chat Memory Manager2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error recordatorio estilista",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error recordatorio cliente": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Juntar citas": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Juntar citas1": {
+      "main": [
+        [
+          {
+            "node": "Wait2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis Chat Memory3": {
+      "ai_memory": [
+        [
+          {
+            "node": "Chat Memory Manager2",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait3": {
+      "main": [
+        [
+          {
+            "node": "send_estilista_no_confirmado1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "No formato": {
+      "main": [
+        [
+          {
+            "node": "Wait3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "send_estilista_no_confirmado1": {
+      "main": [
+        [
+          {
+            "node": "Chat Memory Manager2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error recordatorio estilista3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bloqueado": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Son citas?",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "send_estilista1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'Configuracion Global'": {
+      "main": [
+        [
+          {
+            "node": "Formatear fecha",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'Configuracion Global'1": {
+      "main": [
+        [
+          {
+            "node": "Date & Time3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-03-16T07:00:02.167Z",
+  "id": "zthwP2JYfOwX2r8s",
+  "isArchived": true,
+  "meta": null,
+  "name": "Recordatorios citas-Veremma-V1",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "ulises.rosales.ar@gmail.com",
+          "mode": "list",
+          "cachedResultName": "ulises.rosales.ar@gmail.com"
+        },
+        "limit": 15,
+        "timeMin": "={{ $json.startDate }}{{ $('Call \\'Configuracion Global\\'').item.json.TimezoneOffset }}",
+        "timeMax": "={{ $json.endDate }}{{ $('Call \\'Configuracion Global\\'').item.json.TimezoneOffset }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        192,
+        848
+      ],
+      "id": "33a802be-a63b-4d8f-9c4d-0d64826c540a",
+      "name": "Google Calendar",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "uUlIwgQJ1mHXECLz",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').item.json.EvolutionInstance }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionApiKey }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "number",
+              "value": "={{ $('Call \\'Configuracion Global\\'').item.json['CelularDueño'] }}"
+            },
+            {
+              "name": "text",
+              "value": "=¡Hola te informo tus turnos agendados para Hoy!\nSi no estan confirmados puedes enviarles un mensaje para confirmar su asistencia."
+            },
+            {
+              "name": "delay",
+              "value": "={{ 2000 }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1088,
+        656
+      ],
+      "id": "6b4e65c6-4e9d-478b-a6ff-c97361fe79f1",
+      "name": "send_estilista1",
+      "executeOnce": true,
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 5000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "formatDate",
+        "date": "={{ $now }}",
+        "format": "custom",
+        "customFormat": "dd/MM/yyyy ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dateTime",
+      "typeVersion": 2,
+      "position": [
+        -192,
+        80
+      ],
+      "id": "41ef6f82-de3e-46ab-89af-b53626d2bba2",
+      "name": "Date & Time3",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "ulises.rosales.ar@gmail.com",
+          "mode": "list",
+          "cachedResultName": "ulises.rosales.ar@gmail.com"
+        },
+        "limit": 15,
+        "timeMin": "={{ $json.startDate }}{{ $('Call \\'Configuracion Global\\'1').item.json.TimezoneOffset }}",
+        "timeMax": "={{ $json.endDate }}{{ $('Call \\'Configuracion Global\\'1').item.json.TimezoneOffset }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        256,
+        80
+      ],
+      "id": "eff568d5-5557-42c4-9181-c65e9b122424",
+      "name": "Google Calendar4",
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "uUlIwgQJ1mHXECLz",
+          "name": "Google Calendar account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Call \\'Configuracion Global\\'1').item.json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'1').item.json.EvolutionInstance }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $('Call \\'Configuracion Global\\'1').item.json.EvolutionApiKey }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "number",
+              "value": "={{ $json.numero }}@s.whatsapp.net"
+            },
+            {
+              "name": "text",
+              "value": "={{ \n  \"Hola \" + $json.nombre + \" 😊\\n\\n\" +\n  \"Te recordamos tus turnos de mañana:\\n\\n\" +\n  $json.citas\n    .sort((a, b) => a.hora.localeCompare(b.hora))\n    .map(c =>\n      \"• \" + c.hora + \" – \" + c.servicio +\n      \" (duración: \" + c.tiempo + \")\"\n    ).join(\"\\n\") +\n  \"\\n\\nConfírmanos tu asistencia cuanto antes así dejamos todo preparado para mañana ✨\"\n}}\n"
+            },
+            {
+              "name": "delay",
+              "value": "={{ 2000 }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1376,
+        272
+      ],
+      "id": "924db1aa-a9be-4ca5-8f88-16930d971d67",
+      "name": "reminder_cliente",
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 5000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "amount": "={{ Math.floor(Math.random() * (30 - 10 + 1) + 10) }}\n"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1552,
+        816
+      ],
+      "id": "d7777ea1-1d98-4db7-a2f3-131d0ada0fe9",
+      "name": "Wait1",
+      "webhookId": "c7346c88-21be-420c-ad7d-960081c6e31a"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -192,
+        1264
+      ],
+      "id": "ab95974b-5ebf-42c2-8cd1-87f97d8646ef",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "mode": "delete",
+        "deleteMode": "all"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryManager",
+      "typeVersion": 1.1,
+      "position": [
+        32,
+        1264
+      ],
+      "id": "9ec24569-6775-4c72-8913-c21ff62da2b4",
+      "name": "Chat Memory Manager1"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "=5492634322107@s.whatsapp.net",
+        "sessionTTL": 259200
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
+      "typeVersion": 1.5,
+      "position": [
+        32,
+        1456
+      ],
+      "id": "9691c564-9dd1-48e4-9b30-2061bf3c234f",
+      "name": "Redis Chat Memory1",
+      "credentials": {
+        "redis": {
+          "id": "aqJvBUEfRdgU1LkO",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        32,
+        1808
+      ],
+      "id": "9151a9dc-7dbd-45bd-8b17-57363ee144a2",
+      "name": "AI Agent",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -192,
+        1808
+      ],
+      "id": "fa96f846-6eea-4114-8e89-4a4a2d7d9c3d",
+      "name": "When chat message received",
+      "webhookId": "70e34fe6-4187-4e33-a511-d9e1264762d5"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        48,
+        2032
+      ],
+      "id": "b1dd9c60-1d8b-465c-b938-45730383f618",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "3ce9Jyp845Tp5bCS",
+          "name": "Google Gemini(PaLM) Api RST"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "=5492616763104@s.whatsapp.net",
+        "sessionTTL": 259200,
+        "contextWindowLength": 3
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
+      "typeVersion": 1.5,
+      "position": [
+        176,
+        2032
+      ],
+      "id": "2c069662-a824-4ea8-96d9-53b1f23cb326",
+      "name": "Redis Chat Memory2",
+      "credentials": {
+        "redis": {
+          "id": "aqJvBUEfRdgU1LkO",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "calendar": {
+          "__rl": true,
+          "value": "ulises.rosales.ar@gmail.com",
+          "mode": "list",
+          "cachedResultName": "ulises.rosales.ar@gmail.com"
+        },
+        "eventId": "={{ $json.id }}",
+        "updateFields": {
+          "color": "5"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        1152,
+        -112
+      ],
+      "id": "9bf6796c-ae5e-4c6b-a54f-9ca4bbbfebaf",
+      "name": "Update an event",
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "uUlIwgQJ1mHXECLz",
+          "name": "Google Calendar account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const item = $input.first();\nconst inputDate = item.json.formattedDate.trim();   // \"22/04/2025\"\n\n// --- 1. Parsear la fecha DD/MM/YYYY -----------------------------\nconst [day, month, year] = inputDate.split('/').map(Number); // → [22, 4, 2025]\n\n// --- 2. Construir un Date y sumarle 1 día -----------------------\nlet base = new Date(year, month - 1, day);          // mes = 0-based\nbase.setDate(base.getDate() + 1);                   // +1 día\n\n// --- 3. Helper para devolver ISO sin zona horaria --------------\nconst toISO = (d, hour) => {\n  // Creamos un Date en UTC para la hora pedida\n  const utc = new Date(Date.UTC(\n    d.getFullYear(),\n    d.getMonth(),\n    d.getDate(),\n    hour, 0, 0\n  ));\n  return utc.toISOString().slice(0, 19);            // YYYY-MM-DDTHH:MM:SS\n};\n\n// --- 4. Guardar resultados --------------------------------------\nitem.json.startDate = toISO(base, 8);   // 08:00:00\nitem.json.endDate   = toISO(base, 21);  // 21:00:00\n\nreturn [item];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        32,
+        80
+      ],
+      "id": "9d4ba8e5-0038-493b-9dba-eba619cfb5bb",
+      "name": "Formatear fecha y horarios de atencion",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const results = [];\n\nfor (const item of $input.all()) {\n    const summary = item?.json?.summary ?? \"\";\n    const text = typeof summary === \"string\" ? summary : \"\";\n\n    const servicio = text.match(/Cita:\\s*(.*?)\\s*Duracion/i)?.[1] || \"\";\n    const tiempo = text.match(/Duracion estimada:\\s*([0-9]+ ?minutos)/i)?.[1] || \"\";\n    const nombre = text.match(/Para\\s+(.*?)\\s+[0-9]+@/i)?.[1] || \"\";\n    const numero = text.match(/([0-9]{10,})@s\\.whatsapp\\.net/i)?.[1] || \"\";\n\n    // Extraer hora desde item.json.start.dateTime (si existe)\n    let horaEntrada = \"\";\n    const startStr = item?.json?.start?.dateTime ?? item?.json?.startDateTime ?? \"\";\n    if (typeof startStr === \"string\" && startStr.includes(\"T\")) {\n        // Parte después de la T: \"09:00:00-03:00\" o \"09:00:00\"\n        const afterT = startStr.split(\"T\")[1] || \"\";\n        // Extraer HH:MM usando regex (maneja segundos y offsets)\n        const m = afterT.match(/^(\\d{2}:\\d{2})/);\n        if (m) {\n            horaEntrada = `${m[1]} hs`;\n        }\n    }\n\n    const isEmpty =\n        !servicio &&\n        !tiempo &&\n        !nombre &&\n        !numero;\n\n    if (!isEmpty) {\n        results.push({\n            json: {\n                id: item.json.id, \n                servicio,\n                tiempo,\n                nombre,\n                numero,\n                horaEntrada\n            }\n        });\n    }\n}\n\nreturn results;\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        480,
+        80
+      ],
+      "id": "512d6bc1-c6b2-4193-b972-763fadc69f5e",
+      "name": "formatear datos cita",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const updates = [];\n\nfor (const item of $input.all()) {\n  for (const cita of item.json.citas) {\n    updates.push({\n      json: {\n        id: cita.id\n      }\n    });\n  }\n}\n\nreturn updates;\n\n\nreturn updates;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        928,
+        -112
+      ],
+      "id": "00797a89-751a-4195-a927-2267d73ffbbb",
+      "name": "separar citas"
+    },
+    {
+      "parameters": {
+        "jsCode": "const grouped = {};\n\nfor (const item of $input.all()) {\n  const { numero, nombre, servicio, horaEntrada, tiempo } = item.json;\n\n  if (!numero) continue;\n\n  if (!grouped[numero]) {\n    grouped[numero] = {\n      numero,\n      nombre,\n      citas: []\n    };\n  }\n\n  grouped[numero].citas.push({\n    id: item.json.id,\n    servicio,\n    hora: horaEntrada,\n    tiempo\n  });\n}\n\nreturn Object.values(grouped).map(g => ({ json: g }));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        704,
+        80
+      ],
+      "id": "b0bc7c98-5890-4b89-86fa-cb0f010635db",
+      "name": "agrupar citas"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 21
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -528,
+        80
+      ],
+      "id": "931cbd28-9a19-4d89-a62a-a910e0dbedd6",
+      "name": "9pm"
+    },
+    {
+      "parameters": {
+        "amount": "={{ Math.floor(Math.random() * (30 - 5 + 1) + 5) }}",
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1152,
+        272
+      ],
+      "id": "3e51b034-c844-49af-8391-27eb0af847bf",
+      "name": "Wait",
+      "webhookId": "c7346c88-21be-420c-ad7d-960081c6e31a"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        928,
+        272
+      ],
+      "id": "aaaa5f15-9011-4f4e-a4aa-24057f0aa6b0",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "messages": {
+          "messageValues": [
+            {
+              "type": "ai",
+              "message": "={{ $json.message.conversation }}"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryManager",
+      "typeVersion": 1.1,
+      "position": [
+        1760,
+        336
+      ],
+      "id": "9cc1ae4d-44c4-49eb-85e3-4eec8f2db607",
+      "name": "Chat Memory Manager",
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 5000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.key.remoteJid }}",
+        "sessionTTL": 172800
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
+      "typeVersion": 1.5,
+      "position": [
+        1760,
+        528
+      ],
+      "id": "7d765a03-f49e-45dc-9514-c37ee2035d04",
+      "name": "Redis Chat Memory",
+      "credentials": {
+        "redis": {
+          "id": "aqJvBUEfRdgU1LkO",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1152,
+        80
+      ],
+      "id": "0a4c8025-6038-4675-9b16-b4eb3e64fa99",
+      "name": "No Operation, do nothing1"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -496,
+        848
+      ],
+      "id": "38d960d1-6a82-49e6-8c5a-00f99cc90c0d",
+      "name": "8AM"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "4f5c77fa-3782-4cb2-ab4e-872c56574c6a",
+              "leftValue": "={{ $json.summary }}",
+              "rightValue": "Cita:",
+              "operator": {
+                "type": "string",
+                "operation": "startsWith"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        592,
+        880
+      ],
+      "id": "07fed656-b8fd-420e-95d4-1979e8219760",
+      "name": "Son citas?"
+    },
+    {
+      "parameters": {
+        "operation": "formatDate",
+        "date": "={{ $now }}",
+        "format": "custom",
+        "customFormat": "dd/MM/yyyy ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dateTime",
+      "typeVersion": 2,
+      "position": [
+        -176,
+        848
+      ],
+      "id": "594ed523-1d43-4842-8fb7-81f27afa15df",
+      "name": "Formatear fecha",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const item = $input.first();\nconst inputDate = item.json.formattedDate.trim();   // \"22/04/2025\"\n\n// --- 1. Parsear la fecha DD/MM/YYYY -----------------------------\nconst [day, month, year] = inputDate.split('/').map(Number); // → [22, 4, 2025]\n\n// --- 2. Construir un Date  -----------------------\nlet base = new Date(year, month - 1, day);          // mes = 0-based\nbase.setDate(base.getDate());                   \n\n// --- 3. Helper para devolver ISO sin zona horaria --------------\nconst toISO = (d, hour) => {\n  // Creamos un Date en UTC para la hora pedida\n  const utc = new Date(Date.UTC(\n    d.getFullYear(),\n    d.getMonth(),\n    d.getDate(),\n    hour, 0, 0\n  ));\n  return utc.toISOString().slice(0, 19);            // YYYY-MM-DDTHH:MM:SS\n};\n\n// --- 4. Guardar resultados --------------------------------------\nitem.json.startDate = toISO(base, 8);   // 08:00:00\nitem.json.endDate   = toISO(base, 21);  // 21:00:00\n\nreturn [item];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
+        848
+      ],
+      "id": "0260334d-1ad1-4208-84e5-335caa8840ee",
+      "name": "Hora inicio y fin",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "dc31f1df-d555-4ca7-9f98-e0cce4c3f0d3",
+              "leftValue": "={{ $json.colorId }}",
+              "rightValue": "2",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        864,
+        864
+      ],
+      "id": "97ef47a5-7970-4efd-b709-db50ab38dae7",
+      "name": "Confirmadas?"
+    },
+    {
+      "parameters": {
+        "jsCode": "const results = [];\n\nfor (const item of $input.all()) {\n    const summary = item?.json?.summary ?? \"\";\n    const text = typeof summary === \"string\" ? summary : \"\";\n\n    const servicio = text.match(/Cita:\\s*(.*?)\\s*Duracion/i)?.[1] || \"\";\n    const tiempo = text.match(/Duracion estimada:\\s*([0-9]+ ?minutos)/i)?.[1] || \"\";\n    const nombre = text.match(/Para\\s+(.*?)\\s+[0-9]+@/i)?.[1] || \"\";\n    const numero = text.match(/([0-9]{10,})@s\\.whatsapp\\.net/i)?.[1] || \"\";\n\n    // Extraer hora desde item.json.start.dateTime (si existe)\n    let horaEntrada = \"\";\n    const startStr = item?.json?.start?.dateTime ?? item?.json?.startDateTime ?? \"\";\n    if (typeof startStr === \"string\" && startStr.includes(\"T\")) {\n        // Parte después de la T: \"09:00:00-03:00\" o \"09:00:00\"\n        const afterT = startStr.split(\"T\")[1] || \"\";\n        // Extraer HH:MM usando regex (maneja segundos y offsets)\n        const m = afterT.match(/^(\\d{2}:\\d{2})/);\n        if (m) {\n            horaEntrada = `${m[1]} hs`;\n        }\n    }\n\n    const isEmpty =\n        !servicio &&\n        !tiempo &&\n        !nombre &&\n        !numero;\n\n    if (!isEmpty) {\n        results.push({\n            json: {\n                servicio,\n                tiempo,\n                nombre,\n                numero,\n                horaEntrada\n            }\n        });\n    }\n}\n\nreturn results;\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1232,
+        816
+      ],
+      "id": "b267be03-c893-4d8b-bb24-ee93f8d8b741",
+      "name": "Ordenar Datos",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "amount": "={{ Math.floor(Math.random() * (30 - 10 + 1) + 10) }}\n"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1552,
+        1008
+      ],
+      "id": "0bd91161-32b9-4ea0-9c1b-81d6daee729b",
+      "name": "Wait2",
+      "webhookId": "c7346c88-21be-420c-ad7d-960081c6e31a"
+    },
+    {
+      "parameters": {
+        "jsCode": "const results = [];\n\nfor (const item of $input.all()) {\n    const summary = item?.json?.summary ?? \"\";\n    const text = typeof summary === \"string\" ? summary : \"\";\n\n    const servicio = text.match(/Cita:\\s*(.*?)\\s*Duracion/i)?.[1] || \"\";\n    const tiempo = text.match(/Duracion estimada:\\s*([0-9]+ ?minutos)/i)?.[1] || \"\";\n    const nombre = text.match(/Para\\s+(.*?)\\s+[0-9]+@/i)?.[1] || \"\";\n    const numero = text.match(/([0-9]{10,})@s\\.whatsapp\\.net/i)?.[1] || \"\";\n\n    // Extraer hora desde item.json.start.dateTime (si existe)\n    let horaEntrada = \"\";\n    const startStr = item?.json?.start?.dateTime ?? item?.json?.startDateTime ?? \"\";\n    if (typeof startStr === \"string\" && startStr.includes(\"T\")) {\n        // Parte después de la T: \"09:00:00-03:00\" o \"09:00:00\"\n        const afterT = startStr.split(\"T\")[1] || \"\";\n        // Extraer HH:MM usando regex (maneja segundos y offsets)\n        const m = afterT.match(/^(\\d{2}:\\d{2})/);\n        if (m) {\n            horaEntrada = `${m[1]} hs`;\n        }\n    }\n\n    const isEmpty =\n        !servicio &&\n        !tiempo &&\n        !nombre &&\n        !numero;\n\n    if (!isEmpty) {\n        results.push({\n            json: {\n                servicio,\n                tiempo,\n                nombre,\n                numero,\n                horaEntrada\n            }\n        });\n    }\n}\n\nreturn results;\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1200,
+        1008
+      ],
+      "id": "23d28b11-e816-467a-8b7b-fc62898ed4a6",
+      "name": "Ordenar Datos1",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').item.json.EvolutionInstance }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionApiKey }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "number",
+              "value": "={{ $('Call \\'Configuracion Global\\'').item.json['CelularDueño'] }}"
+            },
+            {
+              "name": "text",
+              "value": "={{ $json.mensaje }}"
+            },
+            {
+              "name": "delay",
+              "value": "={{ 2000 }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1728,
+        816
+      ],
+      "id": "400a2232-c161-4d95-83f5-2912188b8d00",
+      "name": "send_estilista_confirmado",
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 5000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').item.json.EvolutionInstance }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionApiKey }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "number",
+              "value": "={{ $('Call \\'Configuracion Global\\'').item.json['CelularDueño'] }}"
+            },
+            {
+              "name": "text",
+              "value": "={{ $json.mensaje }}"
+            },
+            {
+              "name": "delay",
+              "value": "={{ 2000 }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1744,
+        1008
+      ],
+      "id": "825bb91b-efc7-425e-b074-2398feb3211f",
+      "name": "send_estilista_no_confirmado",
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 5000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Call \\'Configuracion Global\\'1').item.json.TelegramChatId }}",
+        "text": "=Se produjo un error el {{ $now }} en el proyecto de veremma EN EN UN RECORDATORIO A UN CLIENTE. \nWorkflow:  {{ $workflow.name }}\nExecution:{{ $execution.id }}\nUrl:{{ $execution.resumeUrl }}\n",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1568,
+        368
+      ],
+      "id": "8a21958a-29ed-4126-863b-55e33fc01d8c",
+      "name": "Error recordatorio cliente",
+      "webhookId": "c11a6f96-510b-41af-ac40-1101cbd147c7",
+      "retryOnFail": true,
+      "credentials": {
+        "telegramApi": {
+          "id": "5Kl62VkSpYm7Hhzy",
+          "name": "Telegram account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Call \\'Configuracion Global\\'').item.json.TelegramChatId }}",
+        "text": "=Se produjo un error el {{ $now }} en el proyecto de veremma EN EN UN RECORDATORIO AL ESTILISTA. \nWorkflow:  {{ $workflow.name }}\nExecution:{{ $execution.id }}\nUrl:{{ $execution.resumeUrl }}\n",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1360,
+        656
+      ],
+      "id": "e88b96a7-d4a8-4fb1-85bf-45a03c5d8e8e",
+      "name": "Error recordatorio estilista",
+      "webhookId": "c11a6f96-510b-41af-ac40-1101cbd147c7",
+      "retryOnFail": true,
+      "credentials": {
+        "telegramApi": {
+          "id": "5Kl62VkSpYm7Hhzy",
+          "name": "Telegram account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Call \\'Configuracion Global\\'').item.json.TelegramChatId }}",
+        "text": "=Se produjo un error el {{ $now }} en el proyecto de veremma EN EN UN RECORDATORIO AL ESTILISTA. \nWorkflow:  {{ $workflow.name }}\nExecution:{{ $execution.id }}\nUrl:{{ $execution.resumeUrl }}\n",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2048,
+        832
+      ],
+      "id": "a96c8058-b866-40b3-9b5d-1cd9ded92d1d",
+      "name": "Error recordatorio estilista1",
+      "webhookId": "c11a6f96-510b-41af-ac40-1101cbd147c7",
+      "retryOnFail": true,
+      "credentials": {
+        "telegramApi": {
+          "id": "5Kl62VkSpYm7Hhzy",
+          "name": "Telegram account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Call \\'Configuracion Global\\'').item.json.TelegramChatId }}",
+        "text": "=Se produjo un error el {{ $now }} en el proyecto de veremma EN EN UN RECORDATORIO AL ESTILISTA. \nWorkflow:  {{ $workflow.name }}\nExecution:{{ $execution.id }}\nUrl:\n",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2016,
+        1024
+      ],
+      "id": "d16b2b20-9be2-4ac3-89ba-fc7f28e97bcb",
+      "name": "Error recordatorio estilista2",
+      "webhookId": "c11a6f96-510b-41af-ac40-1101cbd147c7",
+      "retryOnFail": true,
+      "credentials": {
+        "telegramApi": {
+          "id": "5Kl62VkSpYm7Hhzy",
+          "name": "Telegram account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Call \\'Configuracion Global\\'1').item.json.TelegramChatId }}",
+        "text": "=Se produjo un error el {{ $now }} en el proyecto de veremma ACTUALIZANDO EL CALENDARIO. \nWorkflow:  {{ $workflow.name }}\nExecution:{{ $execution.id }}\nUrl:{{ $execution.resumeUrl }}\n",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1424,
+        -48
+      ],
+      "id": "465f2293-628a-4927-9910-dc379bbc8825",
+      "name": "Error actualizando calendario",
+      "webhookId": "c11a6f96-510b-41af-ac40-1101cbd147c7",
+      "retryOnFail": true,
+      "credentials": {
+        "telegramApi": {
+          "id": "5Kl62VkSpYm7Hhzy",
+          "name": "Telegram account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Si no hay citas\nif (items.length === 0) {\n  return [\n    {\n      json: {\n        mensaje: \"Citas confirmadas para hoy:\\n\\nNo hay citas agendadas.\"\n      }\n    }\n  ];\n}\n\n// Texto base\nlet mensaje = \"Citas confirmadas para hoy:\\n\\n\";\n\n// Recorrer todas las citas\nitems.forEach((item, index) => {\n  const cita = item.json;\n\n  mensaje += `${index + 1}) ${cita.horaEntrada}\\n`;\n  mensaje += `Cliente: ${cita.nombre}\\n`;\n  mensaje += `Servicio: ${cita.servicio}\\n`;\n  mensaje += `Duración: ${cita.tiempo}\\n`;\n  mensaje += `Teléfono: ${cita.numero}\\n\\n`;\n});\n\n// Devolver un solo item con el mensaje armado\nreturn [\n  {\n    json: {\n      mensaje: mensaje.trim()\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1392,
+        816
+      ],
+      "id": "28f0212a-fe26-4023-bbc8-45df9411e5ed",
+      "name": "Juntar citas"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Si no hay citas\nif (items.length === 0) {\n  return [\n    {\n      json: {\n        mensaje: \"Citas NO confirmadas para hoy:\\n\\nNo hay citas agendadas.\"\n      }\n    }\n  ];\n}\n\n// Texto base\nlet mensaje = \"Citas NO confirmadas para hoy:\\n\\n\";\n\n// Recorrer todas las citas\nitems.forEach((item, index) => {\n  const cita = item.json;\n\n  mensaje += `${index + 1}) ${cita.horaEntrada}\\n`;\n  mensaje += `Cliente: ${cita.nombre}\\n`;\n  mensaje += `Servicio: ${cita.servicio}\\n`;\n  mensaje += `Duración: ${cita.tiempo}\\n`;\n  mensaje += `Teléfono: ${cita.numero}\\n\\n`;\n});\n\n// Devolver un solo item con el mensaje armado\nreturn [\n  {\n    json: {\n      mensaje: mensaje.trim()\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1360,
+        1008
+      ],
+      "id": "574cf5b3-6360-4420-985d-489f5da5b6b0",
+      "name": "Juntar citas1"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "messages": {
+          "messageValues": [
+            {
+              "type": "ai",
+              "message": "={{ $json.message.conversation }}"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryManager",
+      "typeVersion": 1.1,
+      "position": [
+        2672,
+        832
+      ],
+      "id": "f6c070bc-9d4a-424c-a32a-2e035000f0d7",
+      "name": "Chat Memory Manager2",
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 5000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.key.remoteJid }}",
+        "sessionTTL": 172800
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
+      "typeVersion": 1.5,
+      "position": [
+        2656,
+        1008
+      ],
+      "id": "0a8c20e1-e72b-4f8c-88bf-2a866aadc8bf",
+      "name": "Redis Chat Memory3",
+      "credentials": {
+        "redis": {
+          "id": "aqJvBUEfRdgU1LkO",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\n\nfunction obtenerHora(fechaISO) {\n  return fechaISO.substring(11, 16); // HH:mm\n}\n\n// Crear texto de cada evento\nconst eventos = items.map(item => {\n\n  const summary = item.json.summary ?? \"Sin descripción\";\n  const inicio = obtenerHora(item.json.start.dateTime);\n  const fin = obtenerHora(item.json.end.dateTime);\n\n  return `${summary}\ninicio: ${inicio}\nfin: ${fin}`;\n});\n\n// Mensaje final\nconst mensajeFinal = `Otros:\n${eventos.join(\"\\n\\n\")}`;\n\nreturn [\n  {\n    json: {\n      mensaje: mensajeFinal\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1200,
+        1216
+      ],
+      "id": "4a2deea3-a999-415c-963e-4c4a907d4a37",
+      "name": "No formato"
+    },
+    {
+      "parameters": {
+        "amount": "={{ Math.floor(Math.random() * (30 - 10 + 1) + 10) }}\n"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1424,
+        1216
+      ],
+      "id": "71a47f8f-a661-47a3-a042-38b2731deaeb",
+      "name": "Wait3",
+      "webhookId": "c7346c88-21be-420c-ad7d-960081c6e31a"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').item.json.EvolutionInstance }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionApiKey }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "number",
+              "value": "={{ $('Call \\'Configuracion Global\\'').item.json['CelularDueño'] }}"
+            },
+            {
+              "name": "text",
+              "value": "={{ $json.mensaje }}"
+            },
+            {
+              "name": "delay",
+              "value": "={{ 2000 }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1680,
+        1216
+      ],
+      "id": "28bacbd4-4fff-4f0d-b783-f86bb5f062e6",
+      "name": "send_estilista_no_confirmado1",
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 5000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Call \\'Configuracion Global\\'').item.json.TelegramChatId }}",
+        "text": "=Se produjo un error el {{ $now }} en el proyecto de veremma EN EN UN RECORDATORIO AL ESTILISTA. \nWorkflow:  {{ $workflow.name }}\nExecution:{{ $execution.id }}\nUrl:\n",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1936,
+        1264
+      ],
+      "id": "b2cdb210-741e-426f-9667-086e8f5aa978",
+      "name": "Error recordatorio estilista3",
+      "webhookId": "c11a6f96-510b-41af-ac40-1101cbd147c7",
+      "retryOnFail": true,
+      "credentials": {
+        "telegramApi": {
+          "id": "5Kl62VkSpYm7Hhzy",
+          "name": "Telegram account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        512,
+        704
+      ],
+      "id": "e63694e9-fc49-44a5-8fea-4039bd1e9a5b",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "e855a4e4-8412-4004-ab0f-746fd0945e0e",
+              "leftValue": "={{ $json.summary }}",
+              "rightValue": "Horario bloqueado",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        352,
+        848
+      ],
+      "id": "7cf1536b-1f4c-42a1-807a-6c0d40056297",
+      "name": "Bloqueado"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "i0aP21thDHY2T8UDlPfgP",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/i0aP21thDHY2T8UDlPfgP",
+          "cachedResultName": "Configuracion Global"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        -336,
+        848
+      ],
+      "id": "d6b84c9a-054c-451e-8bb8-b4a3f2b04daa",
+      "name": "Call 'Configuracion Global'"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "i0aP21thDHY2T8UDlPfgP",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/i0aP21thDHY2T8UDlPfgP",
+          "cachedResultName": "Configuracion Global"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        -368,
+        80
+      ],
+      "id": "f7810be3-f934-4a29-95dd-42e33d9dae0d",
+      "name": "Call 'Configuracion Global'1"
+    }
+  ],
+  "pinData": null,
+  "settings": {
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-03-16T07:00:02.169Z",
+      "createdAt": "2026-03-16T07:00:02.169Z",
+      "role": "workflow:owner",
+      "workflowId": "zthwP2JYfOwX2r8s",
+      "projectId": "f3W32VX4HOke6C3N"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-03-16T13:31:58.000Z",
+  "versionId": "47cfa7b9-8d4c-45c2-af97-852d1b2b13a5"
+}
