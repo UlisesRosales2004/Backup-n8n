@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-03-15T14:50:17.000Z",
-    "createdAt": "2026-03-15T14:50:16.410Z",
-    "versionId": "1a867dc0-c27e-4ab8-b633-b13936136ff8",
+    "updatedAt": "2026-03-17T17:54:59.000Z",
+    "createdAt": "2026-03-17T17:54:58.642Z",
+    "versionId": "8379a17c-d282-4cdb-977c-9581eb9ec128",
     "workflowId": "LiHonUg95pO2m5WpY7HsO",
     "nodes": [
       {
@@ -55,7 +55,7 @@
               },
               {
                 "name": "text",
-                "value": "=Hola, te informo que el cliente {{ $('When Executed by Another Workflow').item.json.nombre_Cliente }} solicitó asistencia de un asesor.\nPodés contactarlo al siguiente número: {{ $json.celular }}."
+                "value": "=Hola, te informo que el cliente {{ $('When Executed by Another Workflow').item.json.nombre_Cliente }} solicitó asistencia de un asesor.\nPodés contactarlo al siguiente número: {{ $json.celular }} o revisar la conversación que tuve con el para más contexto."
               },
               {
                 "name": "delay",
@@ -139,11 +139,11 @@
       }
     },
     "authors": "Cognia Empresa",
-    "name": "Version 1a867dc0",
+    "name": "Version 8379a17c",
     "description": "",
     "autosaved": false
   },
-  "activeVersionId": "1a867dc0-c27e-4ab8-b633-b13936136ff8",
+  "activeVersionId": "8379a17c-d282-4cdb-977c-9581eb9ec128",
   "connections": {
     "When Executed by Another Workflow": {
       "main": [
@@ -234,7 +234,7 @@
             },
             {
               "name": "text",
-              "value": "=Hola, te informo que el cliente {{ $('When Executed by Another Workflow').item.json.nombre_Cliente }} solicitó asistencia de un asesor.\nPodés contactarlo al siguiente número: {{ $json.celular }}."
+              "value": "=Hola, te informo que el cliente {{ $('When Executed by Another Workflow').item.json.nombre_Cliente }} solicitó asistencia de un asesor.\nPodés contactarlo al siguiente número: {{ $json.celular }} o revisar la conversación que tuve con el para más contexto."
             },
             {
               "name": "delay",
@@ -318,6 +318,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2026-03-15T14:50:35.909Z",
-  "versionId": "1a867dc0-c27e-4ab8-b633-b13936136ff8"
+  "updatedAt": "2026-03-17T17:54:58.641Z",
+  "versionId": "8379a17c-d282-4cdb-977c-9581eb9ec128"
 }
