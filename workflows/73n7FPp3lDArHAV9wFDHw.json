@@ -107,8 +107,8 @@
       "name": "Create a workflow",
       "credentials": {
         "n8nApi": {
-          "id": "W90YbFDYWkPtRUmY",
-          "name": "n8n account"
+          "id": "hOh6kMisnaxc6hud",
+          "name": "n8n veremma"
         }
       }
     },
@@ -141,6 +141,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-03-16T13:30:55.053Z",
-  "versionId": "5ef04d7c-7868-4744-8b75-974e4d4a7fa9"
+  "updatedAt": "2026-03-17T14:43:14.441Z",
+  "versionId": "bf89044f-a909-4341-9e4a-5b8080f59af3"
 }
