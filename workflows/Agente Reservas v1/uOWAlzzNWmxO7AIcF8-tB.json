@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-03-16T21:21:00.000Z",
-    "createdAt": "2026-03-16T21:20:59.537Z",
-    "versionId": "7cb39b25-1731-46d6-8f9f-62b91955b6d9",
+    "updatedAt": "2026-03-17T17:40:47.000Z",
+    "createdAt": "2026-03-17T17:40:46.364Z",
+    "versionId": "163d46e9-d711-4348-83cc-ea54132811a5",
     "workflowId": "uOWAlzzNWmxO7AIcF8-tB",
     "nodes": [
       {
@@ -240,8 +240,8 @@
         "type": "n8n-nodes-base.set",
         "typeVersion": 3.4,
         "position": [
-          1584,
-          -48
+          2160,
+          336
         ],
         "id": "7168067e-991e-4b0f-865e-688068e0eff4",
         "name": "Exitoso"
@@ -264,7 +264,7 @@
         "typeVersion": 3.4,
         "position": [
           1456,
-          128
+          192
         ],
         "id": "154d9694-7796-4c79-bec3-c44305c4437f",
         "name": "Problema"
@@ -470,7 +470,7 @@
         "typeVersion": 3.4,
         "position": [
           2000,
-          -128
+          -176
         ],
         "id": "3acd9ebb-491c-45ba-b935-5c4d02d5daab",
         "name": "Exitoso1"
@@ -497,7 +497,7 @@
               },
               {
                 "name": "text",
-                "value": "=Hola, te informo que el/la propietario/a canceló tu turno programado para el {{ \nnew Date($('Traer_citas').item.json.start.dateTime)\n.toLocaleString('es-AR', { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' })\n}} .  \nSi necesitas reprogramarlo, puedes comunicarte nuevamente."
+                "value": "=Hola, te informo que el/la propietario/a canceló tu turno programado para el {{\n(() => {\nconst d = $('Traer_citas').item.json.start.dateTime;\nconst [fecha, hora] = d.split('T');\nconst [y,m,day] = fecha.split('-');\nreturn `${day}/${m}/${y} ${hora.substring(0,5)}`;\n})()\n}}.  \nSi necesitas reprogramarlo, puedes comunicarte nuevamente."
               },
               {
                 "name": "delay",
@@ -751,6 +751,191 @@
         ],
         "id": "5df2df49-645d-4f2d-a981-85486f6cf0bf",
         "name": "CitaNoEncontrada1"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionUrl}}/message/sendText/{{ $('Call \\'Configuracion Global\\'').item.json.EvolutionInstance }}",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "apikey",
+                "value": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionApiKey }}"
+              }
+            ]
+          },
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "number",
+                "value": "={{ $('Call \\'Configuracion Global\\'').item.json['CelularDueño'] }}"
+              },
+              {
+                "name": "text",
+                "value": "=📅 Cancelacion de turno detectada\n\nUn usuario canceló un turno programado para hoy.\n\n🔹 Turno cancelado\n{{ $('Traer_citas').item.json.summary }}\nFecha y hora: {{\n$('Traer_citas').item.json.start.dateTime\n.replace('T', ' ')\n.substring(0, 16)\n}}\n"
+              },
+              {
+                "name": "delay",
+                "value": "={{ 2000 }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1760,
+          -32
+        ],
+        "id": "c80abce0-00c5-44ee-991d-e93ee902a789",
+        "name": "turnoModificado1",
+        "retryOnFail": true,
+        "waitBetweenTries": 3000,
+        "maxTries": 5,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "c0ecaff4-7624-4222-86c1-d874d89d6e88",
+                "leftValue": "={{ DateTime.fromISO($('Traer_citas').item.json.start.dateTime).toISODate() }}",
+                "rightValue": "={{ $now.toISODate() }}",
+                "operator": {
+                  "type": "dateTime",
+                  "operation": "equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          1520,
+          16
+        ],
+        "id": "0f777381-45d2-408e-8ff5-327e2a92669d",
+        "name": "mismo dia"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "6bbd8632-ba8d-4657-8ca5-5d585252bf21",
+                "name": "Respuesta",
+                "value": "=Se elimino correctamente la {{ $('Traer_citas').item.json.summary }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          2256,
+          -32
+        ],
+        "id": "577fbcb6-1a60-4c8f-828f-43e73d577b1e",
+        "name": "Exitoso4"
+      },
+      {
+        "parameters": {
+          "mode": "insert",
+          "messages": {
+            "messageValues": [
+              {
+                "type": "ai",
+                "message": "={{ $json.message.conversation }}"
+              }
+            ]
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.memoryManager",
+        "typeVersion": 1.1,
+        "position": [
+          1952,
+          -32
+        ],
+        "id": "f8200a49-20cb-4435-b1b0-a5b44fa39fef",
+        "name": "Chat Memory Manager1",
+        "retryOnFail": true,
+        "maxTries": 5,
+        "waitBetweenTries": 5000,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "sessionIdType": "customKey",
+          "sessionKey": "={{ $json.key.remoteJid }}",
+          "sessionTTL": 172800
+        },
+        "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
+        "typeVersion": 1.5,
+        "position": [
+          1952,
+          128
+        ],
+        "id": "7e3d53aa-bdb8-45ea-9dd8-35501ccb8804",
+        "name": "Redis Chat Memory1",
+        "credentials": {
+          "redis": {
+            "id": "aqJvBUEfRdgU1LkO",
+            "name": "Redis account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "6bbd8632-ba8d-4657-8ca5-5d585252bf21",
+                "name": "Respuesta",
+                "value": "=Se elimino correctamente la {{ $('Traer_citas').item.json.summary }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1744,
+          128
+        ],
+        "id": "662d0fd5-d358-499e-9e36-26b17d675b5f",
+        "name": "Exitoso5"
+      },
+      {
+        "parameters": {
+          "path": "e2359496-e3a4-425d-8feb-459c1028ec33",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          -1696,
+          -32
+        ],
+        "id": "ab3224f9-cfcc-47d7-9975-0f52b1fc965c",
+        "name": "Webhook",
+        "webhookId": "e2359496-e3a4-425d-8feb-459c1028ec33"
       }
     ],
     "connections": {
@@ -914,7 +1099,7 @@
           ],
           [
             {
-              "node": "Exitoso",
+              "node": "mismo dia",
               "type": "main",
               "index": 0
             }
@@ -1036,14 +1221,65 @@
             }
           ]
         ]
+      },
+      "turnoModificado1": {
+        "main": [
+          [
+            {
+              "node": "Chat Memory Manager1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "mismo dia": {
+        "main": [
+          [
+            {
+              "node": "turnoModificado1",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Exitoso5",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Chat Memory Manager1": {
+        "main": [
+          [
+            {
+              "node": "Exitoso4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Redis Chat Memory1": {
+        "ai_memory": [
+          [
+            {
+              "node": "Chat Memory Manager1",
+              "type": "ai_memory",
+              "index": 0
+            }
+          ]
+        ]
       }
     },
     "authors": "Cognia Empresa",
-    "name": "Version 7cb39b25",
+    "name": "Version 163d46e9",
     "description": "",
     "autosaved": false
   },
-  "activeVersionId": "7cb39b25-1731-46d6-8f9f-62b91955b6d9",
+  "activeVersionId": "163d46e9-d711-4348-83cc-ea54132811a5",
   "connections": {
     "When Executed by Another Workflow": {
       "main": [
@@ -1205,7 +1441,7 @@
         ],
         [
           {
-            "node": "Exitoso",
+            "node": "mismo dia",
             "type": "main",
             "index": 0
           }
@@ -1323,6 +1559,57 @@
           {
             "node": "Fecha pasada",
             "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "turnoModificado1": {
+      "main": [
+        [
+          {
+            "node": "Chat Memory Manager1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "mismo dia": {
+      "main": [
+        [
+          {
+            "node": "turnoModificado1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Exitoso5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chat Memory Manager1": {
+      "main": [
+        [
+          {
+            "node": "Exitoso4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis Chat Memory1": {
+      "ai_memory": [
+        [
+          {
+            "node": "Chat Memory Manager1",
+            "type": "ai_memory",
             "index": 0
           }
         ]
@@ -1571,8 +1858,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1584,
-        -48
+        2160,
+        336
       ],
       "id": "7168067e-991e-4b0f-865e-688068e0eff4",
       "name": "Exitoso"
@@ -1595,7 +1882,7 @@
       "typeVersion": 3.4,
       "position": [
         1456,
-        128
+        192
       ],
       "id": "154d9694-7796-4c79-bec3-c44305c4437f",
       "name": "Problema"
@@ -1801,7 +2088,7 @@
       "typeVersion": 3.4,
       "position": [
         2000,
-        -128
+        -176
       ],
       "id": "3acd9ebb-491c-45ba-b935-5c4d02d5daab",
       "name": "Exitoso1"
@@ -1828,7 +2115,7 @@
             },
             {
               "name": "text",
-              "value": "=Hola, te informo que el/la propietario/a canceló tu turno programado para el {{ \nnew Date($('Traer_citas').item.json.start.dateTime)\n.toLocaleString('es-AR', { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' })\n}} .  \nSi necesitas reprogramarlo, puedes comunicarte nuevamente."
+              "value": "=Hola, te informo que el/la propietario/a canceló tu turno programado para el {{\n(() => {\nconst d = $('Traer_citas').item.json.start.dateTime;\nconst [fecha, hora] = d.split('T');\nconst [y,m,day] = fecha.split('-');\nreturn `${day}/${m}/${y} ${hora.substring(0,5)}`;\n})()\n}}.  \nSi necesitas reprogramarlo, puedes comunicarte nuevamente."
             },
             {
               "name": "delay",
@@ -2082,16 +2369,204 @@
       ],
       "id": "5df2df49-645d-4f2d-a981-85486f6cf0bf",
       "name": "CitaNoEncontrada1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionUrl}}/message/sendText/{{ $('Call \\'Configuracion Global\\'').item.json.EvolutionInstance }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionApiKey }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "number",
+              "value": "={{ $('Call \\'Configuracion Global\\'').item.json['CelularDueño'] }}"
+            },
+            {
+              "name": "text",
+              "value": "=📅 Cancelacion de turno detectada\n\nUn usuario canceló un turno programado para hoy.\n\n🔹 Turno cancelado\n{{ $('Traer_citas').item.json.summary }}\nFecha y hora: {{\n$('Traer_citas').item.json.start.dateTime\n.replace('T', ' ')\n.substring(0, 16)\n}}\n"
+            },
+            {
+              "name": "delay",
+              "value": "={{ 2000 }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1760,
+        -32
+      ],
+      "id": "c80abce0-00c5-44ee-991d-e93ee902a789",
+      "name": "turnoModificado1",
+      "retryOnFail": true,
+      "waitBetweenTries": 3000,
+      "maxTries": 5,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "c0ecaff4-7624-4222-86c1-d874d89d6e88",
+              "leftValue": "={{ DateTime.fromISO($('Traer_citas').item.json.start.dateTime).toISODate() }}",
+              "rightValue": "={{ $now.toISODate() }}",
+              "operator": {
+                "type": "dateTime",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1520,
+        16
+      ],
+      "id": "0f777381-45d2-408e-8ff5-327e2a92669d",
+      "name": "mismo dia"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6bbd8632-ba8d-4657-8ca5-5d585252bf21",
+              "name": "Respuesta",
+              "value": "=Se elimino correctamente la {{ $('Traer_citas').item.json.summary }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2256,
+        -32
+      ],
+      "id": "577fbcb6-1a60-4c8f-828f-43e73d577b1e",
+      "name": "Exitoso4"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "messages": {
+          "messageValues": [
+            {
+              "type": "ai",
+              "message": "={{ $json.message.conversation }}"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryManager",
+      "typeVersion": 1.1,
+      "position": [
+        1952,
+        -32
+      ],
+      "id": "f8200a49-20cb-4435-b1b0-a5b44fa39fef",
+      "name": "Chat Memory Manager1",
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 5000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.key.remoteJid }}",
+        "sessionTTL": 172800
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
+      "typeVersion": 1.5,
+      "position": [
+        1952,
+        128
+      ],
+      "id": "7e3d53aa-bdb8-45ea-9dd8-35501ccb8804",
+      "name": "Redis Chat Memory1",
+      "credentials": {
+        "redis": {
+          "id": "aqJvBUEfRdgU1LkO",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6bbd8632-ba8d-4657-8ca5-5d585252bf21",
+              "name": "Respuesta",
+              "value": "=Se elimino correctamente la {{ $('Traer_citas').item.json.summary }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1744,
+        128
+      ],
+      "id": "662d0fd5-d358-499e-9e36-26b17d675b5f",
+      "name": "Exitoso5"
+    },
+    {
+      "parameters": {
+        "path": "e2359496-e3a4-425d-8feb-459c1028ec33",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -1696,
+        -32
+      ],
+      "id": "ab3224f9-cfcc-47d7-9975-0f52b1fc965c",
+      "name": "Webhook",
+      "webhookId": "e2359496-e3a4-425d-8feb-459c1028ec33"
     }
   ],
   "pinData": {
     "When Executed by Another Workflow": [
       {
         "json": {
-          "Fecha": "2026-03-14T08:00:00",
-          "Telefono": "",
+          "Fecha": "2026-03-17T16:00:00",
+          "Telefono": "5492634322107@s.whatsapp.net",
           "Duracion": "150",
-          "Dueño": true
+          "Dueño": false
+        },
+        "pairedItem": {
+          "item": 0
         }
       }
     ]
@@ -2122,7 +2597,7 @@
       "name": "Agente Reservas v1"
     }
   ],
-  "triggerCount": 0,
-  "updatedAt": "2026-03-16T21:22:13.912Z",
-  "versionId": "7cb39b25-1731-46d6-8f9f-62b91955b6d9"
+  "triggerCount": 1,
+  "updatedAt": "2026-03-17T17:40:46.362Z",
+  "versionId": "163d46e9-d711-4348-83cc-ea54132811a5"
 }
