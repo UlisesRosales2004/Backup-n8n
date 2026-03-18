@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-03-13T23:56:34.000Z",
-    "createdAt": "2026-03-13T23:56:33.778Z",
-    "versionId": "8c1d59e3-b961-4086-b41e-31d853edd2a4",
+    "updatedAt": "2026-03-17T18:52:50.000Z",
+    "createdAt": "2026-03-17T18:52:49.267Z",
+    "versionId": "4d93c50b-5f11-427a-a8f3-149cda7fdd5d",
     "workflowId": "SbFtJmidS4qCg4yxL6Oe2",
     "nodes": [
       {
@@ -135,13 +135,13 @@
       {
         "parameters": {
           "method": "POST",
-          "url": "={{ $('Call \\'Configuracion Global\\'1').item.json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'1').item.json.EvolutionInstance }}",
+          "url": "={{ $('Call \\'Configuracion Global\\'1').first().json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'1').first().json.EvolutionInstance }}",
           "sendHeaders": true,
           "headerParameters": {
             "parameters": [
               {
                 "name": "apikey",
-                "value": "={{ $('Call \\'Configuracion Global\\'1').item.json.EvolutionApiKey }}"
+                "value": "={{ $('Call \\'Configuracion Global\\'1').first().json.EvolutionApiKey }}"
               }
             ]
           },
@@ -154,7 +154,7 @@
               },
               {
                 "name": "text",
-                "value": "={{ \n  \"Hola \" + $json.nombre + \" 😊\\n\\n\" +\n  \"Te recordamos tus turnos de mañana:\\n\\n\" +\n  $json.citas\n    .sort((a, b) => a.hora.localeCompare(b.hora))\n    .map(c =>\n      \"• \" + c.hora + \" – \" + c.servicio +\n      \" (duración: \" + c.tiempo + \")\"\n    ).join(\"\\n\") +\n  \"\\n\\nConfírmanos tu asistencia cuanto antes así dejamos todo preparado para mañana ✨\"\n}}\n"
+                "value": "={{ \n  \"Hola \" + $json.nombre + \" 😊\\n\\n\" +\n  \"Te recordamos tus turnos de mañana:\\n\\n\" +\n  $json.citas\n    .sort((a, b) => a.hora.localeCompare(b.hora))\n    .map(c =>\n      \"• \" + c.hora + \" – \" + c.servicio +\n      \" (duración: \" + c.tiempo + \")\" +\n      (\n        c.recomendaciones && c.recomendaciones.trim() !== \"\"\n          ? \"\\n   Recuerda que debes: \" + c.recomendaciones\n          : \"\"\n      )\n    ).join(\"\\n\") +\n  \"\\n\\nConfírmanos tu asistencia cuanto antes así dejamos todo preparado para mañana ✨\"\n}}"
               },
               {
                 "name": "delay",
@@ -176,20 +176,6 @@
         "maxTries": 5,
         "waitBetweenTries": 5000,
         "onError": "continueErrorOutput"
-      },
-      {
-        "parameters": {
-          "amount": "={{ Math.floor(Math.random() * (30 - 10 + 1) + 10) }}\n"
-        },
-        "type": "n8n-nodes-base.wait",
-        "typeVersion": 1.1,
-        "position": [
-          1552,
-          816
-        ],
-        "id": "d7777ea1-1d98-4db7-a2f3-131d0ada0fe9",
-        "name": "Wait1",
-        "webhookId": "c7346c88-21be-420c-ad7d-960081c6e31a"
       },
       {
         "parameters": {},
@@ -355,7 +341,7 @@
       },
       {
         "parameters": {
-          "jsCode": "const results = [];\n\nfor (const item of $input.all()) {\n    const summary = item?.json?.summary ?? \"\";\n    const text = typeof summary === \"string\" ? summary : \"\";\n\n    const servicio = text.match(/Cita:\\s*(.*?)\\s*Duracion/i)?.[1] || \"\";\n    const tiempo = text.match(/Duracion estimada:\\s*([0-9]+ ?minutos)/i)?.[1] || \"\";\n    const nombre = text.match(/Para\\s+(.*?)\\s+[0-9]+@/i)?.[1] || \"\";\n    const numero = text.match(/([0-9]{10,})@s\\.whatsapp\\.net/i)?.[1] || \"\";\n\n    // Extraer hora desde item.json.start.dateTime (si existe)\n    let horaEntrada = \"\";\n    const startStr = item?.json?.start?.dateTime ?? item?.json?.startDateTime ?? \"\";\n    if (typeof startStr === \"string\" && startStr.includes(\"T\")) {\n        // Parte después de la T: \"09:00:00-03:00\" o \"09:00:00\"\n        const afterT = startStr.split(\"T\")[1] || \"\";\n        // Extraer HH:MM usando regex (maneja segundos y offsets)\n        const m = afterT.match(/^(\\d{2}:\\d{2})/);\n        if (m) {\n            horaEntrada = `${m[1]} hs`;\n        }\n    }\n\n    const isEmpty =\n        !servicio &&\n        !tiempo &&\n        !nombre &&\n        !numero;\n\n    if (!isEmpty) {\n        results.push({\n            json: {\n                id: item.json.id, \n                servicio,\n                tiempo,\n                nombre,\n                numero,\n                horaEntrada\n            }\n        });\n    }\n}\n\nreturn results;\n\n"
+          "jsCode": "const results = [];\n\nfor (const item of $input.all()) {\n    const summary = item?.json?.summary ?? \"\";\n    const description = item?.json?.description ?? \"\";\n\n    const text = typeof summary === \"string\" ? summary : \"\";\n    const descText = typeof description === \"string\" ? description : \"\";\n\n    const servicio = text.match(/Cita:\\s*(.*?)\\s*id_servicio/i)?.[1] || \"\";\n    const tiempo = text.match(/Duracion estimada:\\s*([0-9]+ ?minutos)/i)?.[1] || \"\";\n    const nombre = text.match(/Para\\s+(.*?)\\s+[0-9]+@/i)?.[1] || \"\";\n    const numero = text.match(/([0-9]{10,})@s\\.whatsapp\\.net/i)?.[1] || \"\";\n\n    // ✅ ahora se llama recomendaciones\n    const recomendaciones = descText;\n\n    // Extraer hora desde item.json.start.dateTime\n    let horaEntrada = \"\";\n    const startStr = item?.json?.start?.dateTime ?? item?.json?.startDateTime ?? \"\";\n\n    if (typeof startStr === \"string\" && startStr.includes(\"T\")) {\n        const afterT = startStr.split(\"T\")[1] || \"\";\n        const m = afterT.match(/^(\\d{2}:\\d{2})/);\n        if (m) {\n            horaEntrada = `${m[1]} hs`;\n        }\n    }\n\n    const isEmpty =\n        !servicio &&\n        !tiempo &&\n        !nombre &&\n        !numero &&\n        !recomendaciones;\n\n    if (!isEmpty) {\n        results.push({\n            json: {\n                id: item.json.id,\n                servicio,\n                tiempo,\n                nombre,\n                numero,\n                horaEntrada,\n                recomendaciones  \n            }\n        });\n    }\n}\n\nreturn results;"
         },
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
@@ -382,7 +368,7 @@
       },
       {
         "parameters": {
-          "jsCode": "const grouped = {};\n\nfor (const item of $input.all()) {\n  const { numero, nombre, servicio, horaEntrada, tiempo } = item.json;\n\n  if (!numero) continue;\n\n  if (!grouped[numero]) {\n    grouped[numero] = {\n      numero,\n      nombre,\n      citas: []\n    };\n  }\n\n  grouped[numero].citas.push({\n    id: item.json.id,\n    servicio,\n    hora: horaEntrada,\n    tiempo\n  });\n}\n\nreturn Object.values(grouped).map(g => ({ json: g }));\n"
+          "jsCode": "const grouped = {};\n\nfor (const item of $input.all()) {\n  const { numero, nombre, servicio, horaEntrada, tiempo,recomendaciones } = item.json;\n\n  if (!numero) continue;\n\n  if (!grouped[numero]) {\n    grouped[numero] = {\n      numero,\n      nombre,\n      citas: []\n    };\n  }\n\n  grouped[numero].citas.push({\n    id: item.json.id,\n    servicio,\n    hora: horaEntrada,\n    tiempo,\n    recomendaciones\n  });\n}\n\nreturn Object.values(grouped).map(g => ({ json: g }));\n"
         },
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
@@ -414,13 +400,13 @@
       },
       {
         "parameters": {
-          "amount": "={{ Math.floor(Math.random() * (30 - 5 + 1) + 5) }}",
+          "amount": "={{ Math.floor(Math.random() * (20 - 5 + 1) + 5) }}",
           "unit": "minutes"
         },
         "type": "n8n-nodes-base.wait",
         "typeVersion": 1.1,
         "position": [
-          1152,
+          1136,
           272
         ],
         "id": "3e51b034-c844-49af-8391-27eb0af847bf",
@@ -630,7 +616,7 @@
       },
       {
         "parameters": {
-          "amount": "={{ Math.floor(Math.random() * (30 - 10 + 1) + 10) }}\n"
+          "amount": "={{ Math.floor(Math.random() * (50 - 10 + 1) + 10) }}\n"
         },
         "type": "n8n-nodes-base.wait",
         "typeVersion": 1.1,
@@ -682,7 +668,7 @@
               },
               {
                 "name": "delay",
-                "value": "={{ 2000 }}"
+                "value": "={{ 7000 }}"
               }
             ]
           },
@@ -727,7 +713,7 @@
               },
               {
                 "name": "delay",
-                "value": "={{ 2000 }}"
+                "value": "={{ 5000 }}"
               }
             ]
           },
@@ -953,7 +939,7 @@
       },
       {
         "parameters": {
-          "amount": "={{ Math.floor(Math.random() * (30 - 10 + 1) + 10) }}\n"
+          "amount": "={{ Math.floor(Math.random() * (50 - 10 + 1) + 10) }}\n"
         },
         "type": "n8n-nodes-base.wait",
         "typeVersion": 1.1,
@@ -1133,6 +1119,20 @@
         ],
         "id": "f7810be3-f934-4a29-95dd-42e33d9dae0d",
         "name": "Call 'Configuracion Global'1"
+      },
+      {
+        "parameters": {
+          "amount": "={{ Math.floor(Math.random() * (50 - 10 + 1) + 10) }}\n"
+        },
+        "type": "n8n-nodes-base.wait",
+        "typeVersion": 1.1,
+        "position": [
+          1552,
+          816
+        ],
+        "id": "d7777ea1-1d98-4db7-a2f3-131d0ada0fe9",
+        "name": "Wait1",
+        "webhookId": "c7346c88-21be-420c-ad7d-960081c6e31a"
       }
     ],
     "connections": {
@@ -1163,17 +1163,6 @@
           [
             {
               "node": "formatear datos cita",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Wait1": {
-        "main": [
-          [
-            {
-              "node": "send_estilista_confirmado",
               "type": "main",
               "index": 0
             }
@@ -1340,7 +1329,7 @@
           ],
           [
             {
-              "node": "Wait",
+              "node": "reminder_cliente",
               "type": "main",
               "index": 0
             }
@@ -1665,14 +1654,25 @@
             }
           ]
         ]
+      },
+      "Wait1": {
+        "main": [
+          [
+            {
+              "node": "send_estilista_confirmado",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
       }
     },
     "authors": "Cognia Empresa",
-    "name": "Version 8c1d59e3",
+    "name": "Version 4d93c50b",
     "description": "",
     "autosaved": false
   },
-  "activeVersionId": "8c1d59e3-b961-4086-b41e-31d853edd2a4",
+  "activeVersionId": "4d93c50b-5f11-427a-a8f3-149cda7fdd5d",
   "connections": {
     "Google Calendar": {
       "main": [
@@ -1701,17 +1701,6 @@
         [
           {
             "node": "formatear datos cita",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Wait1": {
-      "main": [
-        [
-          {
-            "node": "send_estilista_confirmado",
             "type": "main",
             "index": 0
           }
@@ -1878,7 +1867,7 @@
         ],
         [
           {
-            "node": "Wait",
+            "node": "reminder_cliente",
             "type": "main",
             "index": 0
           }
@@ -2203,6 +2192,17 @@
           }
         ]
       ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "send_estilista_confirmado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2026-01-10T18:51:50.044Z",
@@ -2342,13 +2342,13 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "={{ $('Call \\'Configuracion Global\\'1').item.json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'1').item.json.EvolutionInstance }}",
+        "url": "={{ $('Call \\'Configuracion Global\\'1').first().json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'1').first().json.EvolutionInstance }}",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
             {
               "name": "apikey",
-              "value": "={{ $('Call \\'Configuracion Global\\'1').item.json.EvolutionApiKey }}"
+              "value": "={{ $('Call \\'Configuracion Global\\'1').first().json.EvolutionApiKey }}"
             }
           ]
         },
@@ -2361,7 +2361,7 @@
             },
             {
               "name": "text",
-              "value": "={{ \n  \"Hola \" + $json.nombre + \" 😊\\n\\n\" +\n  \"Te recordamos tus turnos de mañana:\\n\\n\" +\n  $json.citas\n    .sort((a, b) => a.hora.localeCompare(b.hora))\n    .map(c =>\n      \"• \" + c.hora + \" – \" + c.servicio +\n      \" (duración: \" + c.tiempo + \")\"\n    ).join(\"\\n\") +\n  \"\\n\\nConfírmanos tu asistencia cuanto antes así dejamos todo preparado para mañana ✨\"\n}}\n"
+              "value": "={{ \n  \"Hola \" + $json.nombre + \" 😊\\n\\n\" +\n  \"Te recordamos tus turnos de mañana:\\n\\n\" +\n  $json.citas\n    .sort((a, b) => a.hora.localeCompare(b.hora))\n    .map(c =>\n      \"• \" + c.hora + \" – \" + c.servicio +\n      \" (duración: \" + c.tiempo + \")\" +\n      (\n        c.recomendaciones && c.recomendaciones.trim() !== \"\"\n          ? \"\\n   Recuerda que debes: \" + c.recomendaciones\n          : \"\"\n      )\n    ).join(\"\\n\") +\n  \"\\n\\nConfírmanos tu asistencia cuanto antes así dejamos todo preparado para mañana ✨\"\n}}"
             },
             {
               "name": "delay",
@@ -2383,20 +2383,6 @@
       "maxTries": 5,
       "waitBetweenTries": 5000,
       "onError": "continueErrorOutput"
-    },
-    {
-      "parameters": {
-        "amount": "={{ Math.floor(Math.random() * (30 - 10 + 1) + 10) }}\n"
-      },
-      "type": "n8n-nodes-base.wait",
-      "typeVersion": 1.1,
-      "position": [
-        1552,
-        816
-      ],
-      "id": "d7777ea1-1d98-4db7-a2f3-131d0ada0fe9",
-      "name": "Wait1",
-      "webhookId": "c7346c88-21be-420c-ad7d-960081c6e31a"
     },
     {
       "parameters": {},
@@ -2562,7 +2548,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const results = [];\n\nfor (const item of $input.all()) {\n    const summary = item?.json?.summary ?? \"\";\n    const text = typeof summary === \"string\" ? summary : \"\";\n\n    const servicio = text.match(/Cita:\\s*(.*?)\\s*Duracion/i)?.[1] || \"\";\n    const tiempo = text.match(/Duracion estimada:\\s*([0-9]+ ?minutos)/i)?.[1] || \"\";\n    const nombre = text.match(/Para\\s+(.*?)\\s+[0-9]+@/i)?.[1] || \"\";\n    const numero = text.match(/([0-9]{10,})@s\\.whatsapp\\.net/i)?.[1] || \"\";\n\n    // Extraer hora desde item.json.start.dateTime (si existe)\n    let horaEntrada = \"\";\n    const startStr = item?.json?.start?.dateTime ?? item?.json?.startDateTime ?? \"\";\n    if (typeof startStr === \"string\" && startStr.includes(\"T\")) {\n        // Parte después de la T: \"09:00:00-03:00\" o \"09:00:00\"\n        const afterT = startStr.split(\"T\")[1] || \"\";\n        // Extraer HH:MM usando regex (maneja segundos y offsets)\n        const m = afterT.match(/^(\\d{2}:\\d{2})/);\n        if (m) {\n            horaEntrada = `${m[1]} hs`;\n        }\n    }\n\n    const isEmpty =\n        !servicio &&\n        !tiempo &&\n        !nombre &&\n        !numero;\n\n    if (!isEmpty) {\n        results.push({\n            json: {\n                id: item.json.id, \n                servicio,\n                tiempo,\n                nombre,\n                numero,\n                horaEntrada\n            }\n        });\n    }\n}\n\nreturn results;\n\n"
+        "jsCode": "const results = [];\n\nfor (const item of $input.all()) {\n    const summary = item?.json?.summary ?? \"\";\n    const description = item?.json?.description ?? \"\";\n\n    const text = typeof summary === \"string\" ? summary : \"\";\n    const descText = typeof description === \"string\" ? description : \"\";\n\n    const servicio = text.match(/Cita:\\s*(.*?)\\s*id_servicio/i)?.[1] || \"\";\n    const tiempo = text.match(/Duracion estimada:\\s*([0-9]+ ?minutos)/i)?.[1] || \"\";\n    const nombre = text.match(/Para\\s+(.*?)\\s+[0-9]+@/i)?.[1] || \"\";\n    const numero = text.match(/([0-9]{10,})@s\\.whatsapp\\.net/i)?.[1] || \"\";\n\n    // ✅ ahora se llama recomendaciones\n    const recomendaciones = descText;\n\n    // Extraer hora desde item.json.start.dateTime\n    let horaEntrada = \"\";\n    const startStr = item?.json?.start?.dateTime ?? item?.json?.startDateTime ?? \"\";\n\n    if (typeof startStr === \"string\" && startStr.includes(\"T\")) {\n        const afterT = startStr.split(\"T\")[1] || \"\";\n        const m = afterT.match(/^(\\d{2}:\\d{2})/);\n        if (m) {\n            horaEntrada = `${m[1]} hs`;\n        }\n    }\n\n    const isEmpty =\n        !servicio &&\n        !tiempo &&\n        !nombre &&\n        !numero &&\n        !recomendaciones;\n\n    if (!isEmpty) {\n        results.push({\n            json: {\n                id: item.json.id,\n                servicio,\n                tiempo,\n                nombre,\n                numero,\n                horaEntrada,\n                recomendaciones  \n            }\n        });\n    }\n}\n\nreturn results;"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -2589,7 +2575,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const grouped = {};\n\nfor (const item of $input.all()) {\n  const { numero, nombre, servicio, horaEntrada, tiempo } = item.json;\n\n  if (!numero) continue;\n\n  if (!grouped[numero]) {\n    grouped[numero] = {\n      numero,\n      nombre,\n      citas: []\n    };\n  }\n\n  grouped[numero].citas.push({\n    id: item.json.id,\n    servicio,\n    hora: horaEntrada,\n    tiempo\n  });\n}\n\nreturn Object.values(grouped).map(g => ({ json: g }));\n"
+        "jsCode": "const grouped = {};\n\nfor (const item of $input.all()) {\n  const { numero, nombre, servicio, horaEntrada, tiempo,recomendaciones } = item.json;\n\n  if (!numero) continue;\n\n  if (!grouped[numero]) {\n    grouped[numero] = {\n      numero,\n      nombre,\n      citas: []\n    };\n  }\n\n  grouped[numero].citas.push({\n    id: item.json.id,\n    servicio,\n    hora: horaEntrada,\n    tiempo,\n    recomendaciones\n  });\n}\n\nreturn Object.values(grouped).map(g => ({ json: g }));\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -2621,13 +2607,13 @@
     },
     {
       "parameters": {
-        "amount": "={{ Math.floor(Math.random() * (30 - 5 + 1) + 5) }}",
+        "amount": "={{ Math.floor(Math.random() * (20 - 5 + 1) + 5) }}",
         "unit": "minutes"
       },
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        1152,
+        1136,
         272
       ],
       "id": "3e51b034-c844-49af-8391-27eb0af847bf",
@@ -2837,7 +2823,7 @@
     },
     {
       "parameters": {
-        "amount": "={{ Math.floor(Math.random() * (30 - 10 + 1) + 10) }}\n"
+        "amount": "={{ Math.floor(Math.random() * (50 - 10 + 1) + 10) }}\n"
       },
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
@@ -2889,7 +2875,7 @@
             },
             {
               "name": "delay",
-              "value": "={{ 2000 }}"
+              "value": "={{ 7000 }}"
             }
           ]
         },
@@ -2934,7 +2920,7 @@
             },
             {
               "name": "delay",
-              "value": "={{ 2000 }}"
+              "value": "={{ 5000 }}"
             }
           ]
         },
@@ -3160,7 +3146,7 @@
     },
     {
       "parameters": {
-        "amount": "={{ Math.floor(Math.random() * (30 - 10 + 1) + 10) }}\n"
+        "amount": "={{ Math.floor(Math.random() * (50 - 10 + 1) + 10) }}\n"
       },
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
@@ -3340,6 +3326,20 @@
       ],
       "id": "f7810be3-f934-4a29-95dd-42e33d9dae0d",
       "name": "Call 'Configuracion Global'1"
+    },
+    {
+      "parameters": {
+        "amount": "={{ Math.floor(Math.random() * (50 - 10 + 1) + 10) }}\n"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1552,
+        816
+      ],
+      "id": "d7777ea1-1d98-4db7-a2f3-131d0ada0fe9",
+      "name": "Wait1",
+      "webhookId": "c7346c88-21be-420c-ad7d-960081c6e31a"
     }
   ],
   "pinData": {
@@ -3411,6 +3411,6 @@
     }
   ],
   "triggerCount": 3,
-  "updatedAt": "2026-03-15T14:50:56.989Z",
-  "versionId": "8c1d59e3-b961-4086-b41e-31d853edd2a4"
+  "updatedAt": "2026-03-17T18:52:49.265Z",
+  "versionId": "4d93c50b-5f11-427a-a8f3-149cda7fdd5d"
 }
