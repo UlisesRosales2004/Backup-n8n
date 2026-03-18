@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-03-16T21:22:09.000Z",
-    "createdAt": "2026-03-16T21:22:08.397Z",
-    "versionId": "f28374c7-a05a-4d64-aa2c-1d710feecdf0",
+    "updatedAt": "2026-03-17T18:35:52.000Z",
+    "createdAt": "2026-03-17T18:35:50.667Z",
+    "versionId": "092ec883-0e2d-41e0-ab4e-3343f84b6950",
     "workflowId": "a7PR02q4rt2w7LszRKKhQ",
     "nodes": [
       {
@@ -255,6 +255,7 @@
           "eventId": "={{ $('traer_cita_actual').item.json.id }}",
           "updateFields": {
             "color": "7",
+            "description": "={{ $('Get a row').item.json['Preparación previa'] }}",
             "end": "={{ $('Formatear_input').item.json['Fecha nueva fin'] }}{{ $('Call \\'Configuracion Global\\'').item.json.TimezoneOffset }}",
             "start": "={{ $('Formatear_input').item.json['Fecha nueva inicio'] }}{{ $('Call \\'Configuracion Global\\'').item.json.TimezoneOffset }}",
             "summary": "=Cita: {{ $('Get a row').item.json.Nombre }}. id_servicio: {{ $('When Executed by Another Workflow').item.json.id_servicio }}. Duracion estimada: {{ $('Get a row').item.json.Tiempo_estimado_min }} minutos. Para {{ $('When Executed by Another Workflow').item.json.Nombre }}. {{ $('When Executed by Another Workflow').item.json.Telefono }}"
@@ -680,7 +681,7 @@
               {
                 "id": "6bbd8632-ba8d-4657-8ca5-5d585252bf21",
                 "name": "Respuesta",
-                "value": "=La cita ha sido reagendada exitosamente para el {{ $('Formatear_input').item.json['Fecha Nueva Inicio Simple con Hora'] }} hs.\nAquí tienes los detalles de la reserva:\n{{ $json.summary }}",
+                "value": "=La cita ha sido reagendada exitosamente para el {{ $('Formatear_input').item.json['Fecha Nueva Inicio Simple con Hora'] }} hs.\nAquí tienes los detalles de la reserva:\n{{ $('Update an event').item.json.summary }}",
                 "type": "string"
               }
             ]
@@ -690,8 +691,8 @@
         "type": "n8n-nodes-base.set",
         "typeVersion": 3.4,
         "position": [
-          2784,
-          -304
+          2960,
+          -128
         ],
         "id": "8ee5fb24-d5c9-430b-9563-4a816b618426",
         "name": "Exitoso"
@@ -793,7 +794,7 @@
         "typeVersion": 3.4,
         "position": [
           3216,
-          -416
+          -432
         ],
         "id": "ed1e2f61-6eae-45b2-a111-ee4f5f2c3a92",
         "name": "Exitoso1"
@@ -912,7 +913,7 @@
               },
               {
                 "name": "text",
-                "value": "=Hola, te informo que el/la propietario/a modificó tu turno.\n\nTurno actualizado para el {{ \nnew Date($('Update an event').item.json.start.dateTime)\n.toLocaleString('es-AR', { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' })\n}}.\n\nDetalle: {{ $('Update an event').item.json.summary }}\n\nSi necesitas hacer otro cambio, puedes comunicarte nuevamente."
+                "value": "=Hola, te informo que el/la propietario/a modificó tu turno.\n\nTurno actualizado para el {{\n(() => {\nconst d = $('Update an event').item.json.start.dateTime;\nconst [fecha, hora] = d.split('T');\nconst [y,m,day] = fecha.split('-');\nreturn `${day}/${m}/${y} ${hora.substring(0,5)}`;\n})()\n}}.\n\nDetalle: {{ $('Update an event').item.json.summary }}\n\nSi necesitas hacer otro cambio, puedes comunicarte nuevamente."
               },
               {
                 "name": "delay",
@@ -1017,6 +1018,168 @@
         ],
         "id": "0b008c85-ed52-4210-9313-ff46954a9a6e",
         "name": "Fecha pasada"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionUrl}}/message/sendText/{{ $('Call \\'Configuracion Global\\'').item.json.EvolutionInstance }}",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "apikey",
+                "value": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionApiKey }}"
+              }
+            ]
+          },
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "number",
+                "value": "={{ $('Call \\'Configuracion Global\\'').item.json['CelularDueño'] }}"
+              },
+              {
+                "name": "text",
+                "value": "=📅 Modificación de turno detectada\n\nUn usuario modificó un turno programado para hoy.\n\n🔹 Turno anterior\n{{ $('traer_cita_actual').item.json.summary }}\nFecha y hora: {{\n$('traer_cita_actual').item.json.start.dateTime\n.replace('T', ' ')\n.substring(0, 16)\n}}\n\n🔹 Turno actualizado\n{{ $('Update an event').item.json.summary }}\nFecha y hora: {{\n$('Update an event').item.json.start.dateTime\n.replace('T', ' ')\n.substring(0, 16)\n}}\n"
+              },
+              {
+                "name": "delay",
+                "value": "={{ 2000 }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          2976,
+          -288
+        ],
+        "id": "2773f05f-6e62-4a04-a258-6094d322f0fe",
+        "name": "turnoModificado1",
+        "retryOnFail": true,
+        "waitBetweenTries": 3000,
+        "maxTries": 5,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "c0ecaff4-7624-4222-86c1-d874d89d6e88",
+                "leftValue": "={{ DateTime.fromISO($('traer_cita_actual').item.json.start.dateTime).toISODate() }}",
+                "rightValue": "={{ $now.toISODate() }}",
+                "operator": {
+                  "type": "dateTime",
+                  "operation": "equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          2736,
+          -240
+        ],
+        "id": "da05468c-66d8-438a-8cf1-da7b1d05e29f",
+        "name": "mismo dia"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "6bbd8632-ba8d-4657-8ca5-5d585252bf21",
+                "name": "Respuesta",
+                "value": "=La cita ha sido reagendada exitosamente para el {{ $('Formatear_input').item.json['Fecha Nueva Inicio Simple con Hora'] }} hs.\nAquí tienes los detalles de la reserva:\n{{ $('Update an event').item.json.summary }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          3472,
+          -288
+        ],
+        "id": "e0da7628-1ad2-43b0-85b0-5b3554e5afab",
+        "name": "Exitoso4"
+      },
+      {
+        "parameters": {
+          "mode": "insert",
+          "messages": {
+            "messageValues": [
+              {
+                "type": "ai",
+                "message": "={{ $json.message.conversation }}"
+              }
+            ]
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.memoryManager",
+        "typeVersion": 1.1,
+        "position": [
+          3168,
+          -288
+        ],
+        "id": "ca0bcfac-8bc6-44c4-9931-9c0b3672d78d",
+        "name": "Chat Memory Manager1",
+        "retryOnFail": true,
+        "maxTries": 5,
+        "waitBetweenTries": 5000,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "sessionIdType": "customKey",
+          "sessionKey": "={{ $json.key.remoteJid }}",
+          "sessionTTL": 172800
+        },
+        "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
+        "typeVersion": 1.5,
+        "position": [
+          3168,
+          -128
+        ],
+        "id": "c8097748-c245-4d6c-9e26-142d92041516",
+        "name": "Redis Chat Memory1",
+        "credentials": {
+          "redis": {
+            "id": "aqJvBUEfRdgU1LkO",
+            "name": "Redis account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "path": "ad88d2fd-c27e-4b1e-8648-4bc01b04618f",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          -2240,
+          48
+        ],
+        "id": "dd0929eb-fa3f-47d5-a5c2-4ca7b7d94351",
+        "name": "Webhook",
+        "webhookId": "ad88d2fd-c27e-4b1e-8648-4bc01b04618f"
       }
     ],
     "connections": {
@@ -1283,7 +1446,7 @@
           ],
           [
             {
-              "node": "Exitoso",
+              "node": "mismo dia",
               "type": "main",
               "index": 0
             }
@@ -1387,14 +1550,65 @@
             }
           ]
         ]
+      },
+      "mismo dia": {
+        "main": [
+          [
+            {
+              "node": "turnoModificado1",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Exitoso",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "turnoModificado1": {
+        "main": [
+          [
+            {
+              "node": "Chat Memory Manager1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Chat Memory Manager1": {
+        "main": [
+          [
+            {
+              "node": "Exitoso4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Redis Chat Memory1": {
+        "ai_memory": [
+          [
+            {
+              "node": "Chat Memory Manager1",
+              "type": "ai_memory",
+              "index": 0
+            }
+          ]
+        ]
       }
     },
     "authors": "Cognia Empresa",
-    "name": "Version f28374c7",
+    "name": "Version 092ec883",
     "description": "",
     "autosaved": false
   },
-  "activeVersionId": "f28374c7-a05a-4d64-aa2c-1d710feecdf0",
+  "activeVersionId": "092ec883-0e2d-41e0-ab4e-3343f84b6950",
   "connections": {
     "When Executed by Another Workflow": {
       "main": [
@@ -1659,7 +1873,7 @@
         ],
         [
           {
-            "node": "Exitoso",
+            "node": "mismo dia",
             "type": "main",
             "index": 0
           }
@@ -1759,6 +1973,57 @@
           {
             "node": "Fecha pasada",
             "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "mismo dia": {
+      "main": [
+        [
+          {
+            "node": "turnoModificado1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Exitoso",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "turnoModificado1": {
+      "main": [
+        [
+          {
+            "node": "Chat Memory Manager1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chat Memory Manager1": {
+      "main": [
+        [
+          {
+            "node": "Exitoso4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis Chat Memory1": {
+      "ai_memory": [
+        [
+          {
+            "node": "Chat Memory Manager1",
+            "type": "ai_memory",
             "index": 0
           }
         ]
@@ -2022,6 +2287,7 @@
         "eventId": "={{ $('traer_cita_actual').item.json.id }}",
         "updateFields": {
           "color": "7",
+          "description": "={{ $('Get a row').item.json['Preparación previa'] }}",
           "end": "={{ $('Formatear_input').item.json['Fecha nueva fin'] }}{{ $('Call \\'Configuracion Global\\'').item.json.TimezoneOffset }}",
           "start": "={{ $('Formatear_input').item.json['Fecha nueva inicio'] }}{{ $('Call \\'Configuracion Global\\'').item.json.TimezoneOffset }}",
           "summary": "=Cita: {{ $('Get a row').item.json.Nombre }}. id_servicio: {{ $('When Executed by Another Workflow').item.json.id_servicio }}. Duracion estimada: {{ $('Get a row').item.json.Tiempo_estimado_min }} minutos. Para {{ $('When Executed by Another Workflow').item.json.Nombre }}. {{ $('When Executed by Another Workflow').item.json.Telefono }}"
@@ -2447,7 +2713,7 @@
             {
               "id": "6bbd8632-ba8d-4657-8ca5-5d585252bf21",
               "name": "Respuesta",
-              "value": "=La cita ha sido reagendada exitosamente para el {{ $('Formatear_input').item.json['Fecha Nueva Inicio Simple con Hora'] }} hs.\nAquí tienes los detalles de la reserva:\n{{ $json.summary }}",
+              "value": "=La cita ha sido reagendada exitosamente para el {{ $('Formatear_input').item.json['Fecha Nueva Inicio Simple con Hora'] }} hs.\nAquí tienes los detalles de la reserva:\n{{ $('Update an event').item.json.summary }}",
               "type": "string"
             }
           ]
@@ -2457,8 +2723,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2784,
-        -304
+        2960,
+        -128
       ],
       "id": "8ee5fb24-d5c9-430b-9563-4a816b618426",
       "name": "Exitoso"
@@ -2560,7 +2826,7 @@
       "typeVersion": 3.4,
       "position": [
         3216,
-        -416
+        -432
       ],
       "id": "ed1e2f61-6eae-45b2-a111-ee4f5f2c3a92",
       "name": "Exitoso1"
@@ -2679,7 +2945,7 @@
             },
             {
               "name": "text",
-              "value": "=Hola, te informo que el/la propietario/a modificó tu turno.\n\nTurno actualizado para el {{ \nnew Date($('Update an event').item.json.start.dateTime)\n.toLocaleString('es-AR', { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' })\n}}.\n\nDetalle: {{ $('Update an event').item.json.summary }}\n\nSi necesitas hacer otro cambio, puedes comunicarte nuevamente."
+              "value": "=Hola, te informo que el/la propietario/a modificó tu turno.\n\nTurno actualizado para el {{\n(() => {\nconst d = $('Update an event').item.json.start.dateTime;\nconst [fecha, hora] = d.split('T');\nconst [y,m,day] = fecha.split('-');\nreturn `${day}/${m}/${y} ${hora.substring(0,5)}`;\n})()\n}}.\n\nDetalle: {{ $('Update an event').item.json.summary }}\n\nSi necesitas hacer otro cambio, puedes comunicarte nuevamente."
             },
             {
               "name": "delay",
@@ -2784,18 +3050,180 @@
       ],
       "id": "0b008c85-ed52-4210-9313-ff46954a9a6e",
       "name": "Fecha pasada"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionUrl}}/message/sendText/{{ $('Call \\'Configuracion Global\\'').item.json.EvolutionInstance }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionApiKey }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "number",
+              "value": "={{ $('Call \\'Configuracion Global\\'').item.json['CelularDueño'] }}"
+            },
+            {
+              "name": "text",
+              "value": "=📅 Modificación de turno detectada\n\nUn usuario modificó un turno programado para hoy.\n\n🔹 Turno anterior\n{{ $('traer_cita_actual').item.json.summary }}\nFecha y hora: {{\n$('traer_cita_actual').item.json.start.dateTime\n.replace('T', ' ')\n.substring(0, 16)\n}}\n\n🔹 Turno actualizado\n{{ $('Update an event').item.json.summary }}\nFecha y hora: {{\n$('Update an event').item.json.start.dateTime\n.replace('T', ' ')\n.substring(0, 16)\n}}\n"
+            },
+            {
+              "name": "delay",
+              "value": "={{ 2000 }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2976,
+        -288
+      ],
+      "id": "2773f05f-6e62-4a04-a258-6094d322f0fe",
+      "name": "turnoModificado1",
+      "retryOnFail": true,
+      "waitBetweenTries": 3000,
+      "maxTries": 5,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "c0ecaff4-7624-4222-86c1-d874d89d6e88",
+              "leftValue": "={{ DateTime.fromISO($('traer_cita_actual').item.json.start.dateTime).toISODate() }}",
+              "rightValue": "={{ $now.toISODate() }}",
+              "operator": {
+                "type": "dateTime",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2736,
+        -240
+      ],
+      "id": "da05468c-66d8-438a-8cf1-da7b1d05e29f",
+      "name": "mismo dia"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6bbd8632-ba8d-4657-8ca5-5d585252bf21",
+              "name": "Respuesta",
+              "value": "=La cita ha sido reagendada exitosamente para el {{ $('Formatear_input').item.json['Fecha Nueva Inicio Simple con Hora'] }} hs.\nAquí tienes los detalles de la reserva:\n{{ $('Update an event').item.json.summary }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3472,
+        -288
+      ],
+      "id": "e0da7628-1ad2-43b0-85b0-5b3554e5afab",
+      "name": "Exitoso4"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "messages": {
+          "messageValues": [
+            {
+              "type": "ai",
+              "message": "={{ $json.message.conversation }}"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryManager",
+      "typeVersion": 1.1,
+      "position": [
+        3168,
+        -288
+      ],
+      "id": "ca0bcfac-8bc6-44c4-9931-9c0b3672d78d",
+      "name": "Chat Memory Manager1",
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 5000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.key.remoteJid }}",
+        "sessionTTL": 172800
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
+      "typeVersion": 1.5,
+      "position": [
+        3168,
+        -128
+      ],
+      "id": "c8097748-c245-4d6c-9e26-142d92041516",
+      "name": "Redis Chat Memory1",
+      "credentials": {
+        "redis": {
+          "id": "aqJvBUEfRdgU1LkO",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "path": "ad88d2fd-c27e-4b1e-8648-4bc01b04618f",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -2240,
+        48
+      ],
+      "id": "dd0929eb-fa3f-47d5-a5c2-4ca7b7d94351",
+      "name": "Webhook",
+      "webhookId": "ad88d2fd-c27e-4b1e-8648-4bc01b04618f"
     }
   ],
   "pinData": {
     "When Executed by Another Workflow": [
       {
         "json": {
-          "Fecha actual": "2026-03-14T08:00:00",
-          "Fecha nueva": "2026-03-19T17:30:00",
-          "Nombre": "Rocío Bleisen",
-          "Telefono": "5492616763104@s.whatsapp.net",
+          "Fecha actual": "2026-03-17T16:00:00",
+          "Fecha nueva": "2026-03-17T17:30:00",
+          "Nombre": "Pedro Gonzales",
+          "Telefono": "5492634322107@s.whatsapp.net",
           "id_servicio": "1",
-          "Dueño": true
+          "Dueño": false
         }
       }
     ]
@@ -2826,7 +3254,7 @@
       "name": "Agente Reservas v1"
     }
   ],
-  "triggerCount": 0,
-  "updatedAt": "2026-03-16T21:22:08.396Z",
-  "versionId": "f28374c7-a05a-4d64-aa2c-1d710feecdf0"
+  "triggerCount": 1,
+  "updatedAt": "2026-03-17T18:35:50.666Z",
+  "versionId": "092ec883-0e2d-41e0-ab4e-3343f84b6950"
 }
