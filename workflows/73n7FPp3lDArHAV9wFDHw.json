@@ -94,14 +94,14 @@
     {
       "parameters": {
         "operation": "create",
-        "workflowObject": "={{\nJSON.stringify({\n  name: $json.name + \"-Veremma-V1\",\n  nodes: $json.activeVersion?.nodes ?? $json.nodes,\n  connections: $json.activeVersion?.connections ?? $json.connections,\n  settings: {}\n})\n}}",
+        "workflowObject": "={{\nJSON.stringify({\n  name: $json.name + \"-Veremma-Carla\",\n  nodes: $json.activeVersion?.nodes ?? $json.nodes,\n  connections: $json.activeVersion?.connections ?? $json.connections,\n  settings: {}\n})\n}}",
         "requestOptions": {}
       },
       "type": "n8n-nodes-base.n8n",
       "typeVersion": 1,
       "position": [
-        1120,
-        160
+        1136,
+        144
       ],
       "id": "2fbf6839-588c-4cf4-bab1-230dd707b668",
       "name": "Create a workflow",
@@ -141,6 +141,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-03-17T14:43:14.441Z",
-  "versionId": "bf89044f-a909-4341-9e4a-5b8080f59af3"
+  "updatedAt": "2026-03-18T17:30:36.363Z",
+  "versionId": "ff26140f-4a1e-4b04-ae40-a68f7ce9eecf"
 }
