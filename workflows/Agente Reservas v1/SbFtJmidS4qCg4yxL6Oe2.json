@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-03-17T18:52:50.000Z",
-    "createdAt": "2026-03-17T18:52:49.267Z",
-    "versionId": "4d93c50b-5f11-427a-a8f3-149cda7fdd5d",
+    "updatedAt": "2026-03-18T20:33:34.000Z",
+    "createdAt": "2026-03-18T20:33:33.692Z",
+    "versionId": "21be910b-eeab-473d-b039-3d7449b02607",
     "workflowId": "SbFtJmidS4qCg4yxL6Oe2",
     "nodes": [
       {
@@ -154,7 +154,7 @@
               },
               {
                 "name": "text",
-                "value": "={{ \n  \"Hola \" + $json.nombre + \" 😊\\n\\n\" +\n  \"Te recordamos tus turnos de mañana:\\n\\n\" +\n  $json.citas\n    .sort((a, b) => a.hora.localeCompare(b.hora))\n    .map(c =>\n      \"• \" + c.hora + \" – \" + c.servicio +\n      \" (duración: \" + c.tiempo + \")\" +\n      (\n        c.recomendaciones && c.recomendaciones.trim() !== \"\"\n          ? \"\\n   Recuerda que debes: \" + c.recomendaciones\n          : \"\"\n      )\n    ).join(\"\\n\") +\n  \"\\n\\nConfírmanos tu asistencia cuanto antes así dejamos todo preparado para mañana ✨\"\n}}"
+                "value": "={{ \n  \"Hola \" + $json.nombre + \" 😊\\n\\n\" +\n  \"Te recordamos tus turnos de mañana:\\n\\n\" +\n  $json.citas\n    .sort((a, b) => a.hora.localeCompare(b.hora))\n    .map(c =>\n      \"• \" + c.hora + \" – \" + c.servicio +\n      \" (duración: \" + c.tiempo + \")\" +\n      (\n        c.recomendaciones && c.recomendaciones.trim() !== \"\"\n          ? \"\\n   Recuerda: \" + c.recomendaciones\n          : \"\"\n      )\n    ).join(\"\\n\") +\n  \"\\n\\nConfírmanos tu asistencia cuanto antes así dejamos todo preparado para mañana ✨\"\n}}"
               },
               {
                 "name": "delay",
@@ -1668,11 +1668,11 @@
       }
     },
     "authors": "Cognia Empresa",
-    "name": "Version 4d93c50b",
+    "name": "Version 21be910b",
     "description": "",
     "autosaved": false
   },
-  "activeVersionId": "4d93c50b-5f11-427a-a8f3-149cda7fdd5d",
+  "activeVersionId": "21be910b-eeab-473d-b039-3d7449b02607",
   "connections": {
     "Google Calendar": {
       "main": [
@@ -2361,7 +2361,7 @@
             },
             {
               "name": "text",
-              "value": "={{ \n  \"Hola \" + $json.nombre + \" 😊\\n\\n\" +\n  \"Te recordamos tus turnos de mañana:\\n\\n\" +\n  $json.citas\n    .sort((a, b) => a.hora.localeCompare(b.hora))\n    .map(c =>\n      \"• \" + c.hora + \" – \" + c.servicio +\n      \" (duración: \" + c.tiempo + \")\" +\n      (\n        c.recomendaciones && c.recomendaciones.trim() !== \"\"\n          ? \"\\n   Recuerda que debes: \" + c.recomendaciones\n          : \"\"\n      )\n    ).join(\"\\n\") +\n  \"\\n\\nConfírmanos tu asistencia cuanto antes así dejamos todo preparado para mañana ✨\"\n}}"
+              "value": "={{ \n  \"Hola \" + $json.nombre + \" 😊\\n\\n\" +\n  \"Te recordamos tus turnos de mañana:\\n\\n\" +\n  $json.citas\n    .sort((a, b) => a.hora.localeCompare(b.hora))\n    .map(c =>\n      \"• \" + c.hora + \" – \" + c.servicio +\n      \" (duración: \" + c.tiempo + \")\" +\n      (\n        c.recomendaciones && c.recomendaciones.trim() !== \"\"\n          ? \"\\n   Recuerda: \" + c.recomendaciones\n          : \"\"\n      )\n    ).join(\"\\n\") +\n  \"\\n\\nConfírmanos tu asistencia cuanto antes así dejamos todo preparado para mañana ✨\"\n}}"
             },
             {
               "name": "delay",
@@ -3411,6 +3411,6 @@
     }
   ],
   "triggerCount": 3,
-  "updatedAt": "2026-03-17T18:52:49.265Z",
-  "versionId": "4d93c50b-5f11-427a-a8f3-149cda7fdd5d"
+  "updatedAt": "2026-03-18T20:33:33.690Z",
+  "versionId": "21be910b-eeab-473d-b039-3d7449b02607"
 }
