@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-03-13T21:04:22.000Z",
-    "createdAt": "2026-03-13T21:04:21.711Z",
-    "versionId": "e2075d1d-e128-47b7-a7e7-6a3d2c83d54b",
+    "updatedAt": "2026-03-18T21:34:26.000Z",
+    "createdAt": "2026-03-18T21:34:25.048Z",
+    "versionId": "e823eaca-0625-4c15-b100-652a89482b77",
     "workflowId": "JcLddoWI3V8ZtQdGAeAmT",
     "nodes": [
       {
@@ -846,6 +846,21 @@
         ],
         "id": "96ff3a28-43de-4893-b91a-2439a9a010cc",
         "name": "Servicio no disponible"
+      },
+      {
+        "parameters": {
+          "path": "9427c41a-86df-49fc-845b-337f7a2542d6",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          -1856,
+          2864
+        ],
+        "id": "bc23a88e-feea-4e25-8be4-3e1d6df952c6",
+        "name": "Webhook",
+        "webhookId": "9427c41a-86df-49fc-845b-337f7a2542d6"
       }
     ],
     "connections": {
@@ -1116,11 +1131,11 @@
       }
     },
     "authors": "Cognia Empresa",
-    "name": "Version e2075d1d",
+    "name": "Version e823eaca",
     "description": "",
     "autosaved": false
   },
-  "activeVersionId": "e2075d1d-e128-47b7-a7e7-6a3d2c83d54b",
+  "activeVersionId": "e823eaca-0625-4c15-b100-652a89482b77",
   "connections": {
     "When Executed by Another Workflow": {
       "main": [
@@ -2236,15 +2251,30 @@
       ],
       "id": "96ff3a28-43de-4893-b91a-2439a9a010cc",
       "name": "Servicio no disponible"
+    },
+    {
+      "parameters": {
+        "path": "9427c41a-86df-49fc-845b-337f7a2542d6",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -1856,
+        2864
+      ],
+      "id": "bc23a88e-feea-4e25-8be4-3e1d6df952c6",
+      "name": "Webhook",
+      "webhookId": "9427c41a-86df-49fc-845b-337f7a2542d6"
     }
   ],
   "pinData": {
     "When Executed by Another Workflow": [
       {
         "json": {
-          "Fecha": "2026-03-12T15:00:00",
+          "Fecha": "2026-03-23T15:00:00",
           "Duracion": 40,
-          "Disponibilidad": "Día Seleccionado",
+          "Disponibilidad": "Lunes",
           "DiaDisponible": ""
         }
       }
@@ -2252,7 +2282,7 @@
   },
   "settings": {
     "executionOrder": "v1",
-    "availableInMCP": false,
+    "availableInMCP": true,
     "timeSavedMode": "fixed",
     "timezone": "America/Argentina/Buenos_Aires",
     "callerPolicy": "workflowsFromSameOwner",
@@ -2276,7 +2306,7 @@
       "name": "Agente Reservas v1"
     }
   ],
-  "triggerCount": 0,
-  "updatedAt": "2026-03-15T14:49:28.967Z",
-  "versionId": "e2075d1d-e128-47b7-a7e7-6a3d2c83d54b"
+  "triggerCount": 1,
+  "updatedAt": "2026-03-18T21:34:37.323Z",
+  "versionId": "e823eaca-0625-4c15-b100-652a89482b77"
 }
