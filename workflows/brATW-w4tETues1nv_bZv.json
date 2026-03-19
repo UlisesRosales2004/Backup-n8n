@@ -1,0 +1,497 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "GET Tablas Origen": {
+      "main": [
+        [
+          {
+            "node": "Preparar Tablas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar Tablas": {
+      "main": [
+        [
+          {
+            "node": "GET Detalles Tablas Origen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GET Detalles Tablas Origen": {
+      "main": [
+        [
+          {
+            "node": "Loop Tablas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Tablas": {
+      "main": [
+        [
+          {
+            "node": "GET Tablas Destino",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "POST Crear Tabla",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "POST Crear Tabla": {
+      "main": [
+        [
+          {
+            "node": "Loop Tablas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GET Tablas Destino": {
+      "main": [
+        [
+          {
+            "node": "Preparar Columnas Escalares",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar Columnas Escalares": {
+      "main": [
+        [
+          {
+            "node": "Loop Columnas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Columnas": {
+      "main": [
+        [
+          {
+            "node": "Preparar Relaciones",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "POST Crear Columna",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "POST Crear Columna": {
+      "main": [
+        [
+          {
+            "node": "Loop Columnas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar Relaciones": {
+      "main": [
+        [
+          {
+            "node": "Loop Relaciones",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Relaciones": {
+      "main": [
+        [],
+        [
+          {
+            "node": "POST Crear Relacion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "POST Crear Relacion": {
+      "main": [
+        [
+          {
+            "node": "Loop Relaciones",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Configuracion1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Configuracion1": {
+      "main": [
+        [
+          {
+            "node": "GET Tablas Origen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-03-18T14:38:49.028Z",
+  "id": "brATW-w4tETues1nv_bZv",
+  "isArchived": false,
+  "meta": null,
+  "name": "NocoDB Copy Structure (v0.301.3) Corrección",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "={{ $('Configuracion1').first().json.url_origen }}/api/v2/meta/bases/{{ $('Configuracion1').first().json.base_id_origen }}/tables",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "xc-token",
+              "value": "={{ $('Configuracion1').first().json.token_origen }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e88e648c-097d-4c2e-8442-b699e64d5ed0",
+      "name": "GET Tablas Origen",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        -848,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const tables = $input.item.json.list || $input.item.json || [];\nreturn tables.map(t => ({ json: t }));"
+      },
+      "id": "2902f3af-3de9-4f73-a6ad-429034fc9a3c",
+      "name": "Preparar Tablas",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -656,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Configuracion1').first().json.url_origen }}/api/v2/meta/tables/{{ $json.id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "xc-token",
+              "value": "={{ $('Configuracion1').first().json.token_origen }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4495cf91-3db1-43c1-be53-301619b93da2",
+      "name": "GET Detalles Tablas Origen",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        -448,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "30f6dcc0-dbb5-43fc-8497-2e44bc730dae",
+      "name": "Loop Tablas",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -256,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Configuracion1').first().json.url_destino }}/api/v2/meta/bases/{{ $('Configuracion1').first().json.base_id_destino }}/tables",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "xc-token",
+              "value": "={{ $('Configuracion1').first().json.token_destino }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({ \n  table_name: $json.table_name || $json.title, \n  title: $json.title,\n  columns: $json.columns.filter(c => c.uidt === 'ID' || c.pk === true).map(c => ({\n    title: c.title,\n    column_name: c.column_name,\n    uidt: c.uidt,\n    pk: true,\n    rqd: true,\n    ai: true\n  }))\n}) }}\n",
+        "options": {}
+      },
+      "id": "0ec85585-4ee8-4fdb-8057-157467e3030c",
+      "name": "POST Crear Tabla",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        -32,
+        256
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Configuracion1').first().json.url_destino }}/api/v2/meta/bases/{{ $('Configuracion1').first().json.base_id_destino }}/tables",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "xc-token",
+              "value": "={{ $('Configuracion1').first().json.token_destino }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "6c9aafdc-96cd-4712-a5e8-b14845183611",
+      "name": "GET Tablas Destino",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        -16,
+        128
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// 1. IMPORTANTE: Extraemos las tablas del nodo que SÍ tiene el detalle de las columnas\nconst sourceTables = $('GET Detalles Tablas Origen').all().map(i => i.json);\n\nconst destData = $input.item.json;\nconst destTables = destData.list || destData;\n\nlet columnsToCreate = [];\n\nfor (const sTable of sourceTables) {\n   const dTable = destTables.find(t => t.title === sTable.title || t.table_name === sTable.table_name);\n   if (!dTable) continue;\n   \n   for (const col of sTable.columns || []) {\n      // Excluir columnas del sistema y relaciones para esta primer fase\n      if (col.system || col.uidt === 'ID' || ['CreatedTime', 'LastModifiedTime', 'LinkToAnotherRecord', 'Links', 'Formula', 'Lookup', 'Rollup', 'CreatedBy', 'LastModifiedBy'].includes(col.uidt)) \n {\n         continue;\n      }\n      // Evitar crear si ya existe (ej. la base de destino u otra columna auto-generada)\n      if (dTable.columns && dTable.columns.find(dc => dc.title === col.title)) {\n         continue;\n      }\n      \n      columnsToCreate.push({\n         dest_table_id: dTable.id,\n         column_name: col.column_name,\n         title: col.title,\n         uidt: col.uidt,\n         dt: col.dt,\n         dtxp: col.dtxp,\n         dtxs: col.dtxs,\n         cdf: ['MultiSelect', 'SingleSelect'].includes(col.uidt) ? null : col.cdf,\n         un: col.un,\n         rqd: col.rqd\n      });\n   }\n}\n\n// 2. TRUCO DE N8N: Si está vacío, retornamos un elemento ficticio { _empty: true }. \n// Así n8n no frena la ejecución, el request fallará por una vez silenciosamente y pasará a crear las relaciones.\nif (columnsToCreate.length === 0) {\n    return [{ json: { _empty: true } }];\n}\n\nreturn columnsToCreate.map(c => ({ json: c }));\n"
+      },
+      "id": "4fcb9ad6-8e6e-44b3-90f7-2d83eb5e2a6d",
+      "name": "Preparar Columnas Escalares",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        176,
+        128
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "614123a3-4630-4963-a484-027389fb1c64",
+      "name": "Loop Columnas",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        352,
+        304
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Configuracion1').first().json.url_destino }}/api/v2/meta/tables/{{ $json.dest_table_id }}/columns",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "xc-token",
+              "value": "={{ $('Configuracion1').first().json.token_destino }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({\n  title: $json.title,\n  column_name: $json.column_name,\n  uidt: $json.uidt,\n  dt: $json.dt,\n  dtxp: $json.dtxp,\n  dtxs: $json.dtxs,\n  cdf: $json.cdf,\n  un: $json.un,\n  rqd: $json.rqd\n}) }}",
+        "options": {}
+      },
+      "id": "49fe329a-b834-4320-866f-0ed495cf92de",
+      "name": "POST Crear Columna",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        544,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const sourceTables = $('GET Detalles Tablas Origen').all().map(i => i.json);\nconst destData = $('GET Tablas Destino').first().json;\nconst destTables = destData.list || destData;\n\nconst tableMap = {};\nfor (const sTable of sourceTables) {\n   const dTable = destTables.find(t => t.title === sTable.title || t.table_name === sTable.table_name);\n   if (dTable) tableMap[sTable.id] = dTable.id;\n}\n\nlet relationsToCreate = [];\n\nfor (const sTable of sourceTables) {\n   const dTableId = tableMap[sTable.id];\n   if (!dTableId) continue;\n\n   for (const col of sTable.columns || []) {\n      if (['LinkToAnotherRecord', 'Links'].includes(col.uidt) && col.colOptions) {\n         const relatedSourceTableId = col.colOptions.fk_related_model_id;\n         const relatedDestTableId = tableMap[relatedSourceTableId];\n         \n                  if (relatedDestTableId) {\n            const originalType = col.colOptions.type;\n            \n            // Asignamos el Padre y el Hijo\n            let parentId = dTableId;\n            let childId = relatedDestTableId;\n            \n            if (originalType === \"bt\") {\n               parentId = relatedDestTableId;\n               childId = dTableId;\n            }\n\n            // Saltamos relaciones duplicadas para evitar crash\n            if (originalType === \"hm\") continue; \n            if (originalType === \"mm\" && sTable.id > relatedSourceTableId) continue;\n\n            relationsToCreate.push({\n               dest_table_id: dTableId,\n               title: col.title,\n               column_name: col.column_name, // Lo volvemos a enviar por si acaso\n               uidt: 'Links',\n               type: originalType, // <--- AQUÍ LE MANDAMOS EL CÓDIGO DIRECTO: 'mm', 'bt', etc.\n               parentId: parentId,\n               childId: childId\n            });\n         }\n\n      }\n   }\n}\n\nif (relationsToCreate.length === 0) return [{ json: { _empty: true } }];\nreturn relationsToCreate.map(r => ({ json: r }));\n"
+      },
+      "id": "c072edb4-b0ff-427c-aa13-e90f08556801",
+      "name": "Preparar Relaciones",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        608,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "f75f2af0-5842-4c6c-8418-8b56ec512b20",
+      "name": "Loop Relaciones",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        800,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Configuracion1').first().json.url_destino }}/api/v2/meta/tables/{{ $json.dest_table_id }}/columns",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "xc-token",
+              "value": "={{ $('Configuracion1').first().json.token_destino }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({\n  title: $json.title,\n  column_name: $json.column_name || $json.title,\n  uidt: \"Links\",\n  type: $json.type,\n  parentId: $json.parentId,\n  childId: $json.childId\n}) }}\n\n",
+        "options": {}
+      },
+      "id": "e69c4062-716f-4e6d-b4ff-12b0814f9ab2",
+      "name": "POST Crear Relacion",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1024,
+        272
+      ]
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1328,
+        208
+      ],
+      "id": "f27b0303-a301-4997-bbe3-767618585b9f",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c1",
+              "name": "url_origen",
+              "value": "http://jobn8n-nocodb.xeewmz.easypanel.host/",
+              "type": "string"
+            },
+            {
+              "id": "c2",
+              "name": "token_origen",
+              "value": "_Uu8pNhoMcao3LXG_t8j9BFbKH46byZr2CWw6Fuj",
+              "type": "string"
+            },
+            {
+              "id": "c3",
+              "name": "base_id_origen",
+              "value": "pvalhsum160gh07",
+              "type": "string"
+            },
+            {
+              "id": "c4",
+              "name": "url_destino",
+              "value": "http://veremma-nocodb-carla.xeewmz.easypanel.host",
+              "type": "string"
+            },
+            {
+              "id": "c5",
+              "name": "token_destino",
+              "value": "B8a6NXdXxq3lTINJyylW-nO9mZ-h2ycCTwjI0blh",
+              "type": "string"
+            },
+            {
+              "id": "c6",
+              "name": "base_id_destino",
+              "value": "pglfj2x5y56h983",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "db0a16f2-2f12-4c45-9984-d5aa3f92ac44",
+      "name": "Configuracion1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1104,
+        208
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-03-18T14:38:49.030Z",
+      "createdAt": "2026-03-18T14:38:49.030Z",
+      "role": "workflow:owner",
+      "workflowId": "brATW-w4tETues1nv_bZv",
+      "projectId": "f3W32VX4HOke6C3N"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-03-18T17:15:16.977Z",
+  "versionId": "c2edfdb2-62d5-4a18-8128-b66e3dd28f16"
+}
