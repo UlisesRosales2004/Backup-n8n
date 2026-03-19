@@ -2268,11 +2268,8 @@
     "When Executed by Another Workflow": [
       {
         "json": {
-          "Fecha": "2026-03-17T00:00:00",
-          "id_servicio": "13"
-        },
-        "pairedItem": {
-          "item": 0
+          "Fecha": "2026-03-23T00:00:00",
+          "id_servicio": "6"
         }
       }
     ]
@@ -2304,6 +2301,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2026-03-16T20:19:57.819Z",
+  "updatedAt": "2026-03-18T19:20:07.758Z",
   "versionId": "b65f6c44-da0c-433b-9b81-f0d2f9802048"
 }
