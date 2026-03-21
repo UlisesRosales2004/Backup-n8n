@@ -446,19 +446,19 @@
             {
               "id": "c4",
               "name": "url_destino",
-              "value": "http://veremma-nocodb-carla.xeewmz.easypanel.host",
+              "value": "https://veremma-nocodb-veremma.xeewmz.easypanel.host",
               "type": "string"
             },
             {
               "id": "c5",
               "name": "token_destino",
-              "value": "B8a6NXdXxq3lTINJyylW-nO9mZ-h2ycCTwjI0blh",
+              "value": "AjjgEruPSsKikgprtXSxfzcDshUnzp-_qFSQdXRq",
               "type": "string"
             },
             {
               "id": "c6",
               "name": "base_id_destino",
-              "value": "pglfj2x5y56h983",
+              "value": "pr9koxjzg4ppvkf",
               "type": "string"
             }
           ]
@@ -492,6 +492,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2026-03-18T17:15:16.977Z",
-  "versionId": "c2edfdb2-62d5-4a18-8128-b66e3dd28f16"
+  "updatedAt": "2026-03-20T14:17:33.034Z",
+  "versionId": "575ac463-2db9-43aa-b5b3-fb5e1c312073"
 }
