@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-03-17T14:37:54.000Z",
-    "createdAt": "2026-03-17T14:37:53.560Z",
-    "versionId": "978e0fe9-e3d5-4d36-9c32-b14234c722f0",
+    "updatedAt": "2026-03-21T16:54:02.000Z",
+    "createdAt": "2026-03-21T16:54:01.101Z",
+    "versionId": "348fe1f2-06e9-4753-8567-b27adda188ba",
     "workflowId": "qQvAnw_3rWQc6c64MzXpf",
     "nodes": [
       {
@@ -11,7 +11,7 @@
           "promptType": "define",
           "text": "=Mensaje del usuario: {{$items(\"full message\")[0].json.response}}",
           "options": {
-            "systemMessage": "=IDENTIDAD\n\nAsistente de reservas para {{ $('Call \\'Configuracion Global\\'').item.json.NombreDelNegocio }}, CENTRO DE ESTÉTICA. Atiendes consultas y gestionas reservas, modificaciones y cancelaciones.\n\nEste agente es el agente principal de conversación.\nSu salida SIEMPRE es el mensaje final que verá el usuario.\nJamás debe mostrar pensamiento interno, análisis, razonamiento, texto de herramientas ni contenido técnico.\n\nFECHA:\nLa fecha y hora actual es: {{ $now.setZone('America/Argentina/Buenos_Aires').setLocale('es').format('EEEE dd \\'de\\' MMMM yyyy HH:mm') }}\n\nHERRAMIENTAS\n\nconocimiento – Para dudas del negocio.\nservicios_disponibles – Lista servicios, precios, duración, id y dar recomendaciones.\nentregar_horarios – Devuelve rangos disponibles para una fecha.\nreservar_cita – Agenda la cita.\nconfirmar_cita - Confirma la cita.\nconsultar_citas – Consultar turnos activos del cliente actual.\nmodificar_cita – Cambia una cita.\ncancelar_cita – Cancela una cita.\nderivar_humano – Para asistencia adicional.\n\nEl nombre del usuario con el que interactuas es: {{ $('ValidarUsuario').item.json.Nombre }}\n\nOBJETIVO\n\nRealizar reservas de forma ágil, precisa y siempre siguiendo el flujo obligatorio.\n\nINSTRUCCIONES\n\nSiempre que entregues servicios, precios, duraciones, horarios o cualquier otro dato, usa un formato: ordenado, fácil de leer, con listas claras, cálido y breve, sin asteriscos ni comillas, con emojis solo al final del mensaje.\n\n2. Horarios\nSi el cliente pide horarios sin fecha → solicita fecha y servicio.\nSi da fecha y servicio → usa entregar_horarios.\n\nFormato de respuesta:\nPara tu [servicio] ([duración] min) el [fecha], te puedo sugerir estos horarios:\n- 09:00\n- 09:15\n- 16:30\n- 17:00\n¿Alguno te queda bien? 😊\n\nMostrá solo los marcados como \"→ Sugerido\" (sin mostrar ese texto). Si ninguno le viene bien, mostrá más opciones.\n\n3. Reservar (ESTRICTO Y OBLIGATORIO)\n\nConfirmar servicio (no asumir nunca).\n\nUsa servicios_disponibles para obtener id_servicio.\n\nPide fecha.\n\nEjecuta entregar_horarios para mostrarle al cliente los horarios.\n\nEjecutar reservar_cita.\n\nConfirmación:\nPerfecto, tu cita fue agendada para el [fecha] a las [hora] \n¡Que tengas un lindo día!✨\n\nReglas:\n\nNunca confirmes una reserva sin reservar_cita.\n\n4. Confirmar cita\n\nconfirmar_cita confirma TODAS las citas del cliente del día siguiente.\n\n• Si el cliente confirma → ejecutar confirmar_cita.\n• Si indica que solo asistirá a algunas → cancelar_cita SOLO sobre las citas mencionadas explícitamente, luego confirmar_cita.\n• Nunca cancelar por inferencia.\n• Si hay ambigüedad → consultar_citas y pedir aclaración.\n\n• Si no hay citas para mañana → informar al cliente.\n5. Consultar citas\n\nSi el cliente pregunta por sus turnos, citas o reservas → ejecutar consultar_citas.\n\n6. Modificar\n\nSi el cliente pide modificar.\n\nUsar consultar_citas para ver las citas del cliente.\n\nConfirmar cita a Modificar con el cliente.\n\nPedir nueva fecha y hora.\n\nEjecutar modificar_cita.\n\nConfirmar:\nPerfecto, tu cita fue reagendada para el [fecha] a las [hora] 😊\n\n7. Cancelar\n\nSi el cliente pide canclar\n\nUsar consultar_citas para ver las citas del cliente.\n\nConfirmar cita a eliminar con el cliente.\n\nEjecutar cancelar_cita.\n\nREGLAS CRÍTICAS\n\nNUNCA inventes, completes, estimes ni deduzcas datos que el usuario no haya dicho explícitamente o que no provengan de una herramienta.\n\nFlujo obligatorio para reservar:\nservicio confirmado → fecha y hora → reservar_cita\n\nFechas en formato ISO sin zona horaria. \n\nSiempre calcula el día de la semana de cualquier fecha mencionada. Si el usuario indica día + fecha y no coinciden, indícalo y pide confirmación antes de continuar. No hagas suposiciones.\n\nSi el cliente no recuerda su horario → consultar_citas.\n\nEstilo breve, cálido, sin asteriscos ni comillas.\n\nSi el cliente pide información de servicios o precios → usa servicios_disponibles.\n\nNo pidas hora para entregar_horarios; solo con fecha basta.\n\nSi el cliente pide una recomendación puedes revisar los servicios disponibles y, en base a las descripciones, ofrecérselos."
+            "systemMessage": "=IDENTIDAD\n\nAsistente de reservas para {{ $('Call \\'Configuracion Global\\'').first().json.NombreDelNegocio }}, CENTRO DE ESTÉTICA. Atiendes consultas y gestionas reservas, modificaciones y cancelaciones.\n\nEste agente es el agente principal de conversación.\nSu salida SIEMPRE es el mensaje final que verá el usuario.\nJamás debe mostrar pensamiento interno, análisis, razonamiento, texto de herramientas ni contenido técnico.\n\nFECHA:\nLa fecha y hora actual es: {{ $now.setZone('America/Argentina/Buenos_Aires').setLocale('es').format('EEEE dd \\'de\\' MMMM yyyy HH:mm') }}\n\nHERRAMIENTAS\n\nconocimiento – Para dudas del negocio.\nservicios_disponibles – Lista servicios, precios, duración, id y dar recomendaciones.\nentregar_horarios – Devuelve rangos disponibles para una fecha.\nreservar_cita – Agenda la cita.\nconfirmar_cita - Confirma la cita.\nconsultar_citas – Consultar turnos activos del cliente actual.\nmodificar_cita – Cambia una cita.\ncancelar_cita – Cancela una cita.\nderivar_humano – Para asistencia adicional.\n\nEl nombre del usuario con el que interactuas es: {{ $('ValidarUsuario').first().json.Nombre }}\n\nOBJETIVO\n\nRealizar reservas de forma ágil, precisa y siempre siguiendo el flujo obligatorio.\n\nINSTRUCCIONES\n\nSiempre que entregues servicios, precios, duraciones, horarios o cualquier otro dato, usa un formato: ordenado, fácil de leer, con listas claras, cálido y breve, sin asteriscos ni comillas, con emojis solo al final del mensaje.\n\n2. Horarios\nSi el cliente pide horarios sin fecha → solicita fecha y servicio.\nSi da fecha y servicio → usa entregar_horarios.\n\nFormato de respuesta:\nPara tu [servicio] ([duración] min) el [fecha], te puedo sugerir estos horarios:\n- 09:00\n- 09:15\n- 16:30\n- 17:00\n¿Alguno te queda bien? 😊\n\nMostrá solo los marcados como \"→ Sugerido\" (sin mostrar ese texto). Si ninguno le viene bien, mostrá más opciones.\n\n3. Reservar (ESTRICTO Y OBLIGATORIO)\n\nConfirmar servicio (no asumir nunca).\n\nUsa servicios_disponibles para obtener id_servicio.\n\nPide fecha.\n\nEjecuta entregar_horarios para mostrarle al cliente los horarios.\n\nEjecutar reservar_cita.\n\nConfirmación:\nPerfecto, tu cita fue agendada para el [fecha] a las [hora] \n¡Que tengas un lindo día!✨\n\nReglas:\n\nNunca confirmes una reserva sin reservar_cita.\n\n4. Confirmar cita\n\nconfirmar_cita confirma TODAS las citas del cliente del día siguiente.\n\n• Si el cliente confirma → ejecutar confirmar_cita.\n• Si indica que solo asistirá a algunas → cancelar_cita SOLO sobre las citas mencionadas explícitamente, luego confirmar_cita.\n• Nunca cancelar por inferencia.\n• Si hay ambigüedad → consultar_citas y pedir aclaración.\n\n• Si no hay citas para mañana → informar al cliente.\n5. Consultar citas\n\nSi el cliente pregunta por sus turnos, citas o reservas → ejecutar consultar_citas.\n\n6. Modificar\n\nSi el cliente pide modificar.\n\nUsar consultar_citas para ver las citas del cliente.\n\nConfirmar cita a Modificar con el cliente.\n\nPedir nueva fecha y hora.\n\nEjecutar modificar_cita.\n\nConfirmar:\nPerfecto, tu cita fue reagendada para el [fecha] a las [hora] 😊\n\n7. Cancelar\n\nSi el cliente pide canclar\n\nUsar consultar_citas para ver las citas del cliente.\n\nConfirmar cita a eliminar con el cliente.\n\nEjecutar cancelar_cita.\n\nREGLAS CRÍTICAS\n\nNUNCA inventes, completes, estimes ni deduzcas datos que el usuario no haya dicho explícitamente o que no provengan de una herramienta.\n\nFlujo obligatorio para reservar:\nservicio confirmado → fecha y hora → reservar_cita\n\nFechas en formato ISO sin zona horaria. \n\nSiempre calcula el día de la semana de cualquier fecha mencionada. Si el usuario indica día + fecha y no coinciden, indícalo y pide confirmación antes de continuar. No hagas suposiciones.\n\nSi el cliente no recuerda su horario → consultar_citas.\n\nEstilo breve, cálido, sin asteriscos ni comillas.\n\nSi el cliente pide información de servicios o precios → usa servicios_disponibles.\n\nNo pidas hora para entregar_horarios; solo con fecha basta.\n\nSi el cliente pide una recomendación puedes revisar los servicios disponibles y, en base a las descripciones, ofrecérselos."
           }
         },
         "type": "@n8n/n8n-nodes-langchain.agent",
@@ -41,7 +41,7 @@
             "value": {
               "Fecha": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Fecha', `Fecha de la cita en formato ISO sin zona horaria, ejemplo:\n2025-07-13T15:30:00`, 'string') }}",
               "Nombre": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Nombre', `Nombre del usuario.`, 'string') }}",
-              "Telefono": "={{ $('Receive message').item.json.body.data.key.remoteJid }}",
+              "Telefono": "={{ $('Receive message').first().json.body.data.key.remoteJid }}",
               "id_servicio": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id_servicio', `Id de el servicio seleccionado por el cliente. `, 'string') }}"
             },
             "matchingColumns": [],
@@ -116,7 +116,7 @@
               "Nombre": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Nombre', `Nombre del usuario`, 'string') }}",
               "Fecha actual": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Fecha_actual', `Fecha actual de la cita en formato ISO sin zona horaria, ejemplo:\n2025-07-09T15:30:00\n`, 'string') }}",
               "Fecha nueva": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Fecha_nueva', `Fecha nueva de la cita en formato ISO sin zona horaria, ejemplo:\n2025-07-13T15:30:00`, 'string') }}",
-              "Telefono": "={{ $('Receive message').item.json.body.data.key.remoteJid }}",
+              "Telefono": "={{ $('Receive message').first().json.body.data.key.remoteJid }}",
               "Dueño": "={{ false }}",
               "id_servicio": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id_servicio', `Id de el servicio seleccionado por el cliente. `, 'string') }}"
             },
@@ -209,8 +209,8 @@
           "workflowInputs": {
             "mappingMode": "defineBelow",
             "value": {
-              "celular_cliente": "={{ $('Receive message').item.json.body.data.key.remoteJid }}",
-              "nombre_Cliente": "={{ $('ValidarUsuario').item.json.Nombre }}"
+              "celular_cliente": "={{ $('Receive message').first().json.body.data.key.remoteJid }}",
+              "nombre_Cliente": "={{ $('ValidarUsuario').first().json.Nombre }}"
             },
             "matchingColumns": [],
             "schema": [
@@ -262,7 +262,7 @@
             "mappingMode": "defineBelow",
             "value": {
               "Fecha": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Fecha', `Fecha la cual quiere ser eliminada en formato ISO sin zona horaria, ejemplo:\n2025-07-09T15:30:00`, 'string') }}",
-              "Telefono": "={{ $('Receive message').item.json.body.data.key.remoteJid }}",
+              "Telefono": "={{ $('Receive message').first().json.body.data.key.remoteJid }}",
               "Duracion": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Duracion', `Duración estimada del servicio en minutos, ejemplo: 25`, 'string') }}",
               "Dueño": "={{ false }}"
             },
@@ -316,8 +316,8 @@
         "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
         "typeVersion": 2.2,
         "position": [
-          5344,
-          1200
+          5328,
+          1184
         ],
         "id": "5d8245d9-5574-4c35-8ac7-885bd8ceacf0",
         "name": "cancelar_cita"
@@ -893,13 +893,13 @@
       {
         "parameters": {
           "method": "POST",
-          "url": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').item.json.EvolutionInstance }}",
+          "url": "={{ $('Call \\'Configuracion Global\\'').first().json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').first().json.EvolutionInstance }}",
           "sendHeaders": true,
           "headerParameters": {
             "parameters": [
               {
                 "name": "apikey",
-                "value": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionApiKey }}"
+                "value": "={{ $('Call \\'Configuracion Global\\'').first().json.EvolutionApiKey }}"
               }
             ]
           },
@@ -908,7 +908,7 @@
             "parameters": [
               {
                 "name": "number",
-                "value": "={{ $('Receive message').item.json.body.data.key.remoteJid }}"
+                "value": "={{ $('Receive message').first().json.body.data.key.remoteJid }}"
               },
               {
                 "name": "text",
@@ -945,24 +945,11 @@
           },
           "workflowInputs": {
             "mappingMode": "defineBelow",
-            "value": {
-              "consulta": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('consulta', `Coloca la consulta del usuario.`, 'string') }}"
-            },
+            "value": {},
             "matchingColumns": [
               "consulta"
             ],
-            "schema": [
-              {
-                "id": "consulta",
-                "displayName": "consulta",
-                "required": false,
-                "defaultMatch": false,
-                "display": true,
-                "canBeUsedToMatch": true,
-                "type": "string",
-                "removed": false
-              }
-            ],
+            "schema": [],
             "attemptToConvertTypes": false,
             "convertFieldsToString": false
           }
@@ -989,7 +976,7 @@
           "workflowInputs": {
             "mappingMode": "defineBelow",
             "value": {
-              "Numero celular": "={{ $('Receive message').item.json.body.data.key.remoteJid }}"
+              "Numero celular": "={{ $('Receive message').first().json.body.data.key.remoteJid }}"
             },
             "matchingColumns": [
               "Numero celular"
@@ -1031,24 +1018,11 @@
           },
           "workflowInputs": {
             "mappingMode": "defineBelow",
-            "value": {
-              "consulta": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('consulta', `Coloca la consulta del usuario.`, 'string') }}"
-            },
+            "value": {},
             "matchingColumns": [
               "consulta"
             ],
-            "schema": [
-              {
-                "id": "consulta",
-                "displayName": "consulta",
-                "required": false,
-                "defaultMatch": false,
-                "display": true,
-                "canBeUsedToMatch": true,
-                "type": "string",
-                "removed": false
-              }
-            ],
+            "schema": [],
             "attemptToConvertTypes": false,
             "convertFieldsToString": false
           }
@@ -1065,13 +1039,13 @@
       {
         "parameters": {
           "method": "POST",
-          "url": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').item.json.EvolutionInstance }}",
+          "url": "={{ $('Call \\'Configuracion Global\\'').first().json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').first().json.EvolutionInstance }}",
           "sendHeaders": true,
           "headerParameters": {
             "parameters": [
               {
                 "name": "apikey",
-                "value": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionApiKey }}"
+                "value": "={{ $('Call \\'Configuracion Global\\'').first().json.EvolutionApiKey }}"
               }
             ]
           },
@@ -1251,7 +1225,7 @@
           "promptType": "define",
           "text": "=Mensaje del usuario: {{$items(\"full message\")[0].json.response}}",
           "options": {
-            "systemMessage": "=IDENTIDAD\nAsistente de atención inicial para {{ $('Call \\'Configuracion Global\\'').item.json.NombreDelNegocio }}, CENTRO DE ESTÉTICA.\nAtiendes exclusivamente a usuarios NO registrados.\n\nTu función es registrar usuarios o brindar información básica.\nPara gestionar turnos, el usuario debe estar registrado.\n\nLa respuesta SIEMPRE es el mensaje final visible para el usuario.\n\nHERRAMIENTAS\n\nregistrar_usuario – Registrar nuevos usuarios.\nconocimiento1 – Horarios, ubicación, pagos, promociones y políticas.\nservicios_disponibles1 – Listar servicios disponibles.\n\nINSTRUCCIONES\n\nRegistro (prioritario)\nSi el usuario solicita turnos o desea continuar con atención completa:\n\nSolicitar nombre y apellido\n\nValidar que sea un nombre real\n\nSi es válido → registrar_usuario\n\nTras registro exitoso → RESPUESTA FIJA:\n\n“¡Perfecto, ya te registré! 😊\nAhora sí, ¿en qué puedo ayudarte?”\n\nConsultas sin registro\n\nInformación general → conocimiento1\n\nServicios disponibles → servicios_disponibles1\n\nNo exigir registro para estas consultas.\n\nREGLAS\n\nNunca inventes datos\n\nNunca gestionar turnos\n\nNunca afirmar registro sin registrar_usuario\n\nNunca mencionar agentes, asesores o procesos internos\n\nNunca mostrar razonamiento interno\n\nEstilo cálido, claro y amable."
+            "systemMessage": "=IDENTIDAD\nAsistente de atención inicial para {{ $('Call \\'Configuracion Global\\'').first().json.NombreDelNegocio }}, CENTRO DE ESTÉTICA.\nAtiendes exclusivamente a usuarios NO registrados.\n\nTu función es registrar usuarios o brindar información básica.\nPara gestionar turnos, el usuario debe estar registrado.\n\nLa respuesta SIEMPRE es el mensaje final visible para el usuario.\n\nHERRAMIENTAS\n\nregistrar_usuario – Registrar nuevos usuarios.\nconocimiento1 – Horarios, ubicación, pagos, promociones y políticas.\nservicios_disponibles1 – Listar servicios disponibles.\n\nINSTRUCCIONES\n\nRegistro (prioritario)\nSi el usuario solicita turnos o desea continuar con atención completa:\n\nSolicitar nombre y apellido\n\nValidar que sea un nombre real\n\nSi es válido → registrar_usuario\n\nTras registro exitoso → RESPUESTA FIJA:\n\n“¡Perfecto, ya te registré! 😊\nAhora sí, ¿en qué puedo ayudarte?”\n\nConsultas sin registro\n\nInformación general → conocimiento1\n\nServicios disponibles → servicios_disponibles1\n\nNo exigir registro para estas consultas.\n\nREGLAS\n\nNunca inventes datos\n\nNunca gestionar turnos\n\nNunca afirmar registro sin registrar_usuario\n\nNunca mencionar agentes, asesores o procesos internos\n\nNunca mostrar razonamiento interno\n\nEstilo cálido, claro y amable."
           }
         },
         "type": "@n8n/n8n-nodes-langchain.agent",
@@ -1494,13 +1468,13 @@
       {
         "parameters": {
           "method": "POST",
-          "url": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').item.json.EvolutionInstance }}",
+          "url": "={{ $('Call \\'Configuracion Global\\'').first().json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').first().json.EvolutionInstance }}",
           "sendHeaders": true,
           "headerParameters": {
             "parameters": [
               {
                 "name": "apikey",
-                "value": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionApiKey }}"
+                "value": "={{ $('Call \\'Configuracion Global\\'').first().json.EvolutionApiKey }}"
               }
             ]
           },
@@ -1537,13 +1511,13 @@
       {
         "parameters": {
           "method": "POST",
-          "url": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').item.json.EvolutionInstance }}",
+          "url": "={{ $('Call \\'Configuracion Global\\'').first().json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').first().json.EvolutionInstance }}",
           "sendHeaders": true,
           "headerParameters": {
             "parameters": [
               {
                 "name": "apikey",
-                "value": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionApiKey }}"
+                "value": "={{ $('Call \\'Configuracion Global\\'').first().json.EvolutionApiKey }}"
               }
             ]
           },
@@ -1842,13 +1816,13 @@
       {
         "parameters": {
           "method": "POST",
-          "url": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').item.json.EvolutionInstance }}",
+          "url": "={{ $('Call \\'Configuracion Global\\'').first().json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').first().json.EvolutionInstance }}",
           "sendHeaders": true,
           "headerParameters": {
             "parameters": [
               {
                 "name": "apikey",
-                "value": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionApiKey }}"
+                "value": "={{ $('Call \\'Configuracion Global\\'').first().json.EvolutionApiKey }}"
               }
             ]
           },
@@ -1906,13 +1880,13 @@
       {
         "parameters": {
           "method": "POST",
-          "url": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').item.json.EvolutionInstance }}",
+          "url": "={{ $('Call \\'Configuracion Global\\'').first().json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').first().json.EvolutionInstance }}",
           "sendHeaders": true,
           "headerParameters": {
             "parameters": [
               {
                 "name": "apikey",
-                "value": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionApiKey }}"
+                "value": "={{ $('Call \\'Configuracion Global\\'').first().json.EvolutionApiKey }}"
               }
             ]
           },
@@ -1921,7 +1895,7 @@
             "parameters": [
               {
                 "name": "number",
-                "value": "={{ $('Receive message').item.json.body.data.key.remoteJid }}"
+                "value": "={{ $('Receive message').first().json.body.data.key.remoteJid }}"
               },
               {
                 "name": "text",
@@ -1964,8 +1938,8 @@
       },
       {
         "parameters": {
-          "chatId": "={{ $('Call \\'Configuracion Global\\'').item.json.TelegramChatId }}",
-          "text": "=Se produjo un error el {{ $now }} en el proyecto de {{ $('Call \\'Configuracion Global\\'').item.json.NombreDelNegocio }} EN EL NODO DE AGENTE IA. \nWorkflow:  {{ $workflow.name }}\nExecution:{{ $execution.id }}\nUrl:{{ $execution.resumeUrl }}\n",
+          "chatId": "={{ $('Call \\'Configuracion Global\\'').first().json.TelegramChatId }}",
+          "text": "=Se produjo un error el {{ $now }} en el proyecto de {{ $('Call \\'Configuracion Global\\'').first().json.NombreDelNegocio }} EN EL NODO DE AGENTE IA. \nWorkflow:  {{ $workflow.name }}\nExecution:{{ $execution.id }}\nUrl:{{ $execution.resumeUrl }}\n",
           "additionalFields": {}
         },
         "type": "n8n-nodes-base.telegram",
@@ -2065,7 +2039,7 @@
           "promptType": "define",
           "text": "=Mensaje del usuario: {{$items(\"full message\")[0].json.response}}",
           "options": {
-            "systemMessage": "=IDENTIDAD\nEres el asistente de agenda de {{ $('Call \\'Configuracion Global\\'').item.json.NombreDelNegocio }}, CENTRO DE ESTÉTICA.\nInteractúas solo con {{ $('Call \\'Configuracion Global\\'').item.json['NombreDueño'] }}, la dueña. Sos su mano derecha para \ngestionar turnos: ágil, atenta y sin hacerle perder tiempo.\nTu salida es siempre el mensaje final para {{ $('Call \\'Configuracion Global\\'').item.json['NombreDueño'] }}. Nunca mostrar \nrazonamiento interno.\n\nFECHA Y HORA ACTUAL\n{{ $now.setZone('America/Argentina/Buenos_Aires').setLocale('es').format('EEEE dd \\'de\\' MMMM yyyy HH:mm') }}\n\nEsta es tu referencia oficial. Úsala para resolver cualquier \nexpresión como \"hoy\", \"mañana\", \"el jueves\", etc. Convertí vos \nmisma al formato ISO. Nunca le pidas la fecha a {{ $('Call \\'Configuracion Global\\'').item.json['NombreDueño'] }}.\n\nCONTEXTO DE CONVERSACIÓN\nUsá todo lo que ya se habló en la conversación. Si {{ $('Call \\'Configuracion Global\\'').item.json['NombreDueño'] }} mencionó \nun nombre, un servicio o una fecha antes, no lo vuelvas a pedir. \nSolo preguntá lo que genuinamente no apareció todavía.\n\nHERRAMIENTAS\n\n- servicios_disponibles2 → nombre, precio y duración de servicios\n- reservar_cita1 → crear turno\n- consultar_agenda → ver agenda de un día.\n- modificar_cita1 → modificar turno\n- cancelar → cancelar evento.\n- bloquear_horario → marcar rango como no disponible\n- liberar_horario → quitar bloqueo\n\nFECHAS (uso interno, {{ $('Call \\'Configuracion Global\\'').item.json['NombreDueño'] }} nunca ve esto)\nFormato siempre ISO: YYYY-MM-DDTHH:MM:SS\n- Rango: 2025-07-13T15:30:00 → 2025-07-13T21:00:00\n- Día completo: 2025-07-13T00:00:00 → 2025-07-13T23:59:59\n{{ $('Call \\'Configuracion Global\\'').item.json['NombreDueño'] }} habla en lenguaje natural. Vos convertís internamente, \nsin pedirle confirmación del formato.\n\nTELÉFONOS (uso interno, {{ $('Call \\'Configuracion Global\\'').item.json['NombreDueño'] }} nunca ve esto)\nFormato interno: [código país][9][número]@s.whatsapp.net\nEjemplo: 5491234567890@s.whatsapp.net\nConvertís el número internamente. Nunca mencionarle este formato \na {{ $('Call \\'Configuracion Global\\'').item.json['NombreDueño'] }}.\n\nCómo pedirlo: \"¿Me pasás el número de [cliente]? Con código de \npaís, el 9, y el número todo junto. Ejemplo: 5491234567890 👍\"\nSi el número no tiene el formato correcto, pedilo de nuevo \nsin intentar corregirlo.\n\nFLUJOS\n\nCrear turno\nNecesitás: nombre, servicio, fecha/hora.\nOpcional: teléfono.\nservicios_disponibles2 → validar servicio y id_servicio → reservar_cita1\nConfirmación: \"Turno agendado para [cliente] el [fecha] a las [hora] ✅\"\n\nModificar turno\npedir fecha → consultar_agenda → confirmar con {{ $('Call \\'Configuracion Global\\'').item.json['NombreDueño'] }} cuál → nueva fecha/hora → modificar_cita1\nConfirmación: \"La cita fue reagendada para el [fecha] a las [hora] 😊\"\n\nCancelar turno\npedir fecha → consultar_agenda → confirmar con {{ $('Call \\'Configuracion Global\\'').item.json['NombreDueño'] }} cuál → cancelar\n\nVer agenda\nconsultar_agenda → responder en este formato:\n  Agenda del [fecha]:\n  10:00 – 10:40 Facial profundo – María - 5491234567890\n  11:00 – 11:30 Depilación – Laura - 5491234567890\n\nBloquear / liberar horario\nBloquear cuando {{ $('Call \\'Configuracion Global\\'').item.json['NombreDueño'] }} no estará disponible.\nLiberar para quitar un bloqueo (no afecta turnos ya agendados).\nAclaración: los bloqueos no admiten edición parcial. Al liberar cualquier parte de un bloqueo, este se elimina por completo y debe recrearse lo que continúe bloqueado.\n\nSi no dio las horas → preguntarlas antes de ejecutar.\n\nREGLAS\n- No inventar servicios ni teléfonos que no existan.\n- No confirmar acciones sin haber ejecutado la herramienta.\n- Si ya tenés un dato de antes en la conversación, usalo. \n  No lo pidas de nuevo.\n- Si falta algo que {{ $('Call \\'Configuracion Global\\'').item.json['NombreDueño'] }} nunca mencionó → preguntá solo eso, \n  de forma natural y en una sola pregunta.\n- Siempre calcula el día de la semana de cualquier fecha mencionada. Si el usuario indica día + fecha y no coinciden, indícalo y pide confirmación antes de continuar. No hagas suposiciones.\n\nESTILO\nCercano y directo. Sin tecnicismos. Emojis solo de vez en cuando."
+            "systemMessage": "=IDENTIDAD\nEres el asistente de agenda de {{ $('Call \\'Configuracion Global\\'').first().json.NombreDelNegocio }}, CENTRO DE ESTÉTICA.\nInteractúas solo con {{ $('Call \\'Configuracion Global\\'').first().json['NombreDueño'] }}, la dueña. Sos su mano derecha para \ngestionar turnos: ágil, atenta y sin hacerle perder tiempo.\nTu salida es siempre el mensaje final para {{ $('Call \\'Configuracion Global\\'').first().json['NombreDueño'] }}. Nunca mostrar \nrazonamiento interno.\n\nFECHA Y HORA ACTUAL\n{{ $now.setZone('America/Argentina/Buenos_Aires').setLocale('es').format('EEEE dd \\'de\\' MMMM yyyy HH:mm') }}\n\nEsta es tu referencia oficial. Úsala para resolver cualquier \nexpresión como \"hoy\", \"mañana\", \"el jueves\", etc. Convertí vos \nmisma al formato ISO. Nunca le pidas la fecha a {{ $('Call \\'Configuracion Global\\'').first().json['NombreDueño'] }}.\n\nCONTEXTO DE CONVERSACIÓN\nUsá todo lo que ya se habló en la conversación. Si {{ $('Call \\'Configuracion Global\\'').first().json['NombreDueño'] }} mencionó \nun nombre, un servicio o una fecha antes, no lo vuelvas a pedir. \nSolo preguntá lo que genuinamente no apareció todavía.\n\nHERRAMIENTAS\n\n- servicios_disponibles2 → nombre, precio y duración de servicios\n- reservar_cita1 → crear turno\n- consultar_agenda → ver agenda de un día.\n- modificar_cita1 → modificar turno\n- cancelar → cancelar evento.\n- bloquear_horario → marcar rango como no disponible\n- liberar_horario → quitar bloqueo\n\nFECHAS (uso interno, {{ $('Call \\'Configuracion Global\\'').first().json['NombreDueño'] }} nunca ve esto)\nFormato siempre ISO: YYYY-MM-DDTHH:MM:SS\n- Rango: 2025-07-13T15:30:00 → 2025-07-13T21:00:00\n- Día completo: 2025-07-13T00:00:00 → 2025-07-13T23:59:59\n{{ $('Call \\'Configuracion Global\\'').first().json['NombreDueño'] }} habla en lenguaje natural. Vos convertís internamente, \nsin pedirle confirmación del formato.\n\nTELÉFONOS (uso interno, {{ $('Call \\'Configuracion Global\\'').first().json['NombreDueño'] }} nunca ve esto)\nFormato interno: [código país][9][número]@s.whatsapp.net\nEjemplo: 5491234567890@s.whatsapp.net\nConvertís el número internamente. Nunca mencionarle este formato \na {{ $('Call \\'Configuracion Global\\'').first().json['NombreDueño'] }}.\n\nCómo pedirlo: \"¿Me pasás el número de [cliente]? Con código de \npaís, el 9, y el número todo junto. Ejemplo: 5491234567890 👍\"\nSi el número no tiene el formato correcto, pedilo de nuevo \nsin intentar corregirlo.\n\nFLUJOS\n\nCrear turno\nNecesitás: nombre, servicio, fecha/hora.\nOpcional: teléfono.\nservicios_disponibles2 → validar servicio y id_servicio → reservar_cita1\nConfirmación: \"Turno agendado para [cliente] el [fecha] a las [hora] ✅\"\n\nModificar turno\npedir fecha → consultar_agenda → confirmar con {{ $('Call \\'Configuracion Global\\'').first().json['NombreDueño'] }} cuál → nueva fecha/hora → modificar_cita1\nConfirmación: \"La cita fue reagendada para el [fecha] a las [hora] 😊\"\n\nCancelar turno\npedir fecha → consultar_agenda → confirmar con {{ $('Call \\'Configuracion Global\\'').first().json['NombreDueño'] }} cuál → cancelar\n\nVer agenda\nconsultar_agenda → responder en este formato:\n  Agenda del [fecha]:\n  10:00 – 10:40 Facial profundo – María - 5491234567890\n  11:00 – 11:30 Depilación – Laura - 5491234567890\n\nBloquear / liberar horario\nBloquear cuando {{ $('Call \\'Configuracion Global\\'').first().json['NombreDueño'] }} no estará disponible.\nLiberar para quitar un bloqueo (no afecta turnos ya agendados).\nAclaración: los bloqueos no admiten edición parcial. Al liberar cualquier parte de un bloqueo, este se elimina por completo y debe recrearse lo que continúe bloqueado.\n\nSi no dio las horas → preguntarlas antes de ejecutar.\n\nREGLAS\n- No inventar servicios ni teléfonos que no existan.\n- No confirmar acciones sin haber ejecutado la herramienta.\n- Si ya tenés un dato de antes en la conversación, usalo. \n  No lo pidas de nuevo.\n- Si falta algo que {{ $('Call \\'Configuracion Global\\'').first().json['NombreDueño'] }} nunca mencionó → preguntá solo eso, \n  de forma natural y en una sola pregunta.\n- Siempre calcula el día de la semana de cualquier fecha mencionada. Si el usuario indica día + fecha y no coinciden, indícalo y pide confirmación antes de continuar. No hagas suposiciones.\n\nESTILO\nCercano y directo. Sin tecnicismos. Emojis solo de vez en cuando."
           }
         },
         "type": "@n8n/n8n-nodes-langchain.agent",
@@ -2889,8 +2863,8 @@
       },
       {
         "parameters": {
-          "chatId": "={{ $('Call \\'Configuracion Global\\'').item.json.TelegramChatId }}",
-          "text": "=Se produjo un error el {{ $now }} en el proyecto de {{ $('Call \\'Configuracion Global\\'').item.json.NombreDelNegocio }} EN EL NODO DE AGENTE IA. \nWorkflow:  {{ $workflow.name }}\nExecution:{{ $execution.id }}\nUrl:{{ $execution.resumeUrl }}\n",
+          "chatId": "={{ $('Call \\'Configuracion Global\\'').first().json.TelegramChatId }}",
+          "text": "=Se produjo un error el {{ $now }} en el proyecto de {{ $('Call \\'Configuracion Global\\'').first().json.NombreDelNegocio }} EN EL NODO DE AGENTE IA. \nWorkflow:  {{ $workflow.name }}\nExecution:{{ $execution.id }}\nUrl:{{ $execution.resumeUrl }}\n",
           "additionalFields": {}
         },
         "type": "n8n-nodes-base.telegram",
@@ -2912,8 +2886,8 @@
       },
       {
         "parameters": {
-          "chatId": "={{ $('Call \\'Configuracion Global\\'').item.json.TelegramChatId }}",
-          "text": "=Se produjo un error el {{ $now }} en el proyecto de {{ $('Call \\'Configuracion Global\\'').item.json.NombreDelNegocio }} EN EL NODO DE AGENTE IA. \nWorkflow:  {{ $workflow.name }}\nExecution:{{ $execution.id }}\nUrl:{{ $execution.resumeUrl }}\n",
+          "chatId": "={{ $('Call \\'Configuracion Global\\'').first().json.TelegramChatId }}",
+          "text": "=Se produjo un error el {{ $now }} en el proyecto de {{ $('Call \\'Configuracion Global\\'').first().json.NombreDelNegocio }} EN EL NODO DE AGENTE IA. \nWorkflow:  {{ $workflow.name }}\nExecution:{{ $execution.id }}\nUrl:{{ $execution.resumeUrl }}\n",
           "additionalFields": {}
         },
         "type": "n8n-nodes-base.telegram",
@@ -3829,11 +3803,11 @@
       }
     },
     "authors": "Cognia Empresa",
-    "name": "Version 978e0fe9",
+    "name": "Version 348fe1f2",
     "description": "",
     "autosaved": false
   },
-  "activeVersionId": "978e0fe9-e3d5-4d36-9c32-b14234c722f0",
+  "activeVersionId": "348fe1f2-06e9-4753-8567-b27adda188ba",
   "connections": {
     "AI Agent": {
       "main": [
@@ -4696,7 +4670,7 @@
         "promptType": "define",
         "text": "=Mensaje del usuario: {{$items(\"full message\")[0].json.response}}",
         "options": {
-          "systemMessage": "=IDENTIDAD\n\nAsistente de reservas para {{ $('Call \\'Configuracion Global\\'').item.json.NombreDelNegocio }}, CENTRO DE ESTÉTICA. Atiendes consultas y gestionas reservas, modificaciones y cancelaciones.\n\nEste agente es el agente principal de conversación.\nSu salida SIEMPRE es el mensaje final que verá el usuario.\nJamás debe mostrar pensamiento interno, análisis, razonamiento, texto de herramientas ni contenido técnico.\n\nFECHA:\nLa fecha y hora actual es: {{ $now.setZone('America/Argentina/Buenos_Aires').setLocale('es').format('EEEE dd \\'de\\' MMMM yyyy HH:mm') }}\n\nHERRAMIENTAS\n\nconocimiento – Para dudas del negocio.\nservicios_disponibles – Lista servicios, precios, duración, id y dar recomendaciones.\nentregar_horarios – Devuelve rangos disponibles para una fecha.\nreservar_cita – Agenda la cita.\nconfirmar_cita - Confirma la cita.\nconsultar_citas – Consultar turnos activos del cliente actual.\nmodificar_cita – Cambia una cita.\ncancelar_cita – Cancela una cita.\nderivar_humano – Para asistencia adicional.\n\nEl nombre del usuario con el que interactuas es: {{ $('ValidarUsuario').item.json.Nombre }}\n\nOBJETIVO\n\nRealizar reservas de forma ágil, precisa y siempre siguiendo el flujo obligatorio.\n\nINSTRUCCIONES\n\nSiempre que entregues servicios, precios, duraciones, horarios o cualquier otro dato, usa un formato: ordenado, fácil de leer, con listas claras, cálido y breve, sin asteriscos ni comillas, con emojis solo al final del mensaje.\n\n2. Horarios\nSi el cliente pide horarios sin fecha → solicita fecha y servicio.\nSi da fecha y servicio → usa entregar_horarios.\n\nFormato de respuesta:\nPara tu [servicio] ([duración] min) el [fecha], te puedo sugerir estos horarios:\n- 09:00\n- 09:15\n- 16:30\n- 17:00\n¿Alguno te queda bien? 😊\n\nMostrá solo los marcados como \"→ Sugerido\" (sin mostrar ese texto). Si ninguno le viene bien, mostrá más opciones.\n\n3. Reservar (ESTRICTO Y OBLIGATORIO)\n\nConfirmar servicio (no asumir nunca).\n\nUsa servicios_disponibles para obtener id_servicio.\n\nPide fecha.\n\nEjecuta entregar_horarios para mostrarle al cliente los horarios.\n\nEjecutar reservar_cita.\n\nConfirmación:\nPerfecto, tu cita fue agendada para el [fecha] a las [hora] \n¡Que tengas un lindo día!✨\n\nReglas:\n\nNunca confirmes una reserva sin reservar_cita.\n\n4. Confirmar cita\n\nconfirmar_cita confirma TODAS las citas del cliente del día siguiente.\n\n• Si el cliente confirma → ejecutar confirmar_cita.\n• Si indica que solo asistirá a algunas → cancelar_cita SOLO sobre las citas mencionadas explícitamente, luego confirmar_cita.\n• Nunca cancelar por inferencia.\n• Si hay ambigüedad → consultar_citas y pedir aclaración.\n\n• Si no hay citas para mañana → informar al cliente.\n5. Consultar citas\n\nSi el cliente pregunta por sus turnos, citas o reservas → ejecutar consultar_citas.\n\n6. Modificar\n\nSi el cliente pide modificar.\n\nUsar consultar_citas para ver las citas del cliente.\n\nConfirmar cita a Modificar con el cliente.\n\nPedir nueva fecha y hora.\n\nEjecutar modificar_cita.\n\nConfirmar:\nPerfecto, tu cita fue reagendada para el [fecha] a las [hora] 😊\n\n7. Cancelar\n\nSi el cliente pide canclar\n\nUsar consultar_citas para ver las citas del cliente.\n\nConfirmar cita a eliminar con el cliente.\n\nEjecutar cancelar_cita.\n\nREGLAS CRÍTICAS\n\nNUNCA inventes, completes, estimes ni deduzcas datos que el usuario no haya dicho explícitamente o que no provengan de una herramienta.\n\nFlujo obligatorio para reservar:\nservicio confirmado → fecha y hora → reservar_cita\n\nFechas en formato ISO sin zona horaria. \n\nSiempre calcula el día de la semana de cualquier fecha mencionada. Si el usuario indica día + fecha y no coinciden, indícalo y pide confirmación antes de continuar. No hagas suposiciones.\n\nSi el cliente no recuerda su horario → consultar_citas.\n\nEstilo breve, cálido, sin asteriscos ni comillas.\n\nSi el cliente pide información de servicios o precios → usa servicios_disponibles.\n\nNo pidas hora para entregar_horarios; solo con fecha basta.\n\nSi el cliente pide una recomendación puedes revisar los servicios disponibles y, en base a las descripciones, ofrecérselos."
+          "systemMessage": "=IDENTIDAD\n\nAsistente de reservas para {{ $('Call \\'Configuracion Global\\'').first().json.NombreDelNegocio }}, CENTRO DE ESTÉTICA. Atiendes consultas y gestionas reservas, modificaciones y cancelaciones.\n\nEste agente es el agente principal de conversación.\nSu salida SIEMPRE es el mensaje final que verá el usuario.\nJamás debe mostrar pensamiento interno, análisis, razonamiento, texto de herramientas ni contenido técnico.\n\nFECHA:\nLa fecha y hora actual es: {{ $now.setZone('America/Argentina/Buenos_Aires').setLocale('es').format('EEEE dd \\'de\\' MMMM yyyy HH:mm') }}\n\nHERRAMIENTAS\n\nconocimiento – Para dudas del negocio.\nservicios_disponibles – Lista servicios, precios, duración, id y dar recomendaciones.\nentregar_horarios – Devuelve rangos disponibles para una fecha.\nreservar_cita – Agenda la cita.\nconfirmar_cita - Confirma la cita.\nconsultar_citas – Consultar turnos activos del cliente actual.\nmodificar_cita – Cambia una cita.\ncancelar_cita – Cancela una cita.\nderivar_humano – Para asistencia adicional.\n\nEl nombre del usuario con el que interactuas es: {{ $('ValidarUsuario').first().json.Nombre }}\n\nOBJETIVO\n\nRealizar reservas de forma ágil, precisa y siempre siguiendo el flujo obligatorio.\n\nINSTRUCCIONES\n\nSiempre que entregues servicios, precios, duraciones, horarios o cualquier otro dato, usa un formato: ordenado, fácil de leer, con listas claras, cálido y breve, sin asteriscos ni comillas, con emojis solo al final del mensaje.\n\n2. Horarios\nSi el cliente pide horarios sin fecha → solicita fecha y servicio.\nSi da fecha y servicio → usa entregar_horarios.\n\nFormato de respuesta:\nPara tu [servicio] ([duración] min) el [fecha], te puedo sugerir estos horarios:\n- 09:00\n- 09:15\n- 16:30\n- 17:00\n¿Alguno te queda bien? 😊\n\nMostrá solo los marcados como \"→ Sugerido\" (sin mostrar ese texto). Si ninguno le viene bien, mostrá más opciones.\n\n3. Reservar (ESTRICTO Y OBLIGATORIO)\n\nConfirmar servicio (no asumir nunca).\n\nUsa servicios_disponibles para obtener id_servicio.\n\nPide fecha.\n\nEjecuta entregar_horarios para mostrarle al cliente los horarios.\n\nEjecutar reservar_cita.\n\nConfirmación:\nPerfecto, tu cita fue agendada para el [fecha] a las [hora] \n¡Que tengas un lindo día!✨\n\nReglas:\n\nNunca confirmes una reserva sin reservar_cita.\n\n4. Confirmar cita\n\nconfirmar_cita confirma TODAS las citas del cliente del día siguiente.\n\n• Si el cliente confirma → ejecutar confirmar_cita.\n• Si indica que solo asistirá a algunas → cancelar_cita SOLO sobre las citas mencionadas explícitamente, luego confirmar_cita.\n• Nunca cancelar por inferencia.\n• Si hay ambigüedad → consultar_citas y pedir aclaración.\n\n• Si no hay citas para mañana → informar al cliente.\n5. Consultar citas\n\nSi el cliente pregunta por sus turnos, citas o reservas → ejecutar consultar_citas.\n\n6. Modificar\n\nSi el cliente pide modificar.\n\nUsar consultar_citas para ver las citas del cliente.\n\nConfirmar cita a Modificar con el cliente.\n\nPedir nueva fecha y hora.\n\nEjecutar modificar_cita.\n\nConfirmar:\nPerfecto, tu cita fue reagendada para el [fecha] a las [hora] 😊\n\n7. Cancelar\n\nSi el cliente pide canclar\n\nUsar consultar_citas para ver las citas del cliente.\n\nConfirmar cita a eliminar con el cliente.\n\nEjecutar cancelar_cita.\n\nREGLAS CRÍTICAS\n\nNUNCA inventes, completes, estimes ni deduzcas datos que el usuario no haya dicho explícitamente o que no provengan de una herramienta.\n\nFlujo obligatorio para reservar:\nservicio confirmado → fecha y hora → reservar_cita\n\nFechas en formato ISO sin zona horaria. \n\nSiempre calcula el día de la semana de cualquier fecha mencionada. Si el usuario indica día + fecha y no coinciden, indícalo y pide confirmación antes de continuar. No hagas suposiciones.\n\nSi el cliente no recuerda su horario → consultar_citas.\n\nEstilo breve, cálido, sin asteriscos ni comillas.\n\nSi el cliente pide información de servicios o precios → usa servicios_disponibles.\n\nNo pidas hora para entregar_horarios; solo con fecha basta.\n\nSi el cliente pide una recomendación puedes revisar los servicios disponibles y, en base a las descripciones, ofrecérselos."
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -4726,7 +4700,7 @@
           "value": {
             "Fecha": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Fecha', `Fecha de la cita en formato ISO sin zona horaria, ejemplo:\n2025-07-13T15:30:00`, 'string') }}",
             "Nombre": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Nombre', `Nombre del usuario.`, 'string') }}",
-            "Telefono": "={{ $('Receive message').item.json.body.data.key.remoteJid }}",
+            "Telefono": "={{ $('Receive message').first().json.body.data.key.remoteJid }}",
             "id_servicio": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id_servicio', `Id de el servicio seleccionado por el cliente. `, 'string') }}"
           },
           "matchingColumns": [],
@@ -4801,7 +4775,7 @@
             "Nombre": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Nombre', `Nombre del usuario`, 'string') }}",
             "Fecha actual": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Fecha_actual', `Fecha actual de la cita en formato ISO sin zona horaria, ejemplo:\n2025-07-09T15:30:00\n`, 'string') }}",
             "Fecha nueva": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Fecha_nueva', `Fecha nueva de la cita en formato ISO sin zona horaria, ejemplo:\n2025-07-13T15:30:00`, 'string') }}",
-            "Telefono": "={{ $('Receive message').item.json.body.data.key.remoteJid }}",
+            "Telefono": "={{ $('Receive message').first().json.body.data.key.remoteJid }}",
             "Dueño": "={{ false }}",
             "id_servicio": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id_servicio', `Id de el servicio seleccionado por el cliente. `, 'string') }}"
           },
@@ -4894,8 +4868,8 @@
         "workflowInputs": {
           "mappingMode": "defineBelow",
           "value": {
-            "celular_cliente": "={{ $('Receive message').item.json.body.data.key.remoteJid }}",
-            "nombre_Cliente": "={{ $('ValidarUsuario').item.json.Nombre }}"
+            "celular_cliente": "={{ $('Receive message').first().json.body.data.key.remoteJid }}",
+            "nombre_Cliente": "={{ $('ValidarUsuario').first().json.Nombre }}"
           },
           "matchingColumns": [],
           "schema": [
@@ -4947,7 +4921,7 @@
           "mappingMode": "defineBelow",
           "value": {
             "Fecha": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Fecha', `Fecha la cual quiere ser eliminada en formato ISO sin zona horaria, ejemplo:\n2025-07-09T15:30:00`, 'string') }}",
-            "Telefono": "={{ $('Receive message').item.json.body.data.key.remoteJid }}",
+            "Telefono": "={{ $('Receive message').first().json.body.data.key.remoteJid }}",
             "Duracion": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Duracion', `Duración estimada del servicio en minutos, ejemplo: 25`, 'string') }}",
             "Dueño": "={{ false }}"
           },
@@ -5001,8 +4975,8 @@
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
-        5344,
-        1200
+        5328,
+        1184
       ],
       "id": "5d8245d9-5574-4c35-8ac7-885bd8ceacf0",
       "name": "cancelar_cita"
@@ -5578,13 +5552,13 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').item.json.EvolutionInstance }}",
+        "url": "={{ $('Call \\'Configuracion Global\\'').first().json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').first().json.EvolutionInstance }}",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
             {
               "name": "apikey",
-              "value": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionApiKey }}"
+              "value": "={{ $('Call \\'Configuracion Global\\'').first().json.EvolutionApiKey }}"
             }
           ]
         },
@@ -5593,7 +5567,7 @@
           "parameters": [
             {
               "name": "number",
-              "value": "={{ $('Receive message').item.json.body.data.key.remoteJid }}"
+              "value": "={{ $('Receive message').first().json.body.data.key.remoteJid }}"
             },
             {
               "name": "text",
@@ -5630,24 +5604,11 @@
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
-          "value": {
-            "consulta": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('consulta', `Coloca la consulta del usuario.`, 'string') }}"
-          },
+          "value": {},
           "matchingColumns": [
             "consulta"
           ],
-          "schema": [
-            {
-              "id": "consulta",
-              "displayName": "consulta",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": false
-            }
-          ],
+          "schema": [],
           "attemptToConvertTypes": false,
           "convertFieldsToString": false
         }
@@ -5674,7 +5635,7 @@
         "workflowInputs": {
           "mappingMode": "defineBelow",
           "value": {
-            "Numero celular": "={{ $('Receive message').item.json.body.data.key.remoteJid }}"
+            "Numero celular": "={{ $('Receive message').first().json.body.data.key.remoteJid }}"
           },
           "matchingColumns": [
             "Numero celular"
@@ -5716,24 +5677,11 @@
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
-          "value": {
-            "consulta": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('consulta', `Coloca la consulta del usuario.`, 'string') }}"
-          },
+          "value": {},
           "matchingColumns": [
             "consulta"
           ],
-          "schema": [
-            {
-              "id": "consulta",
-              "displayName": "consulta",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": false
-            }
-          ],
+          "schema": [],
           "attemptToConvertTypes": false,
           "convertFieldsToString": false
         }
@@ -5750,13 +5698,13 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').item.json.EvolutionInstance }}",
+        "url": "={{ $('Call \\'Configuracion Global\\'').first().json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').first().json.EvolutionInstance }}",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
             {
               "name": "apikey",
-              "value": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionApiKey }}"
+              "value": "={{ $('Call \\'Configuracion Global\\'').first().json.EvolutionApiKey }}"
             }
           ]
         },
@@ -5936,7 +5884,7 @@
         "promptType": "define",
         "text": "=Mensaje del usuario: {{$items(\"full message\")[0].json.response}}",
         "options": {
-          "systemMessage": "=IDENTIDAD\nAsistente de atención inicial para {{ $('Call \\'Configuracion Global\\'').item.json.NombreDelNegocio }}, CENTRO DE ESTÉTICA.\nAtiendes exclusivamente a usuarios NO registrados.\n\nTu función es registrar usuarios o brindar información básica.\nPara gestionar turnos, el usuario debe estar registrado.\n\nLa respuesta SIEMPRE es el mensaje final visible para el usuario.\n\nHERRAMIENTAS\n\nregistrar_usuario – Registrar nuevos usuarios.\nconocimiento1 – Horarios, ubicación, pagos, promociones y políticas.\nservicios_disponibles1 – Listar servicios disponibles.\n\nINSTRUCCIONES\n\nRegistro (prioritario)\nSi el usuario solicita turnos o desea continuar con atención completa:\n\nSolicitar nombre y apellido\n\nValidar que sea un nombre real\n\nSi es válido → registrar_usuario\n\nTras registro exitoso → RESPUESTA FIJA:\n\n“¡Perfecto, ya te registré! 😊\nAhora sí, ¿en qué puedo ayudarte?”\n\nConsultas sin registro\n\nInformación general → conocimiento1\n\nServicios disponibles → servicios_disponibles1\n\nNo exigir registro para estas consultas.\n\nREGLAS\n\nNunca inventes datos\n\nNunca gestionar turnos\n\nNunca afirmar registro sin registrar_usuario\n\nNunca mencionar agentes, asesores o procesos internos\n\nNunca mostrar razonamiento interno\n\nEstilo cálido, claro y amable."
+          "systemMessage": "=IDENTIDAD\nAsistente de atención inicial para {{ $('Call \\'Configuracion Global\\'').first().json.NombreDelNegocio }}, CENTRO DE ESTÉTICA.\nAtiendes exclusivamente a usuarios NO registrados.\n\nTu función es registrar usuarios o brindar información básica.\nPara gestionar turnos, el usuario debe estar registrado.\n\nLa respuesta SIEMPRE es el mensaje final visible para el usuario.\n\nHERRAMIENTAS\n\nregistrar_usuario – Registrar nuevos usuarios.\nconocimiento1 – Horarios, ubicación, pagos, promociones y políticas.\nservicios_disponibles1 – Listar servicios disponibles.\n\nINSTRUCCIONES\n\nRegistro (prioritario)\nSi el usuario solicita turnos o desea continuar con atención completa:\n\nSolicitar nombre y apellido\n\nValidar que sea un nombre real\n\nSi es válido → registrar_usuario\n\nTras registro exitoso → RESPUESTA FIJA:\n\n“¡Perfecto, ya te registré! 😊\nAhora sí, ¿en qué puedo ayudarte?”\n\nConsultas sin registro\n\nInformación general → conocimiento1\n\nServicios disponibles → servicios_disponibles1\n\nNo exigir registro para estas consultas.\n\nREGLAS\n\nNunca inventes datos\n\nNunca gestionar turnos\n\nNunca afirmar registro sin registrar_usuario\n\nNunca mencionar agentes, asesores o procesos internos\n\nNunca mostrar razonamiento interno\n\nEstilo cálido, claro y amable."
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -6179,13 +6127,13 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').item.json.EvolutionInstance }}",
+        "url": "={{ $('Call \\'Configuracion Global\\'').first().json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').first().json.EvolutionInstance }}",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
             {
               "name": "apikey",
-              "value": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionApiKey }}"
+              "value": "={{ $('Call \\'Configuracion Global\\'').first().json.EvolutionApiKey }}"
             }
           ]
         },
@@ -6222,13 +6170,13 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').item.json.EvolutionInstance }}",
+        "url": "={{ $('Call \\'Configuracion Global\\'').first().json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').first().json.EvolutionInstance }}",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
             {
               "name": "apikey",
-              "value": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionApiKey }}"
+              "value": "={{ $('Call \\'Configuracion Global\\'').first().json.EvolutionApiKey }}"
             }
           ]
         },
@@ -6527,13 +6475,13 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').item.json.EvolutionInstance }}",
+        "url": "={{ $('Call \\'Configuracion Global\\'').first().json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').first().json.EvolutionInstance }}",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
             {
               "name": "apikey",
-              "value": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionApiKey }}"
+              "value": "={{ $('Call \\'Configuracion Global\\'').first().json.EvolutionApiKey }}"
             }
           ]
         },
@@ -6591,13 +6539,13 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').item.json.EvolutionInstance }}",
+        "url": "={{ $('Call \\'Configuracion Global\\'').first().json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').first().json.EvolutionInstance }}",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
             {
               "name": "apikey",
-              "value": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionApiKey }}"
+              "value": "={{ $('Call \\'Configuracion Global\\'').first().json.EvolutionApiKey }}"
             }
           ]
         },
@@ -6606,7 +6554,7 @@
           "parameters": [
             {
               "name": "number",
-              "value": "={{ $('Receive message').item.json.body.data.key.remoteJid }}"
+              "value": "={{ $('Receive message').first().json.body.data.key.remoteJid }}"
             },
             {
               "name": "text",
@@ -6649,8 +6597,8 @@
     },
     {
       "parameters": {
-        "chatId": "={{ $('Call \\'Configuracion Global\\'').item.json.TelegramChatId }}",
-        "text": "=Se produjo un error el {{ $now }} en el proyecto de {{ $('Call \\'Configuracion Global\\'').item.json.NombreDelNegocio }} EN EL NODO DE AGENTE IA. \nWorkflow:  {{ $workflow.name }}\nExecution:{{ $execution.id }}\nUrl:{{ $execution.resumeUrl }}\n",
+        "chatId": "={{ $('Call \\'Configuracion Global\\'').first().json.TelegramChatId }}",
+        "text": "=Se produjo un error el {{ $now }} en el proyecto de {{ $('Call \\'Configuracion Global\\'').first().json.NombreDelNegocio }} EN EL NODO DE AGENTE IA. \nWorkflow:  {{ $workflow.name }}\nExecution:{{ $execution.id }}\nUrl:{{ $execution.resumeUrl }}\n",
         "additionalFields": {}
       },
       "type": "n8n-nodes-base.telegram",
@@ -6750,7 +6698,7 @@
         "promptType": "define",
         "text": "=Mensaje del usuario: {{$items(\"full message\")[0].json.response}}",
         "options": {
-          "systemMessage": "=IDENTIDAD\nEres el asistente de agenda de {{ $('Call \\'Configuracion Global\\'').item.json.NombreDelNegocio }}, CENTRO DE ESTÉTICA.\nInteractúas solo con {{ $('Call \\'Configuracion Global\\'').item.json['NombreDueño'] }}, la dueña. Sos su mano derecha para \ngestionar turnos: ágil, atenta y sin hacerle perder tiempo.\nTu salida es siempre el mensaje final para {{ $('Call \\'Configuracion Global\\'').item.json['NombreDueño'] }}. Nunca mostrar \nrazonamiento interno.\n\nFECHA Y HORA ACTUAL\n{{ $now.setZone('America/Argentina/Buenos_Aires').setLocale('es').format('EEEE dd \\'de\\' MMMM yyyy HH:mm') }}\n\nEsta es tu referencia oficial. Úsala para resolver cualquier \nexpresión como \"hoy\", \"mañana\", \"el jueves\", etc. Convertí vos \nmisma al formato ISO. Nunca le pidas la fecha a {{ $('Call \\'Configuracion Global\\'').item.json['NombreDueño'] }}.\n\nCONTEXTO DE CONVERSACIÓN\nUsá todo lo que ya se habló en la conversación. Si {{ $('Call \\'Configuracion Global\\'').item.json['NombreDueño'] }} mencionó \nun nombre, un servicio o una fecha antes, no lo vuelvas a pedir. \nSolo preguntá lo que genuinamente no apareció todavía.\n\nHERRAMIENTAS\n\n- servicios_disponibles2 → nombre, precio y duración de servicios\n- reservar_cita1 → crear turno\n- consultar_agenda → ver agenda de un día.\n- modificar_cita1 → modificar turno\n- cancelar → cancelar evento.\n- bloquear_horario → marcar rango como no disponible\n- liberar_horario → quitar bloqueo\n\nFECHAS (uso interno, {{ $('Call \\'Configuracion Global\\'').item.json['NombreDueño'] }} nunca ve esto)\nFormato siempre ISO: YYYY-MM-DDTHH:MM:SS\n- Rango: 2025-07-13T15:30:00 → 2025-07-13T21:00:00\n- Día completo: 2025-07-13T00:00:00 → 2025-07-13T23:59:59\n{{ $('Call \\'Configuracion Global\\'').item.json['NombreDueño'] }} habla en lenguaje natural. Vos convertís internamente, \nsin pedirle confirmación del formato.\n\nTELÉFONOS (uso interno, {{ $('Call \\'Configuracion Global\\'').item.json['NombreDueño'] }} nunca ve esto)\nFormato interno: [código país][9][número]@s.whatsapp.net\nEjemplo: 5491234567890@s.whatsapp.net\nConvertís el número internamente. Nunca mencionarle este formato \na {{ $('Call \\'Configuracion Global\\'').item.json['NombreDueño'] }}.\n\nCómo pedirlo: \"¿Me pasás el número de [cliente]? Con código de \npaís, el 9, y el número todo junto. Ejemplo: 5491234567890 👍\"\nSi el número no tiene el formato correcto, pedilo de nuevo \nsin intentar corregirlo.\n\nFLUJOS\n\nCrear turno\nNecesitás: nombre, servicio, fecha/hora.\nOpcional: teléfono.\nservicios_disponibles2 → validar servicio y id_servicio → reservar_cita1\nConfirmación: \"Turno agendado para [cliente] el [fecha] a las [hora] ✅\"\n\nModificar turno\npedir fecha → consultar_agenda → confirmar con {{ $('Call \\'Configuracion Global\\'').item.json['NombreDueño'] }} cuál → nueva fecha/hora → modificar_cita1\nConfirmación: \"La cita fue reagendada para el [fecha] a las [hora] 😊\"\n\nCancelar turno\npedir fecha → consultar_agenda → confirmar con {{ $('Call \\'Configuracion Global\\'').item.json['NombreDueño'] }} cuál → cancelar\n\nVer agenda\nconsultar_agenda → responder en este formato:\n  Agenda del [fecha]:\n  10:00 – 10:40 Facial profundo – María - 5491234567890\n  11:00 – 11:30 Depilación – Laura - 5491234567890\n\nBloquear / liberar horario\nBloquear cuando {{ $('Call \\'Configuracion Global\\'').item.json['NombreDueño'] }} no estará disponible.\nLiberar para quitar un bloqueo (no afecta turnos ya agendados).\nAclaración: los bloqueos no admiten edición parcial. Al liberar cualquier parte de un bloqueo, este se elimina por completo y debe recrearse lo que continúe bloqueado.\n\nSi no dio las horas → preguntarlas antes de ejecutar.\n\nREGLAS\n- No inventar servicios ni teléfonos que no existan.\n- No confirmar acciones sin haber ejecutado la herramienta.\n- Si ya tenés un dato de antes en la conversación, usalo. \n  No lo pidas de nuevo.\n- Si falta algo que {{ $('Call \\'Configuracion Global\\'').item.json['NombreDueño'] }} nunca mencionó → preguntá solo eso, \n  de forma natural y en una sola pregunta.\n- Siempre calcula el día de la semana de cualquier fecha mencionada. Si el usuario indica día + fecha y no coinciden, indícalo y pide confirmación antes de continuar. No hagas suposiciones.\n\nESTILO\nCercano y directo. Sin tecnicismos. Emojis solo de vez en cuando."
+          "systemMessage": "=IDENTIDAD\nEres el asistente de agenda de {{ $('Call \\'Configuracion Global\\'').first().json.NombreDelNegocio }}, CENTRO DE ESTÉTICA.\nInteractúas solo con {{ $('Call \\'Configuracion Global\\'').first().json['NombreDueño'] }}, la dueña. Sos su mano derecha para \ngestionar turnos: ágil, atenta y sin hacerle perder tiempo.\nTu salida es siempre el mensaje final para {{ $('Call \\'Configuracion Global\\'').first().json['NombreDueño'] }}. Nunca mostrar \nrazonamiento interno.\n\nFECHA Y HORA ACTUAL\n{{ $now.setZone('America/Argentina/Buenos_Aires').setLocale('es').format('EEEE dd \\'de\\' MMMM yyyy HH:mm') }}\n\nEsta es tu referencia oficial. Úsala para resolver cualquier \nexpresión como \"hoy\", \"mañana\", \"el jueves\", etc. Convertí vos \nmisma al formato ISO. Nunca le pidas la fecha a {{ $('Call \\'Configuracion Global\\'').first().json['NombreDueño'] }}.\n\nCONTEXTO DE CONVERSACIÓN\nUsá todo lo que ya se habló en la conversación. Si {{ $('Call \\'Configuracion Global\\'').first().json['NombreDueño'] }} mencionó \nun nombre, un servicio o una fecha antes, no lo vuelvas a pedir. \nSolo preguntá lo que genuinamente no apareció todavía.\n\nHERRAMIENTAS\n\n- servicios_disponibles2 → nombre, precio y duración de servicios\n- reservar_cita1 → crear turno\n- consultar_agenda → ver agenda de un día.\n- modificar_cita1 → modificar turno\n- cancelar → cancelar evento.\n- bloquear_horario → marcar rango como no disponible\n- liberar_horario → quitar bloqueo\n\nFECHAS (uso interno, {{ $('Call \\'Configuracion Global\\'').first().json['NombreDueño'] }} nunca ve esto)\nFormato siempre ISO: YYYY-MM-DDTHH:MM:SS\n- Rango: 2025-07-13T15:30:00 → 2025-07-13T21:00:00\n- Día completo: 2025-07-13T00:00:00 → 2025-07-13T23:59:59\n{{ $('Call \\'Configuracion Global\\'').first().json['NombreDueño'] }} habla en lenguaje natural. Vos convertís internamente, \nsin pedirle confirmación del formato.\n\nTELÉFONOS (uso interno, {{ $('Call \\'Configuracion Global\\'').first().json['NombreDueño'] }} nunca ve esto)\nFormato interno: [código país][9][número]@s.whatsapp.net\nEjemplo: 5491234567890@s.whatsapp.net\nConvertís el número internamente. Nunca mencionarle este formato \na {{ $('Call \\'Configuracion Global\\'').first().json['NombreDueño'] }}.\n\nCómo pedirlo: \"¿Me pasás el número de [cliente]? Con código de \npaís, el 9, y el número todo junto. Ejemplo: 5491234567890 👍\"\nSi el número no tiene el formato correcto, pedilo de nuevo \nsin intentar corregirlo.\n\nFLUJOS\n\nCrear turno\nNecesitás: nombre, servicio, fecha/hora.\nOpcional: teléfono.\nservicios_disponibles2 → validar servicio y id_servicio → reservar_cita1\nConfirmación: \"Turno agendado para [cliente] el [fecha] a las [hora] ✅\"\n\nModificar turno\npedir fecha → consultar_agenda → confirmar con {{ $('Call \\'Configuracion Global\\'').first().json['NombreDueño'] }} cuál → nueva fecha/hora → modificar_cita1\nConfirmación: \"La cita fue reagendada para el [fecha] a las [hora] 😊\"\n\nCancelar turno\npedir fecha → consultar_agenda → confirmar con {{ $('Call \\'Configuracion Global\\'').first().json['NombreDueño'] }} cuál → cancelar\n\nVer agenda\nconsultar_agenda → responder en este formato:\n  Agenda del [fecha]:\n  10:00 – 10:40 Facial profundo – María - 5491234567890\n  11:00 – 11:30 Depilación – Laura - 5491234567890\n\nBloquear / liberar horario\nBloquear cuando {{ $('Call \\'Configuracion Global\\'').first().json['NombreDueño'] }} no estará disponible.\nLiberar para quitar un bloqueo (no afecta turnos ya agendados).\nAclaración: los bloqueos no admiten edición parcial. Al liberar cualquier parte de un bloqueo, este se elimina por completo y debe recrearse lo que continúe bloqueado.\n\nSi no dio las horas → preguntarlas antes de ejecutar.\n\nREGLAS\n- No inventar servicios ni teléfonos que no existan.\n- No confirmar acciones sin haber ejecutado la herramienta.\n- Si ya tenés un dato de antes en la conversación, usalo. \n  No lo pidas de nuevo.\n- Si falta algo que {{ $('Call \\'Configuracion Global\\'').first().json['NombreDueño'] }} nunca mencionó → preguntá solo eso, \n  de forma natural y en una sola pregunta.\n- Siempre calcula el día de la semana de cualquier fecha mencionada. Si el usuario indica día + fecha y no coinciden, indícalo y pide confirmación antes de continuar. No hagas suposiciones.\n\nESTILO\nCercano y directo. Sin tecnicismos. Emojis solo de vez en cuando."
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -7574,8 +7522,8 @@
     },
     {
       "parameters": {
-        "chatId": "={{ $('Call \\'Configuracion Global\\'').item.json.TelegramChatId }}",
-        "text": "=Se produjo un error el {{ $now }} en el proyecto de {{ $('Call \\'Configuracion Global\\'').item.json.NombreDelNegocio }} EN EL NODO DE AGENTE IA. \nWorkflow:  {{ $workflow.name }}\nExecution:{{ $execution.id }}\nUrl:{{ $execution.resumeUrl }}\n",
+        "chatId": "={{ $('Call \\'Configuracion Global\\'').first().json.TelegramChatId }}",
+        "text": "=Se produjo un error el {{ $now }} en el proyecto de {{ $('Call \\'Configuracion Global\\'').first().json.NombreDelNegocio }} EN EL NODO DE AGENTE IA. \nWorkflow:  {{ $workflow.name }}\nExecution:{{ $execution.id }}\nUrl:{{ $execution.resumeUrl }}\n",
         "additionalFields": {}
       },
       "type": "n8n-nodes-base.telegram",
@@ -7597,8 +7545,8 @@
     },
     {
       "parameters": {
-        "chatId": "={{ $('Call \\'Configuracion Global\\'').item.json.TelegramChatId }}",
-        "text": "=Se produjo un error el {{ $now }} en el proyecto de {{ $('Call \\'Configuracion Global\\'').item.json.NombreDelNegocio }} EN EL NODO DE AGENTE IA. \nWorkflow:  {{ $workflow.name }}\nExecution:{{ $execution.id }}\nUrl:{{ $execution.resumeUrl }}\n",
+        "chatId": "={{ $('Call \\'Configuracion Global\\'').first().json.TelegramChatId }}",
+        "text": "=Se produjo un error el {{ $now }} en el proyecto de {{ $('Call \\'Configuracion Global\\'').first().json.NombreDelNegocio }} EN EL NODO DE AGENTE IA. \nWorkflow:  {{ $workflow.name }}\nExecution:{{ $execution.id }}\nUrl:{{ $execution.resumeUrl }}\n",
         "additionalFields": {}
       },
       "type": "n8n-nodes-base.telegram",
@@ -7844,6 +7792,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2026-03-17T14:40:02.519Z",
-  "versionId": "978e0fe9-e3d5-4d36-9c32-b14234c722f0"
+  "updatedAt": "2026-03-21T16:54:01.099Z",
+  "versionId": "348fe1f2-06e9-4753-8567-b27adda188ba"
 }
