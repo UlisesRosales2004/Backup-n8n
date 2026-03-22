@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-03-18T21:34:26.000Z",
-    "createdAt": "2026-03-18T21:34:25.048Z",
-    "versionId": "e823eaca-0625-4c15-b100-652a89482b77",
+    "updatedAt": "2026-03-21T21:14:24.000Z",
+    "createdAt": "2026-03-21T21:14:23.583Z",
+    "versionId": "c155a8d0-e34e-4b74-8a32-d8e9b8c0894e",
     "workflowId": "JcLddoWI3V8ZtQdGAeAmT",
     "nodes": [
       {
@@ -256,7 +256,9 @@
               }
             ]
           },
-          "options": {}
+          "options": {
+            "keepMissing": true
+          }
         },
         "type": "n8n-nodes-base.aggregate",
         "typeVersion": 1,
@@ -269,7 +271,7 @@
       },
       {
         "parameters": {
-          "jsCode": "const data = items[0].json;\n\nfunction quitarSegundos(arr) {\n  return arr.map(hora => {\n    if (typeof hora === \"string\") {\n      return hora.slice(0, 5); // \"08:00:00\" -> \"08:00\"\n    }\n    return hora;\n  });\n}\n\ndata[\"Hora de Apertura\"] = quitarSegundos(data[\"Hora de Apertura\"]);\ndata[\"Inicio de Receso\"] = quitarSegundos(data[\"Inicio de Receso\"]);\ndata[\"Fin de Receso\"] = quitarSegundos(data[\"Fin de Receso\"]);\ndata[\"Hora de Cierre\"] = quitarSegundos(data[\"Hora de Cierre\"]);\n\nreturn [{ json: data }];"
+          "jsCode": "const data = items[0].json;\n\nfunction quitarSegundos(arr) {\n  return arr.map(hora => {\n    if (!hora || typeof hora !== \"string\") {\n      return \"00:00\";\n    }\n    return hora.slice(0, 5); // \"08:00:00\" -> \"08:00\"\n  });\n}\n\ndata[\"Hora de Apertura\"] = quitarSegundos(data[\"Hora de Apertura\"] || []);\ndata[\"Inicio de Receso\"] = quitarSegundos(data[\"Inicio de Receso\"] || []);\ndata[\"Fin de Receso\"] = quitarSegundos(data[\"Fin de Receso\"] || []);\ndata[\"Hora de Cierre\"] = quitarSegundos(data[\"Hora de Cierre\"] || []);\n\nreturn [{ json: data }];"
         },
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
@@ -846,21 +848,6 @@
         ],
         "id": "96ff3a28-43de-4893-b91a-2439a9a010cc",
         "name": "Servicio no disponible"
-      },
-      {
-        "parameters": {
-          "path": "9427c41a-86df-49fc-845b-337f7a2542d6",
-          "options": {}
-        },
-        "type": "n8n-nodes-base.webhook",
-        "typeVersion": 2.1,
-        "position": [
-          -1856,
-          2864
-        ],
-        "id": "bc23a88e-feea-4e25-8be4-3e1d6df952c6",
-        "name": "Webhook",
-        "webhookId": "9427c41a-86df-49fc-845b-337f7a2542d6"
       }
     ],
     "connections": {
@@ -1131,11 +1118,11 @@
       }
     },
     "authors": "Cognia Empresa",
-    "name": "Version e823eaca",
+    "name": "Version c155a8d0",
     "description": "",
     "autosaved": false
   },
-  "activeVersionId": "e823eaca-0625-4c15-b100-652a89482b77",
+  "activeVersionId": "c155a8d0-e34e-4b74-8a32-d8e9b8c0894e",
   "connections": {
     "When Executed by Another Workflow": {
       "main": [
@@ -1661,7 +1648,9 @@
             }
           ]
         },
-        "options": {}
+        "options": {
+          "keepMissing": true
+        }
       },
       "type": "n8n-nodes-base.aggregate",
       "typeVersion": 1,
@@ -1674,7 +1663,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const data = items[0].json;\n\nfunction quitarSegundos(arr) {\n  return arr.map(hora => {\n    if (typeof hora === \"string\") {\n      return hora.slice(0, 5); // \"08:00:00\" -> \"08:00\"\n    }\n    return hora;\n  });\n}\n\ndata[\"Hora de Apertura\"] = quitarSegundos(data[\"Hora de Apertura\"]);\ndata[\"Inicio de Receso\"] = quitarSegundos(data[\"Inicio de Receso\"]);\ndata[\"Fin de Receso\"] = quitarSegundos(data[\"Fin de Receso\"]);\ndata[\"Hora de Cierre\"] = quitarSegundos(data[\"Hora de Cierre\"]);\n\nreturn [{ json: data }];"
+        "jsCode": "const data = items[0].json;\n\nfunction quitarSegundos(arr) {\n  return arr.map(hora => {\n    if (!hora || typeof hora !== \"string\") {\n      return \"00:00\";\n    }\n    return hora.slice(0, 5); // \"08:00:00\" -> \"08:00\"\n  });\n}\n\ndata[\"Hora de Apertura\"] = quitarSegundos(data[\"Hora de Apertura\"] || []);\ndata[\"Inicio de Receso\"] = quitarSegundos(data[\"Inicio de Receso\"] || []);\ndata[\"Fin de Receso\"] = quitarSegundos(data[\"Fin de Receso\"] || []);\ndata[\"Hora de Cierre\"] = quitarSegundos(data[\"Hora de Cierre\"] || []);\n\nreturn [{ json: data }];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -2251,21 +2240,6 @@
       ],
       "id": "96ff3a28-43de-4893-b91a-2439a9a010cc",
       "name": "Servicio no disponible"
-    },
-    {
-      "parameters": {
-        "path": "9427c41a-86df-49fc-845b-337f7a2542d6",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 2.1,
-      "position": [
-        -1856,
-        2864
-      ],
-      "id": "bc23a88e-feea-4e25-8be4-3e1d6df952c6",
-      "name": "Webhook",
-      "webhookId": "9427c41a-86df-49fc-845b-337f7a2542d6"
     }
   ],
   "pinData": {
@@ -2306,7 +2280,7 @@
       "name": "Agente Reservas v1"
     }
   ],
-  "triggerCount": 1,
-  "updatedAt": "2026-03-18T21:34:37.323Z",
-  "versionId": "e823eaca-0625-4c15-b100-652a89482b77"
+  "triggerCount": 0,
+  "updatedAt": "2026-03-21T21:14:23.581Z",
+  "versionId": "c155a8d0-e34e-4b74-8a32-d8e9b8c0894e"
 }
