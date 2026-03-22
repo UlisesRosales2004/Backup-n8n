@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-03-16T20:20:01.000Z",
-    "createdAt": "2026-03-16T20:19:57.822Z",
-    "versionId": "b65f6c44-da0c-433b-9b81-f0d2f9802048",
+    "updatedAt": "2026-03-21T21:15:02.000Z",
+    "createdAt": "2026-03-21T21:15:01.896Z",
+    "versionId": "5a3e5291-7bad-4fda-8b5d-044ee774b890",
     "workflowId": "uqH8dYw900BtDEIKgLkU9",
     "nodes": [
       {
@@ -147,7 +147,9 @@
               }
             ]
           },
-          "options": {}
+          "options": {
+            "keepMissing": true
+          }
         },
         "type": "n8n-nodes-base.aggregate",
         "typeVersion": 1,
@@ -160,7 +162,7 @@
       },
       {
         "parameters": {
-          "jsCode": "const data = items[0].json;\n\nfunction quitarSegundos(arr) {\n  return arr.map(hora => {\n    if (typeof hora === \"string\") {\n      return hora.slice(0, 5); // \"08:00:00\" -> \"08:00\"\n    }\n    return hora;\n  });\n}\n\ndata[\"Hora de Apertura\"] = quitarSegundos(data[\"Hora de Apertura\"]);\ndata[\"Inicio de Receso\"] = quitarSegundos(data[\"Inicio de Receso\"]);\ndata[\"Fin de Receso\"] = quitarSegundos(data[\"Fin de Receso\"]);\ndata[\"Hora de Cierre\"] = quitarSegundos(data[\"Hora de Cierre\"]);\n\nreturn [{ json: data }];"
+          "jsCode": "const data = items[0].json;\n\nfunction quitarSegundos(arr) {\n  return arr.map(hora => {\n    if (!hora || typeof hora !== \"string\") {\n      return \"00:00\";\n    }\n    return hora.slice(0, 5); // \"08:00:00\" -> \"08:00\"\n  });\n}\n\ndata[\"Hora de Apertura\"] = quitarSegundos(data[\"Hora de Apertura\"] || []);\ndata[\"Inicio de Receso\"] = quitarSegundos(data[\"Inicio de Receso\"] || []);\ndata[\"Fin de Receso\"] = quitarSegundos(data[\"Fin de Receso\"] || []);\ndata[\"Hora de Cierre\"] = quitarSegundos(data[\"Hora de Cierre\"] || []);\n\nreturn [{ json: data }];"
         },
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
@@ -1129,11 +1131,11 @@
       }
     },
     "authors": "Cognia Empresa",
-    "name": "Version b65f6c44",
+    "name": "Version 5a3e5291",
     "description": "",
     "autosaved": false
   },
-  "activeVersionId": "b65f6c44-da0c-433b-9b81-f0d2f9802048",
+  "activeVersionId": "5a3e5291-7bad-4fda-8b5d-044ee774b890",
   "connections": {
     "When Executed by Another Workflow": {
       "main": [
@@ -1555,7 +1557,9 @@
             }
           ]
         },
-        "options": {}
+        "options": {
+          "keepMissing": true
+        }
       },
       "type": "n8n-nodes-base.aggregate",
       "typeVersion": 1,
@@ -1568,7 +1572,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const data = items[0].json;\n\nfunction quitarSegundos(arr) {\n  return arr.map(hora => {\n    if (typeof hora === \"string\") {\n      return hora.slice(0, 5); // \"08:00:00\" -> \"08:00\"\n    }\n    return hora;\n  });\n}\n\ndata[\"Hora de Apertura\"] = quitarSegundos(data[\"Hora de Apertura\"]);\ndata[\"Inicio de Receso\"] = quitarSegundos(data[\"Inicio de Receso\"]);\ndata[\"Fin de Receso\"] = quitarSegundos(data[\"Fin de Receso\"]);\ndata[\"Hora de Cierre\"] = quitarSegundos(data[\"Hora de Cierre\"]);\n\nreturn [{ json: data }];"
+        "jsCode": "const data = items[0].json;\n\nfunction quitarSegundos(arr) {\n  return arr.map(hora => {\n    if (!hora || typeof hora !== \"string\") {\n      return \"00:00\";\n    }\n    return hora.slice(0, 5); // \"08:00:00\" -> \"08:00\"\n  });\n}\n\ndata[\"Hora de Apertura\"] = quitarSegundos(data[\"Hora de Apertura\"] || []);\ndata[\"Inicio de Receso\"] = quitarSegundos(data[\"Inicio de Receso\"] || []);\ndata[\"Fin de Receso\"] = quitarSegundos(data[\"Fin de Receso\"] || []);\ndata[\"Hora de Cierre\"] = quitarSegundos(data[\"Hora de Cierre\"] || []);\n\nreturn [{ json: data }];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -2301,6 +2305,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2026-03-18T19:20:07.758Z",
-  "versionId": "b65f6c44-da0c-433b-9b81-f0d2f9802048"
+  "updatedAt": "2026-03-21T21:15:01.894Z",
+  "versionId": "5a3e5291-7bad-4fda-8b5d-044ee774b890"
 }
