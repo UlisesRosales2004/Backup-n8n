@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-03-17T18:16:13.000Z",
-    "createdAt": "2026-03-17T18:16:12.286Z",
-    "versionId": "525cf5c4-7a8a-46b2-ba42-41ac04786f0d",
+    "updatedAt": "2026-03-23T15:08:31.000Z",
+    "createdAt": "2026-03-23T15:08:29.534Z",
+    "versionId": "85afca04-decb-45cb-bed8-b4216556938b",
     "workflowId": "Sqfs-Ehgzsva7Ya486HXB",
     "nodes": [
       {
@@ -432,8 +432,8 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          1952,
-          176
+          2048,
+          160
         ],
         "id": "cc708a6e-41d0-4070-8365-b18a2a6e55c5",
         "name": "FormatearSlots",
@@ -466,6 +466,41 @@
         ],
         "id": "8ddb7f30-2e02-4631-ab33-2ac98d294645",
         "name": "Call 'Configuracion Global'"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "82c9f36f-f486-4bb9-b201-94e7a352bb0c",
+                "name": "Mensaje",
+                "value": "No hay disponibilidad en el horario seleccionado, estos son los horarios disponibles.",
+                "type": "string"
+              },
+              {
+                "id": "dd7ee899-73ee-463e-8cdc-30f0693a275a",
+                "name": "slotsDisponibles",
+                "value": "={{ $json.slotsDisponibles.toJsonString()\n}}",
+                "type": "array"
+              },
+              {
+                "id": "cdfe72fd-b4c5-44b0-8732-8f376f3037cf",
+                "name": "instruccionIA",
+                "value": "={{ $json.instruccionIA }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1856,
+          192
+        ],
+        "id": "6d2eedb3-136d-43ee-b971-460eff6c8977",
+        "name": "Edit Fields5"
       }
     ],
     "connections": {
@@ -540,7 +575,13 @@
       },
       "Call 'entregar_horarios'": {
         "main": [
-          []
+          [
+            {
+              "node": "Edit Fields5",
+              "type": "main",
+              "index": 0
+            }
+          ]
         ]
       },
       "Call 'comprobar_fecha_clinica'": {
@@ -614,11 +655,11 @@
       }
     },
     "authors": "Cognia Empresa",
-    "name": "Version 525cf5c4",
+    "name": "Version 85afca04",
     "description": "",
     "autosaved": false
   },
-  "activeVersionId": "525cf5c4-7a8a-46b2-ba42-41ac04786f0d",
+  "activeVersionId": "85afca04-decb-45cb-bed8-b4216556938b",
   "connections": {
     "When Executed by Another Workflow": {
       "main": [
@@ -691,7 +732,13 @@
     },
     "Call 'entregar_horarios'": {
       "main": [
-        []
+        [
+          {
+            "node": "Edit Fields5",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "Call 'comprobar_fecha_clinica'": {
@@ -1198,8 +1245,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1952,
-        176
+        2048,
+        160
       ],
       "id": "cc708a6e-41d0-4070-8365-b18a2a6e55c5",
       "name": "FormatearSlots",
@@ -1232,6 +1279,41 @@
       ],
       "id": "8ddb7f30-2e02-4631-ab33-2ac98d294645",
       "name": "Call 'Configuracion Global'"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "82c9f36f-f486-4bb9-b201-94e7a352bb0c",
+              "name": "Mensaje",
+              "value": "No hay disponibilidad en el horario seleccionado, estos son los horarios disponibles.",
+              "type": "string"
+            },
+            {
+              "id": "dd7ee899-73ee-463e-8cdc-30f0693a275a",
+              "name": "slotsDisponibles",
+              "value": "={{ $json.slotsDisponibles.toJsonString()\n}}",
+              "type": "array"
+            },
+            {
+              "id": "cdfe72fd-b4c5-44b0-8732-8f376f3037cf",
+              "name": "instruccionIA",
+              "value": "={{ $json.instruccionIA }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1856,
+        192
+      ],
+      "id": "6d2eedb3-136d-43ee-b971-460eff6c8977",
+      "name": "Edit Fields5"
     }
   ],
   "pinData": {
@@ -1273,6 +1355,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2026-03-17T18:16:12.284Z",
-  "versionId": "525cf5c4-7a8a-46b2-ba42-41ac04786f0d"
+  "updatedAt": "2026-03-23T15:08:29.532Z",
+  "versionId": "85afca04-decb-45cb-bed8-b4216556938b"
 }
