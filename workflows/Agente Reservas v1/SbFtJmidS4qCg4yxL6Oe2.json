@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-03-18T20:33:34.000Z",
-    "createdAt": "2026-03-18T20:33:33.692Z",
-    "versionId": "21be910b-eeab-473d-b039-3d7449b02607",
+    "updatedAt": "2026-03-23T14:35:37.000Z",
+    "createdAt": "2026-03-23T14:35:35.689Z",
+    "versionId": "33001dd3-d1d8-4836-9bb5-549219a4fcb4",
     "workflowId": "SbFtJmidS4qCg4yxL6Oe2",
     "nodes": [
       {
@@ -38,13 +38,13 @@
       {
         "parameters": {
           "method": "POST",
-          "url": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').item.json.EvolutionInstance }}",
+          "url": "={{ $('Call \\'Configuracion Global\\'').first().json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').first().json.EvolutionInstance }}",
           "sendHeaders": true,
           "headerParameters": {
             "parameters": [
               {
                 "name": "apikey",
-                "value": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionApiKey }}"
+                "value": "={{ $('Call \\'Configuracion Global\\'').first().json.EvolutionApiKey }}"
               }
             ]
           },
@@ -53,7 +53,7 @@
             "parameters": [
               {
                 "name": "number",
-                "value": "={{ $('Call \\'Configuracion Global\\'').item.json['CelularDueño'] }}"
+                "value": "={{ $('Call \\'Configuracion Global\\'').first().json['CelularDueño'] }}"
               },
               {
                 "name": "text",
@@ -645,13 +645,13 @@
       {
         "parameters": {
           "method": "POST",
-          "url": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').item.json.EvolutionInstance }}",
+          "url": "={{ $('Call \\'Configuracion Global\\'').first().json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').first().json.EvolutionInstance }}",
           "sendHeaders": true,
           "headerParameters": {
             "parameters": [
               {
                 "name": "apikey",
-                "value": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionApiKey }}"
+                "value": "={{ $('Call \\'Configuracion Global\\'').first().json.EvolutionApiKey }}"
               }
             ]
           },
@@ -660,7 +660,7 @@
             "parameters": [
               {
                 "name": "number",
-                "value": "={{ $('Call \\'Configuracion Global\\'').item.json['CelularDueño'] }}"
+                "value": "={{ $('Call \\'Configuracion Global\\'').first().json['CelularDueño'] }}"
               },
               {
                 "name": "text",
@@ -690,13 +690,13 @@
       {
         "parameters": {
           "method": "POST",
-          "url": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').item.json.EvolutionInstance }}",
+          "url": "={{ $('Call \\'Configuracion Global\\'').first().json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').first().json.EvolutionInstance }}",
           "sendHeaders": true,
           "headerParameters": {
             "parameters": [
               {
                 "name": "apikey",
-                "value": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionApiKey }}"
+                "value": "={{ $('Call \\'Configuracion Global\\'').first().json.EvolutionApiKey }}"
               }
             ]
           },
@@ -705,7 +705,7 @@
             "parameters": [
               {
                 "name": "number",
-                "value": "={{ $('Call \\'Configuracion Global\\'').item.json['CelularDueño'] }}"
+                "value": "={{ $('Call \\'Configuracion Global\\'').first().json['CelularDueño'] }}"
               },
               {
                 "name": "text",
@@ -734,7 +734,7 @@
       },
       {
         "parameters": {
-          "chatId": "={{ $('Call \\'Configuracion Global\\'1').item.json.TelegramChatId }}",
+          "chatId": "={{ $('Call \\'Configuracion Global\\'1').first().json.TelegramChatId }}",
           "text": "=Se produjo un error el {{ $now }} en el proyecto de veremma EN EN UN RECORDATORIO A UN CLIENTE. \nWorkflow:  {{ $workflow.name }}\nExecution:{{ $execution.id }}\nUrl:{{ $execution.resumeUrl }}\n",
           "additionalFields": {}
         },
@@ -758,7 +758,7 @@
       },
       {
         "parameters": {
-          "chatId": "={{ $('Call \\'Configuracion Global\\'').item.json.TelegramChatId }}",
+          "chatId": "={{ $('Call \\'Configuracion Global\\'').first().json.TelegramChatId }}",
           "text": "=Se produjo un error el {{ $now }} en el proyecto de veremma EN EN UN RECORDATORIO AL ESTILISTA. \nWorkflow:  {{ $workflow.name }}\nExecution:{{ $execution.id }}\nUrl:{{ $execution.resumeUrl }}\n",
           "additionalFields": {}
         },
@@ -782,7 +782,7 @@
       },
       {
         "parameters": {
-          "chatId": "={{ $('Call \\'Configuracion Global\\'').item.json.TelegramChatId }}",
+          "chatId": "={{ $('Call \\'Configuracion Global\\'').first().json.TelegramChatId }}",
           "text": "=Se produjo un error el {{ $now }} en el proyecto de veremma EN EN UN RECORDATORIO AL ESTILISTA. \nWorkflow:  {{ $workflow.name }}\nExecution:{{ $execution.id }}\nUrl:{{ $execution.resumeUrl }}\n",
           "additionalFields": {}
         },
@@ -806,7 +806,7 @@
       },
       {
         "parameters": {
-          "chatId": "={{ $('Call \\'Configuracion Global\\'').item.json.TelegramChatId }}",
+          "chatId": "={{ $('Call \\'Configuracion Global\\'').first().json.TelegramChatId }}",
           "text": "=Se produjo un error el {{ $now }} en el proyecto de veremma EN EN UN RECORDATORIO AL ESTILISTA. \nWorkflow:  {{ $workflow.name }}\nExecution:{{ $execution.id }}\nUrl:\n",
           "additionalFields": {}
         },
@@ -830,7 +830,7 @@
       },
       {
         "parameters": {
-          "chatId": "={{ $('Call \\'Configuracion Global\\'1').item.json.TelegramChatId }}",
+          "chatId": "={{ $('Call \\'Configuracion Global\\'1').first().json.TelegramChatId }}",
           "text": "=Se produjo un error el {{ $now }} en el proyecto de veremma ACTUALIZANDO EL CALENDARIO. \nWorkflow:  {{ $workflow.name }}\nExecution:{{ $execution.id }}\nUrl:{{ $execution.resumeUrl }}\n",
           "additionalFields": {}
         },
@@ -954,13 +954,13 @@
       {
         "parameters": {
           "method": "POST",
-          "url": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').item.json.EvolutionInstance }}",
+          "url": "={{ $('Call \\'Configuracion Global\\'').first().json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').first().json.EvolutionInstance }}",
           "sendHeaders": true,
           "headerParameters": {
             "parameters": [
               {
                 "name": "apikey",
-                "value": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionApiKey }}"
+                "value": "={{ $('Call \\'Configuracion Global\\'').first().json.EvolutionApiKey }}"
               }
             ]
           },
@@ -969,7 +969,7 @@
             "parameters": [
               {
                 "name": "number",
-                "value": "={{ $('Call \\'Configuracion Global\\'').item.json['CelularDueño'] }}"
+                "value": "={{ $('Call \\'Configuracion Global\\'').first().json['CelularDueño'] }}"
               },
               {
                 "name": "text",
@@ -998,7 +998,7 @@
       },
       {
         "parameters": {
-          "chatId": "={{ $('Call \\'Configuracion Global\\'').item.json.TelegramChatId }}",
+          "chatId": "={{ $('Call \\'Configuracion Global\\'').first().json.TelegramChatId }}",
           "text": "=Se produjo un error el {{ $now }} en el proyecto de veremma EN EN UN RECORDATORIO AL ESTILISTA. \nWorkflow:  {{ $workflow.name }}\nExecution:{{ $execution.id }}\nUrl:\n",
           "additionalFields": {}
         },
@@ -1668,11 +1668,11 @@
       }
     },
     "authors": "Cognia Empresa",
-    "name": "Version 21be910b",
+    "name": "Version 33001dd3",
     "description": "",
     "autosaved": false
   },
-  "activeVersionId": "21be910b-eeab-473d-b039-3d7449b02607",
+  "activeVersionId": "33001dd3-d1d8-4836-9bb5-549219a4fcb4",
   "connections": {
     "Google Calendar": {
       "main": [
@@ -2245,13 +2245,13 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').item.json.EvolutionInstance }}",
+        "url": "={{ $('Call \\'Configuracion Global\\'').first().json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').first().json.EvolutionInstance }}",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
             {
               "name": "apikey",
-              "value": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionApiKey }}"
+              "value": "={{ $('Call \\'Configuracion Global\\'').first().json.EvolutionApiKey }}"
             }
           ]
         },
@@ -2260,7 +2260,7 @@
           "parameters": [
             {
               "name": "number",
-              "value": "={{ $('Call \\'Configuracion Global\\'').item.json['CelularDueño'] }}"
+              "value": "={{ $('Call \\'Configuracion Global\\'').first().json['CelularDueño'] }}"
             },
             {
               "name": "text",
@@ -2852,13 +2852,13 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').item.json.EvolutionInstance }}",
+        "url": "={{ $('Call \\'Configuracion Global\\'').first().json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').first().json.EvolutionInstance }}",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
             {
               "name": "apikey",
-              "value": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionApiKey }}"
+              "value": "={{ $('Call \\'Configuracion Global\\'').first().json.EvolutionApiKey }}"
             }
           ]
         },
@@ -2867,7 +2867,7 @@
           "parameters": [
             {
               "name": "number",
-              "value": "={{ $('Call \\'Configuracion Global\\'').item.json['CelularDueño'] }}"
+              "value": "={{ $('Call \\'Configuracion Global\\'').first().json['CelularDueño'] }}"
             },
             {
               "name": "text",
@@ -2897,13 +2897,13 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').item.json.EvolutionInstance }}",
+        "url": "={{ $('Call \\'Configuracion Global\\'').first().json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').first().json.EvolutionInstance }}",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
             {
               "name": "apikey",
-              "value": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionApiKey }}"
+              "value": "={{ $('Call \\'Configuracion Global\\'').first().json.EvolutionApiKey }}"
             }
           ]
         },
@@ -2912,7 +2912,7 @@
           "parameters": [
             {
               "name": "number",
-              "value": "={{ $('Call \\'Configuracion Global\\'').item.json['CelularDueño'] }}"
+              "value": "={{ $('Call \\'Configuracion Global\\'').first().json['CelularDueño'] }}"
             },
             {
               "name": "text",
@@ -2941,7 +2941,7 @@
     },
     {
       "parameters": {
-        "chatId": "={{ $('Call \\'Configuracion Global\\'1').item.json.TelegramChatId }}",
+        "chatId": "={{ $('Call \\'Configuracion Global\\'1').first().json.TelegramChatId }}",
         "text": "=Se produjo un error el {{ $now }} en el proyecto de veremma EN EN UN RECORDATORIO A UN CLIENTE. \nWorkflow:  {{ $workflow.name }}\nExecution:{{ $execution.id }}\nUrl:{{ $execution.resumeUrl }}\n",
         "additionalFields": {}
       },
@@ -2965,7 +2965,7 @@
     },
     {
       "parameters": {
-        "chatId": "={{ $('Call \\'Configuracion Global\\'').item.json.TelegramChatId }}",
+        "chatId": "={{ $('Call \\'Configuracion Global\\'').first().json.TelegramChatId }}",
         "text": "=Se produjo un error el {{ $now }} en el proyecto de veremma EN EN UN RECORDATORIO AL ESTILISTA. \nWorkflow:  {{ $workflow.name }}\nExecution:{{ $execution.id }}\nUrl:{{ $execution.resumeUrl }}\n",
         "additionalFields": {}
       },
@@ -2989,7 +2989,7 @@
     },
     {
       "parameters": {
-        "chatId": "={{ $('Call \\'Configuracion Global\\'').item.json.TelegramChatId }}",
+        "chatId": "={{ $('Call \\'Configuracion Global\\'').first().json.TelegramChatId }}",
         "text": "=Se produjo un error el {{ $now }} en el proyecto de veremma EN EN UN RECORDATORIO AL ESTILISTA. \nWorkflow:  {{ $workflow.name }}\nExecution:{{ $execution.id }}\nUrl:{{ $execution.resumeUrl }}\n",
         "additionalFields": {}
       },
@@ -3013,7 +3013,7 @@
     },
     {
       "parameters": {
-        "chatId": "={{ $('Call \\'Configuracion Global\\'').item.json.TelegramChatId }}",
+        "chatId": "={{ $('Call \\'Configuracion Global\\'').first().json.TelegramChatId }}",
         "text": "=Se produjo un error el {{ $now }} en el proyecto de veremma EN EN UN RECORDATORIO AL ESTILISTA. \nWorkflow:  {{ $workflow.name }}\nExecution:{{ $execution.id }}\nUrl:\n",
         "additionalFields": {}
       },
@@ -3037,7 +3037,7 @@
     },
     {
       "parameters": {
-        "chatId": "={{ $('Call \\'Configuracion Global\\'1').item.json.TelegramChatId }}",
+        "chatId": "={{ $('Call \\'Configuracion Global\\'1').first().json.TelegramChatId }}",
         "text": "=Se produjo un error el {{ $now }} en el proyecto de veremma ACTUALIZANDO EL CALENDARIO. \nWorkflow:  {{ $workflow.name }}\nExecution:{{ $execution.id }}\nUrl:{{ $execution.resumeUrl }}\n",
         "additionalFields": {}
       },
@@ -3161,13 +3161,13 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').item.json.EvolutionInstance }}",
+        "url": "={{ $('Call \\'Configuracion Global\\'').first().json.EvolutionUrl }}/message/sendText/{{ $('Call \\'Configuracion Global\\'').first().json.EvolutionInstance }}",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
             {
               "name": "apikey",
-              "value": "={{ $('Call \\'Configuracion Global\\'').item.json.EvolutionApiKey }}"
+              "value": "={{ $('Call \\'Configuracion Global\\'').first().json.EvolutionApiKey }}"
             }
           ]
         },
@@ -3176,7 +3176,7 @@
           "parameters": [
             {
               "name": "number",
-              "value": "={{ $('Call \\'Configuracion Global\\'').item.json['CelularDueño'] }}"
+              "value": "={{ $('Call \\'Configuracion Global\\'').first().json['CelularDueño'] }}"
             },
             {
               "name": "text",
@@ -3205,7 +3205,7 @@
     },
     {
       "parameters": {
-        "chatId": "={{ $('Call \\'Configuracion Global\\'').item.json.TelegramChatId }}",
+        "chatId": "={{ $('Call \\'Configuracion Global\\'').first().json.TelegramChatId }}",
         "text": "=Se produjo un error el {{ $now }} en el proyecto de veremma EN EN UN RECORDATORIO AL ESTILISTA. \nWorkflow:  {{ $workflow.name }}\nExecution:{{ $execution.id }}\nUrl:\n",
         "additionalFields": {}
       },
@@ -3411,6 +3411,6 @@
     }
   ],
   "triggerCount": 3,
-  "updatedAt": "2026-03-18T20:33:33.690Z",
-  "versionId": "21be910b-eeab-473d-b039-3d7449b02607"
+  "updatedAt": "2026-03-23T14:35:35.686Z",
+  "versionId": "33001dd3-d1d8-4836-9bb5-549219a4fcb4"
 }
