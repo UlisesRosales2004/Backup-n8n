@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-03-17T18:35:52.000Z",
-    "createdAt": "2026-03-17T18:35:50.667Z",
-    "versionId": "092ec883-0e2d-41e0-ab4e-3343f84b6950",
+    "updatedAt": "2026-03-23T15:08:55.000Z",
+    "createdAt": "2026-03-23T15:08:53.730Z",
+    "versionId": "04609a13-e129-42ce-b043-63785577633d",
     "workflowId": "a7PR02q4rt2w7LszRKKhQ",
     "nodes": [
       {
@@ -667,8 +667,8 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          2336,
-          -80
+          2512,
+          112
         ],
         "id": "5be44545-8b25-464c-aac4-3d455d0ff25e",
         "name": "FormatearSlots",
@@ -1180,6 +1180,41 @@
         "id": "dd0929eb-fa3f-47d5-a5c2-4ca7b7d94351",
         "name": "Webhook",
         "webhookId": "ad88d2fd-c27e-4b1e-8648-4bc01b04618f"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "82c9f36f-f486-4bb9-b201-94e7a352bb0c",
+                "name": "Mensaje",
+                "value": "No hay disponibilidad en el horario seleccionado, estos son los horarios disponibles.",
+                "type": "string"
+              },
+              {
+                "id": "dd7ee899-73ee-463e-8cdc-30f0693a275a",
+                "name": "slotsDisponibles",
+                "value": "={{ $json.slotsDisponibles.toJsonString()\n}}",
+                "type": "array"
+              },
+              {
+                "id": "cdfe72fd-b4c5-44b0-8732-8f376f3037cf",
+                "name": "instruccionIA",
+                "value": "={{ $json.instruccionIA }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          2304,
+          -80
+        ],
+        "id": "367fb990-9a6c-4d6c-a9ef-d09339eabddb",
+        "name": "Edit Fields5"
       }
     ],
     "connections": {
@@ -1276,7 +1311,13 @@
       },
       "Call 'entregar_horarios'": {
         "main": [
-          []
+          [
+            {
+              "node": "Edit Fields5",
+              "type": "main",
+              "index": 0
+            }
+          ]
         ]
       },
       "Update an event": {
@@ -1604,11 +1645,11 @@
       }
     },
     "authors": "Cognia Empresa",
-    "name": "Version 092ec883",
+    "name": "Version 04609a13",
     "description": "",
     "autosaved": false
   },
-  "activeVersionId": "092ec883-0e2d-41e0-ab4e-3343f84b6950",
+  "activeVersionId": "04609a13-e129-42ce-b043-63785577633d",
   "connections": {
     "When Executed by Another Workflow": {
       "main": [
@@ -1703,7 +1744,13 @@
     },
     "Call 'entregar_horarios'": {
       "main": [
-        []
+        [
+          {
+            "node": "Edit Fields5",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "Update an event": {
@@ -2699,8 +2746,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2336,
-        -80
+        2512,
+        112
       ],
       "id": "5be44545-8b25-464c-aac4-3d455d0ff25e",
       "name": "FormatearSlots",
@@ -3212,6 +3259,41 @@
       "id": "dd0929eb-fa3f-47d5-a5c2-4ca7b7d94351",
       "name": "Webhook",
       "webhookId": "ad88d2fd-c27e-4b1e-8648-4bc01b04618f"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "82c9f36f-f486-4bb9-b201-94e7a352bb0c",
+              "name": "Mensaje",
+              "value": "No hay disponibilidad en el horario seleccionado, estos son los horarios disponibles.",
+              "type": "string"
+            },
+            {
+              "id": "dd7ee899-73ee-463e-8cdc-30f0693a275a",
+              "name": "slotsDisponibles",
+              "value": "={{ $json.slotsDisponibles.toJsonString()\n}}",
+              "type": "array"
+            },
+            {
+              "id": "cdfe72fd-b4c5-44b0-8732-8f376f3037cf",
+              "name": "instruccionIA",
+              "value": "={{ $json.instruccionIA }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2304,
+        -80
+      ],
+      "id": "367fb990-9a6c-4d6c-a9ef-d09339eabddb",
+      "name": "Edit Fields5"
     }
   ],
   "pinData": {
@@ -3255,6 +3337,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2026-03-17T18:35:50.666Z",
-  "versionId": "092ec883-0e2d-41e0-ab4e-3343f84b6950"
+  "updatedAt": "2026-03-23T15:08:53.729Z",
+  "versionId": "04609a13-e129-42ce-b043-63785577633d"
 }
