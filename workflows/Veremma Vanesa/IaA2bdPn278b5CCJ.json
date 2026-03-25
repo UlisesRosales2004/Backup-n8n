@@ -536,7 +536,7 @@
   },
   "createdAt": "2026-03-15T16:05:39.416Z",
   "id": "IaA2bdPn278b5CCJ",
-  "isArchived": false,
+  "isArchived": true,
   "meta": null,
   "name": "Recordatorios citas-Veremma-V1",
   "nodes": [
@@ -1693,6 +1693,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2026-03-15T16:09:28.010Z",
-  "versionId": "dbe65f78-18d5-471a-bdc5-b18875a18cbc"
+  "updatedAt": "2026-03-24T21:04:42.000Z",
+  "versionId": "e149776a-4959-44cb-9dc8-429e16a71dc8"
 }
