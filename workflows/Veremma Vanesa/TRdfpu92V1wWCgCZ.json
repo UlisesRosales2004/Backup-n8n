@@ -271,7 +271,7 @@
   },
   "createdAt": "2026-03-15T16:05:39.259Z",
   "id": "TRdfpu92V1wWCgCZ",
-  "isArchived": false,
+  "isArchived": true,
   "meta": null,
   "name": "comprobar_fecha_clinica-Veremma-V1",
   "nodes": [
@@ -1141,6 +1141,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2026-03-15T16:09:48.881Z",
-  "versionId": "bc9630e6-28e5-41b0-afae-3a61ff6028e6"
+  "updatedAt": "2026-03-24T21:04:42.000Z",
+  "versionId": "ec40095d-6fad-47f4-bdd4-d8a6a7b0a49d"
 }
