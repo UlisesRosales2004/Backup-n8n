@@ -356,7 +356,7 @@
   },
   "createdAt": "2026-03-15T16:05:39.646Z",
   "id": "SLhWImPrZez5hIrB",
-  "isArchived": false,
+  "isArchived": true,
   "meta": null,
   "name": "modificar_cita_clinica-Veremma-V1",
   "nodes": [
@@ -1341,6 +1341,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2026-03-15T16:09:00.155Z",
-  "versionId": "40023ac2-b24f-419b-b857-0b0ea9bad565"
+  "updatedAt": "2026-03-24T21:04:42.000Z",
+  "versionId": "e0b7a988-448c-4f13-8f47-3a83e14beca5"
 }
