@@ -253,7 +253,7 @@
   },
   "createdAt": "2026-03-15T16:05:40.086Z",
   "id": "Tb5jcKYO2xje4LfM",
-  "isArchived": false,
+  "isArchived": true,
   "meta": null,
   "name": "cancelar_cita-Veremma-V1",
   "nodes": [
@@ -915,6 +915,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2026-03-15T16:08:07.734Z",
-  "versionId": "2c510927-ea87-436f-a828-a5c65366edf1"
+  "updatedAt": "2026-03-24T21:04:42.000Z",
+  "versionId": "c414f8f0-e47b-44db-b6aa-7cdcd25da606"
 }
