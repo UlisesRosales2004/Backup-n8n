@@ -97,7 +97,7 @@
   },
   "createdAt": "2026-03-15T16:05:39.532Z",
   "id": "DjirYJLmZ6eI0SMH",
-  "isArchived": false,
+  "isArchived": true,
   "meta": null,
   "name": "liberar_horario-Veremma-V1",
   "nodes": [
@@ -356,6 +356,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2026-03-15T16:09:13.157Z",
-  "versionId": "e1b94033-0f16-45e7-a600-6c175939e8e9"
+  "updatedAt": "2026-03-24T21:04:42.000Z",
+  "versionId": "11aed7ef-47e0-4a96-8b4d-6cf25da14c43"
 }
