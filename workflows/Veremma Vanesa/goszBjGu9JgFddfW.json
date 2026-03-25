@@ -79,7 +79,7 @@
   },
   "createdAt": "2026-03-15T16:05:40.032Z",
   "id": "goszBjGu9JgFddfW",
-  "isArchived": false,
+  "isArchived": true,
   "meta": null,
   "name": "confirmar_cita-Veremma-V1",
   "nodes": [
@@ -302,6 +302,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2026-03-15T16:08:14.587Z",
-  "versionId": "be5c040d-d8f1-44ad-9fe1-6911f3864940"
+  "updatedAt": "2026-03-24T21:04:42.000Z",
+  "versionId": "2e2c5d87-acbe-4f4b-9809-562cbaa503ea"
 }
