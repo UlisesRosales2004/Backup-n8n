@@ -57,7 +57,7 @@
   },
   "createdAt": "2026-03-15T16:05:39.206Z",
   "id": "sYJMnPUFrbfDI415",
-  "isArchived": false,
+  "isArchived": true,
   "meta": null,
   "name": "consultar_citas-Veremma-V1",
   "nodes": [
@@ -241,6 +241,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2026-03-15T16:09:55.931Z",
-  "versionId": "2c39c778-f17c-494c-bdda-c73e0675f964"
+  "updatedAt": "2026-03-24T21:04:42.000Z",
+  "versionId": "8f664a3c-5b42-4cc9-838c-5d6096af765a"
 }
