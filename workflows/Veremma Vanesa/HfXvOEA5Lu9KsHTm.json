@@ -91,7 +91,7 @@
   },
   "createdAt": "2026-03-15T16:05:39.157Z",
   "id": "HfXvOEA5Lu9KsHTm",
-  "isArchived": false,
+  "isArchived": true,
   "meta": null,
   "name": "bloquear_horario-Veremma-V1",
   "nodes": [
@@ -350,6 +350,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2026-03-15T16:10:02.483Z",
-  "versionId": "bb7c2d78-00a7-429e-82b2-32e456030873"
+  "updatedAt": "2026-03-24T21:04:42.000Z",
+  "versionId": "833adad4-f6d7-411c-9d47-4b0fe73f3e49"
 }
