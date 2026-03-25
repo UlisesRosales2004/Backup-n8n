@@ -188,7 +188,7 @@
   },
   "createdAt": "2026-03-15T16:05:39.356Z",
   "id": "fNAkcIumkgTibGce",
-  "isArchived": false,
+  "isArchived": true,
   "meta": null,
   "name": "consultar_agenda-Veremma-V1",
   "nodes": [
@@ -596,6 +596,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2026-03-15T16:09:35.707Z",
-  "versionId": "9155e200-be63-4e4a-813e-4e6e71c3dee2"
+  "updatedAt": "2026-03-24T21:04:42.000Z",
+  "versionId": "2b572257-6f7f-4e72-b698-a6706b0b3ead"
 }
