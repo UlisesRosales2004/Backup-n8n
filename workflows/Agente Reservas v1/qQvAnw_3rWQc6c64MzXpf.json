@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-03-21T16:54:02.000Z",
-    "createdAt": "2026-03-21T16:54:01.101Z",
-    "versionId": "348fe1f2-06e9-4753-8567-b27adda188ba",
+    "updatedAt": "2026-03-26T21:49:16.000Z",
+    "createdAt": "2026-03-26T21:49:15.707Z",
+    "versionId": "f80de86f-336a-4271-994d-6cacc5ac2725",
     "workflowId": "qQvAnw_3rWQc6c64MzXpf",
     "nodes": [
       {
@@ -580,7 +580,7 @@
               {
                 "id": "23c91cc2-369b-4ee7-bdfa-49363f152d1a",
                 "name": "texto final",
-                "value": "={{ $json.content }}",
+                "value": "={{\n  $('Receive message').item.json.body.data.contextInfo?.quotedMessage?.conversation\n    ? `${$json.content}\\n↪ Respondiendo a: ${$('Receive message').item.json.body.data.contextInfo.quotedMessage.conversation}`\n    : $json.content\n}}",
                 "type": "string"
               }
             ]
@@ -3803,11 +3803,11 @@
       }
     },
     "authors": "Cognia Empresa",
-    "name": "Version 348fe1f2",
+    "name": "Version f80de86f",
     "description": "",
     "autosaved": false
   },
-  "activeVersionId": "348fe1f2-06e9-4753-8567-b27adda188ba",
+  "activeVersionId": "f80de86f-336a-4271-994d-6cacc5ac2725",
   "connections": {
     "AI Agent": {
       "main": [
@@ -5239,7 +5239,7 @@
             {
               "id": "23c91cc2-369b-4ee7-bdfa-49363f152d1a",
               "name": "texto final",
-              "value": "={{ $json.content }}",
+              "value": "={{\n  $('Receive message').item.json.body.data.contextInfo?.quotedMessage?.conversation\n    ? `${$json.content}\\n↪ Respondiendo a: ${$('Receive message').item.json.body.data.contextInfo.quotedMessage.conversation}`\n    : $json.content\n}}",
               "type": "string"
             }
           ]
@@ -7792,6 +7792,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2026-03-21T16:54:01.099Z",
-  "versionId": "348fe1f2-06e9-4753-8567-b27adda188ba"
+  "updatedAt": "2026-03-26T21:49:15.705Z",
+  "versionId": "f80de86f-336a-4271-994d-6cacc5ac2725"
 }
