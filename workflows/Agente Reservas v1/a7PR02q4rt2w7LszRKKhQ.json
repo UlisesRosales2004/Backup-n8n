@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-03-23T15:08:55.000Z",
-    "createdAt": "2026-03-23T15:08:53.730Z",
-    "versionId": "04609a13-e129-42ce-b043-63785577633d",
+    "updatedAt": "2026-03-27T18:32:15.000Z",
+    "createdAt": "2026-03-27T18:32:14.294Z",
+    "versionId": "1e120d4d-c4a7-48f5-806a-991e5ae6c138",
     "workflowId": "a7PR02q4rt2w7LszRKKhQ",
     "nodes": [
       {
@@ -254,7 +254,7 @@
           },
           "eventId": "={{ $('traer_cita_actual').item.json.id }}",
           "updateFields": {
-            "color": "7",
+            "color": "5",
             "description": "={{ $('Get a row').item.json['Preparación previa'] }}",
             "end": "={{ $('Formatear_input').item.json['Fecha nueva fin'] }}{{ $('Call \\'Configuracion Global\\'').item.json.TimezoneOffset }}",
             "start": "={{ $('Formatear_input').item.json['Fecha nueva inicio'] }}{{ $('Call \\'Configuracion Global\\'').item.json.TimezoneOffset }}",
@@ -1645,11 +1645,11 @@
       }
     },
     "authors": "Cognia Empresa",
-    "name": "Version 04609a13",
+    "name": "Version 1e120d4d",
     "description": "",
     "autosaved": false
   },
-  "activeVersionId": "04609a13-e129-42ce-b043-63785577633d",
+  "activeVersionId": "1e120d4d-c4a7-48f5-806a-991e5ae6c138",
   "connections": {
     "When Executed by Another Workflow": {
       "main": [
@@ -2333,7 +2333,7 @@
         },
         "eventId": "={{ $('traer_cita_actual').item.json.id }}",
         "updateFields": {
-          "color": "7",
+          "color": "5",
           "description": "={{ $('Get a row').item.json['Preparación previa'] }}",
           "end": "={{ $('Formatear_input').item.json['Fecha nueva fin'] }}{{ $('Call \\'Configuracion Global\\'').item.json.TimezoneOffset }}",
           "start": "={{ $('Formatear_input').item.json['Fecha nueva inicio'] }}{{ $('Call \\'Configuracion Global\\'').item.json.TimezoneOffset }}",
@@ -3337,6 +3337,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2026-03-23T15:08:53.729Z",
-  "versionId": "04609a13-e129-42ce-b043-63785577633d"
+  "updatedAt": "2026-03-27T18:32:14.292Z",
+  "versionId": "1e120d4d-c4a7-48f5-806a-991e5ae6c138"
 }
