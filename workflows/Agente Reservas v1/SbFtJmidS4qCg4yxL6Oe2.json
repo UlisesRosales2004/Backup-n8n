@@ -3401,7 +3401,14 @@
       "projectId": "f3W32VX4HOke6C3N"
     }
   ],
-  "staticData": null,
+  "staticData": {
+    "node:9pm": {
+      "recurrenceRules": []
+    },
+    "node:8AM": {
+      "recurrenceRules": []
+    }
+  },
   "tags": [
     {
       "updatedAt": "2026-03-15T14:46:54.854Z",
