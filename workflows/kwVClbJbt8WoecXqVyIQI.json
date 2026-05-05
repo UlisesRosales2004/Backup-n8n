@@ -1456,7 +1456,11 @@
       "projectId": "f3W32VX4HOke6C3N"
     }
   ],
-  "staticData": null,
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
   "tags": [],
   "triggerCount": 1,
   "updatedAt": "2026-03-16T13:29:09.570Z",
